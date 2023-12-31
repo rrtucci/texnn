@@ -7,28 +7,33 @@
 
 \begin{figure}[h!]\centering
 $$\xymatrix{
-&*+[F*:Lavender]{\underline{B}^{3}}\ar[dr]&
+&*+[F*:Lavender]{\underline{B}^{3}}\ar[dr]\ar[rr]&&*+[F*:yellow]{\underline{D}^{4}}
 \\
-*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ur]\ar[rr]&&*+[F*:cyan]{\underline{C}^{4}}
+*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ur]\ar[rr]\ar[urrr]&&*+[F*:cyan]{\underline{C}^{4}}&
 }$$
 \caption{Boring bnet}
-\label{fig-fig-boring}
+\label{fig-boring}
 \end{figure}
 
 \begin{subequations}
 \begin{equation}
-A^{3\times  4} = {\rm fun\_a}(B^{3},C^{4},{\rm axis=1})
+A^{3\times  4} = {\rm fun\_a}({\rm axis=1})
 \label{eq-A-fun-boring-bnet}
 \end{equation}
 
 \begin{equation}
-B^{3} = {\rm fun\_b}(C^{4})
+B^{3} = {\rm fun\_b}(A^{3\times  4})
 \label{eq-B-fun-boring-bnet}
 \end{equation}
 
 \begin{equation}
 C^{4} = B^{3}A^{3\times  4}+b^4
 \label{eq-C-fun-boring-bnet}
+\end{equation}
+
+\begin{equation}
+D^{4} = {\rm cos}(A^{3\times  4},B^{3},{\rm axis=1})
+\label{eq-D-fun-boring-bnet}
 \end{equation}
 
 \end{subequations}

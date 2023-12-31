@@ -342,32 +342,32 @@ class DAG:
 
         """
         str0 = r"\begin{subequations}" + "\n"
-        for parent in self.nodes:
+        for child in self.nodes:
             str0 += r"\begin{equation}" + "\n"
-            parent_nameL = parent.name
-            fun_args_strL = parent.fun_args_str
+            child_nameL = child.name
+            fun_args_strL = child.fun_args_str
             if add_superscripts:
-                parent_nameL = Node.get_long_name(parent)
-                if parent.fun_args_str:
-                    fun_args_strL = self.get_long_str(parent.fun_args_str)
+                child_nameL = Node.get_long_name(child)
+                if child.fun_args_str:
+                    fun_args_strL = self.get_long_str(child.fun_args_str)
             open_paren = "("
             close_paren = ")"
-            if not parent.fun_name:
+            if not child.fun_name:
                 open_paren = ""
                 close_paren = ""
-            str0 += parent_nameL + " = " + parent.fun_name + open_paren
-            if parent.fun_args_str:
+            str0 += child_nameL + " = " + child.fun_name + open_paren
+            if child.fun_args_str:
                 str0 += fun_args_strL + close_paren
             else:
-                for child in self.parent_to_children[parent]:
-                    child_nameL = child.name
+                for parent in self.child_to_parents[child]:
+                    parent_nameL = parent.name
                     if add_superscripts:
-                        child_nameL = Node.get_long_name(child)
-                    str0 += child_nameL + ","
-                if parent.params_str:
-                    str0 += parent.params_str + ","
+                        parent_nameL = Node.get_long_name(parent)
+                    str0 += parent_nameL + ","
+                if child.params_str:
+                    str0 += child.params_str + ","
                 str0 = str0[:-1] + ")"
-            str0 += "\n" + r"\label{eq-" + parent.name + \
+            str0 += "\n" + r"\label{eq-" + child.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
         str0 += r"\end{subequations}"
@@ -403,16 +403,25 @@ if __name__ == "__main__":
             params_str=None,
             color="cyan"
         )
-        nodes = [anode, bnode, cnode]
+        dnode = Node(
+            name="D",
+            parent_names=["A", "B"],
+            shape_str="(4,)",
+            fun_name="cos",
+            fun_args_str=None,
+            params_str="axis=1",
+            color="yellow"
+        )
+        nodes = [anode, bnode, cnode, dnode]
         ll_tile = [
-            "_B_",
-            "A_C",
+            "_B_D",
+            "A_C_",
         ]
         name = "boring-bnet"
         dag = DAG(nodes, ll_tile, name)
         print()
         print(dag.get_figure_str(fig_caption="Boring bnet",
-                                 fig_label="fig-boring"))
+                                 fig_label="boring"))
         print()
         print(dag.get_equations_str())
 
