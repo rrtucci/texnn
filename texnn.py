@@ -7,12 +7,12 @@ Although texnn is stand-alone, I wrote it specifically to aid me in writing
 a chapter on transformer architectures for my free, open source book
 Bayesuvius.
 
-texnn uses the LaTex package XYPic for drawing.
+texnn uses the LaTex package xy-pic for drawing.
 
 texnn takes as input a bunch of strings with info for each node of a Neural 
 Net (NN).
 
-The function DAG.get_figure_str() outputs a LaTex str for drawing via XYPic 
+The function DAG.get_figure_str() outputs a LaTex str for drawing via xy-pic 
 a bnet that represents the NN.
 
 The function DAG.get_equations_str() outputs a LaTex str for writing the 
@@ -136,7 +136,7 @@ class Node:
 
 class DAG:
     """
-    This class has methods for drawing a NN (via XYPic) and writing its 
+    This class has methods for drawing a NN (via xy-pic) and writing its 
     structural equations.
     
     Attributes
