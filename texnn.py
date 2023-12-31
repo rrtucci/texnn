@@ -1,34 +1,48 @@
 """
-XYpic is a LaTex package for drawing network graphs with LaTex.
 
-This stand-alone python file takes as input a bunch of strings for each node
-of a Neural Net (nn).
+texnn (pronounced like "Texan") is a Python script that outputs LaTex (tex)
+strings for visualizing a Neural Net (nn) as a Bayesian Network.
 
-The function DAG.get_figure_str() outputs a LaTex (tex) str for a figure
-containing XYpic code for drawing a bnet that represents the NN.
+Although texnn is stand-alone, I wrote it specifically to aid me in writing
+a chapter on transformer architectures for my book Bayesuvius.
 
-The function DAG.get_equations_str() outputs a LaTex (tex) str for the
-structural equations for a bnet of the NN.
+texnn uses the LaTex package XYPic for drawing.
+
+texnn takes as input a bunch of strings with info for each node of a Neural 
+Net (NN).
+
+The function DAG.get_figure_str() outputs a LaTex str for drawing via XYPic 
+a bnet that represents the NN.
+
+The function DAG.get_equations_str() outputs a LaTex str for writing the 
+structural equations for a bnet that represents the NN.
 
 """
 
 
-
 class Node:
     """
+    This class just stores a bunch of strings with info about a node.
     
     Attributes
     ----------
     color: str
-        the color of the node in the bnet
+        the color of node `self` in the bnet
     fun_args_str: str
-        function arguments str
+        the string of function arguments
     fun_name: str
+        the name of the function which equals `self`
     name: str
+        the name of node `self`
     params_str: str
+        a str containing parameter names and their values
     parent_names: list[str]
+        a list of the names of the parents of node `self`.
     shape_str: str
+        the string of the shape of the output of node `self`. For example, 
+        "(3, )", "(4, 3)", "(N, M)"
     """
+
     def __init__(self,
                  name,
                  parent_names,
@@ -51,11 +65,13 @@ class Node:
         """
         self.name = name
         self.parent_names = parent_names
+
         def rm_str(str0):
             if str0:
                 return r"{\rm " + str0.replace("_", "\_") + "}"
             else:
                 return ""
+
         self.shape_str = shape_str
         self.fun_name = rm_str(fun_name)
         self.fun_args_str = fun_args_str
@@ -65,14 +81,18 @@ class Node:
     @staticmethod
     def get_dimensions_str(shape_str):
         """
+        This method takes as input a tensor shape string and returns as 
+        output a dimensions string. For example. "(8, 5, 3)" ->"8X5X3"
         
         Parameters
         ----------
         shape_str:str
+            tensor shape string
 
         Returns
         -------
         str
+            dimensions string
 
         """
         # remove parentheses
@@ -92,6 +112,9 @@ class Node:
     @staticmethod
     def get_long_name(node, underline_it=False):
         """
+        This method takes as input a node name and underlines it iff 
+        underline = True. In addition, output string adds to the input 
+        string a superscript with its dimensions str.
         
         Parameters
         ----------
@@ -112,15 +135,26 @@ class Node:
 
 class DAG:
     """
+    This class has methods for drawing a NN (via XYPic) and writing its 
+    structural equations.
     
     Attributes
     ----------
     child_to_parents: dict[Node, list[Node]]
+        a dictionary mapping each node to a list of its parent nodes
     empty_tile: str
-    ll_tile: list[list[str]]
+        str for an empty tile,usually "_" 
+    ll_tile: list[str]
+        a list of string which when stacked horizontally represent
+        the bnet that we wish to draw, as a tile mosaic, with one or zero 
+        nodes per tile.
     node_to_tile_loc: list[Node, tuple[int]]
+        a dictionary mapping each node to its tile location, which
+        should be a tuple (row, col).
     nodes: list[Node]
+        the list of nodes in the bnet that we wish to draw
     parent_to_children: dict[Node, list[Node]]
+        A dictionary mapping every node to a list of its children
     
     
     """
@@ -132,7 +166,7 @@ class DAG:
         Parameters
         ----------
         nodes: list[Node]
-        ll_tile: list[list[str]]
+        ll_tile: list[str]
         """
         self.nodes = nodes
         self.ll_tile = ll_tile
@@ -144,6 +178,7 @@ class DAG:
 
     def get_node(self, node_name):
         """
+        This method returns the unique Node with name `node_name`.
         
         Parameters
         ----------
@@ -167,6 +202,7 @@ class DAG:
 
     def set_node_tile_locs(self):
         """
+        This method fills the dictionary `self.node_to_tile_loc`
         
         Returns
         -------
@@ -188,6 +224,8 @@ class DAG:
 
     def set_parentage(self):
         """
+        This method fills the dictionaries `self.child_to_parents` and 
+        `self.parent_to_children`.
         
         Returns
         -------
@@ -205,9 +243,12 @@ class DAG:
                 if parent in self.child_to_parents[child] and \
                         child not in self.parent_to_children[parent]:
                     self.parent_to_children[parent].append(child)
-    
+
     def get_long_str(self, str0):
         """
+        This method returns the str `str0` after replacing in it every 
+        occurrence of a node name by that same node name with a superscript 
+        added. The superscript shows the dimensions str for that node.
         
         Parameters
         ----------
@@ -227,6 +268,8 @@ class DAG:
                        fig_label=None,
                        add_superscripts=True):
         """
+        This method returns a LaTex string for drawing a bnet that 
+        represents a neural net.
         
         Parameters
         ----------
@@ -244,7 +287,7 @@ class DAG:
         str0 += r"$$\xymatrix{" + "\n"
         for row in range(len0):
             for col in range(len1):
-                if col !=0:
+                if col != 0:
                     str0 += "&"
                 parent_name = self.ll_tile[row][col]
                 if parent_name == DAG.empty_tile:
@@ -283,6 +326,8 @@ class DAG:
 
     def get_equations_str(self, add_superscripts=True):
         """
+        This method returns a LaTex string for writing the structure 
+        equations of the bnet we are drawing.
         
         Parameters
         ----------
