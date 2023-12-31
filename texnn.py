@@ -350,9 +350,14 @@ class DAG:
                 parent_nameL = Node.get_long_name(parent)
                 if parent.fun_args_str:
                     fun_args_strL = self.get_long_str(parent.fun_args_str)
-            str0 += parent_nameL + " = " + parent.fun_name + "("
+            open_paren = "("
+            close_paren = ")"
+            if not parent.fun_name:
+                open_paren = ""
+                close_paren = ""
+            str0 += parent_nameL + " = " + parent.fun_name + open_paren
             if parent.fun_args_str:
-                str0 += fun_args_strL + ")"
+                str0 += fun_args_strL + close_paren
             else:
                 for child in self.parent_to_children[parent]:
                     child_nameL = child.name
@@ -393,7 +398,7 @@ if __name__ == "__main__":
             name="C",
             parent_names=["A", "B"],
             shape_str="(4,)",
-            fun_name="fun_c",
+            fun_name=None,
             fun_args_str="BA+b^4",
             params_str=None,
             color="cyan"
