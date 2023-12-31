@@ -161,16 +161,18 @@ class DAG:
     """
     empty_tile = "_"
 
-    def __init__(self, nodes, ll_tile):
+    def __init__(self, nodes, ll_tile, name):
         """
         
         Parameters
         ----------
         nodes: list[Node]
         ll_tile: list[str]
+        fig_label: str
         """
         self.nodes = nodes
         self.ll_tile = ll_tile
+        self.name = name
         self.node_to_tile_loc = None
         self.parent_to_children = None
         self.child_to_parents = None
@@ -321,7 +323,7 @@ class DAG:
         if fig_caption:
             str0 += r"\caption{" + fig_caption + "}\n"
         if fig_label:
-            str0 += r"\label{" + fig_label + "}\n"
+            str0 += r"\label{fig-" + fig_label + "}\n"
         str0 += r"\end{figure}"
         return str0
 
@@ -360,7 +362,9 @@ class DAG:
                 if parent.params_str:
                     str0 += parent.params_str + ","
                 str0 = str0[:-1] + ")"
-            str0 += "\n" + r"\end{equation}" + "\n\n"
+            str0 += "\n" + r"\label{eq-" + parent.name + \
+                    "-fun-" + self.name + "}\n"
+            str0 += r"\end{equation}" + "\n\n"
         str0 += r"\end{subequations}"
         return str0
 
@@ -399,7 +403,8 @@ if __name__ == "__main__":
             "_B_",
             "A_C",
         ]
-        dag = DAG(nodes, ll_tile)
+        name = "boring-bnet"
+        dag = DAG(nodes, ll_tile, name)
         print()
         print(dag.get_figure_str(fig_caption="Boring bnet",
                                  fig_label="fig-boring"))
