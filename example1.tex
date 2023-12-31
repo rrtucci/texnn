@@ -1,0 +1,33 @@
+\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+\begin{figure}[h!]\centering
+$$\xymatrix{
+&*+[F*:Lavender]{\underline{B}^{3}}\ar[dr]&
+\\
+*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ur]\ar[rr]&&*+[F*:cyan]{\underline{C}^{4}}
+}$$
+\caption{Boring bnet}
+\label{fig-boring}
+\end{figure}
+
+\begin{subequations}
+\begin{equation}
+A^{3\times  4} = {\rm fun\_a}(B^{3},C^{4},{\rm axis=1})
+\end{equation}
+
+\begin{equation}
+B^{3} = {\rm fun\_b}(C^{4})
+\end{equation}
+
+\begin{equation}
+C^{4} = {\rm fun\_c}(B^{3}A^{3\times  4}+b^4)
+\end{equation}
+
+\end{subequations}
+
+\end{document}
