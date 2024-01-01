@@ -417,11 +417,11 @@ if __name__ == "__main__":
             "_B_D",
             "A_C_",
         ]
-        name = "boring-bnet"
+        name = "silly-bnet"
         dag = DAG(nodes, ll_tile, name)
         print()
-        print(dag.get_figure_str(fig_caption="Boring bnet",
-                                 fig_label="boring"))
+        print(dag.get_figure_str(fig_caption="Silly bnet",
+                                 fig_label="silly"))
         print()
         print(dag.get_equations_str())
 
