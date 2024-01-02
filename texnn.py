@@ -42,10 +42,13 @@ class Node:
     shape_str: str
         the string of the shape of the output of node `self`. For example, 
         "(3, )", "(4, 3)", "(N, M)"
+    tile_ch: str
+        tile character, a character that identifies the node uniquely
     """
 
     def __init__(self,
                  name,
+                 tile_ch,
                  parent_names,
                  shape_str,
                  fun_name,
@@ -57,6 +60,7 @@ class Node:
         Parameters
         ----------
         name: str
+        tile_ch: str
         parent_names: list[str]
         shape_str: str
         fun_name: str
@@ -65,6 +69,8 @@ class Node:
         color: str
         """
         self.name = name
+        assert len(tile_ch) == 1
+        self.tile_ch = tile_ch
         self.parent_names = parent_names
 
         def rm_str(str0):
@@ -179,13 +185,13 @@ class DAG:
         self.set_node_tile_locs()
         self.set_parentage()
 
-    def get_node(self, node_name):
+    def get_node_from_name(self, name):
         """
-        This method returns the unique Node with name `node_name`.
+        This method returns the unique Node with name `name`.
         
         Parameters
         ----------
-        node_name: str
+        name: str
 
         Returns
         -------
@@ -194,14 +200,38 @@ class DAG:
         """
         node = None
         for node0 in self.nodes:
-            if node0.name == node_name:
+            if node0.name == name:
                 node = node0
                 break
         if node:
             return node
         else:
-            assert False, f"'{node_name}' is not in: " + \
+            assert False, f"'{name}' is not in: " + \
                           str([node0.name for node0 in self.nodes])
+
+    def get_node_from_tile_ch(self, tile_ch):
+        """
+        This method returns the unique Node with tile_ch `tile_ch`.
+
+        Parameters
+        ----------
+        tile_ch: str
+
+        Returns
+        -------
+        Node
+
+        """
+        node = None
+        for node0 in self.nodes:
+            if node0.tile_ch == tile_ch:
+                node = node0
+                break
+        if node:
+            return node
+        else:
+            assert False, f"'{tile_ch}' is not in: " + \
+                          str([node0.tile_ch for node0 in self.nodes])
 
     def set_node_tile_locs(self):
         """
@@ -220,9 +250,10 @@ class DAG:
         self.node_to_tile_loc = {}
         for row in range(len0):
             for col in range(len1):
-                node_name = self.ll_tile[row][col]
-                if node_name != DAG.empty_tile:
-                    node = self.get_node(node_name)
+                tile_ch = self.ll_tile[row][col]
+                
+                if tile_ch != DAG.empty_tile:
+                    node = self.get_node_from_tile_ch(tile_ch)
                     self.node_to_tile_loc[node] = (row, col)
 
     def set_parentage(self):
@@ -237,7 +268,7 @@ class DAG:
         """
         self.child_to_parents = {}
         for child in self.nodes:
-            self.child_to_parents[child] = [self.get_node(parent_name) for
+            self.child_to_parents[child] = [self.get_node_from_name(parent_name) for
                                             parent_name in child.parent_names]
         self.parent_to_children = {}
         for parent in self.nodes:
@@ -292,10 +323,10 @@ class DAG:
             for col in range(len1):
                 if col != 0:
                     str0 += "&"
-                parent_name = self.ll_tile[row][col]
-                if parent_name == DAG.empty_tile:
+                parent_tile_ch = self.ll_tile[row][col]
+                if parent_tile_ch == DAG.empty_tile:
                     continue
-                parent = self.get_node(parent_name)
+                parent = self.get_node_from_tile_ch(parent_tile_ch)
                 box_str = r"*+[F*]{"
                 if parent.color:
                     box_str = r"*+[F*:" + parent.color + "]{"
@@ -378,6 +409,7 @@ if __name__ == "__main__":
     def main():
         anode = Node(
             name="A",
+            tile_ch = "A",
             parent_names=[],
             shape_str="(3, 4)",
             fun_name="fun_a",
@@ -387,6 +419,7 @@ if __name__ == "__main__":
         )
         bnode = Node(
             name="B",
+            tile_ch="B",
             parent_names=["A"],
             shape_str="(3,)",
             fun_name="fun_b",
@@ -396,6 +429,7 @@ if __name__ == "__main__":
         )
         cnode = Node(
             name="C",
+            tile_ch="C",
             parent_names=["A", "B"],
             shape_str="(4,)",
             fun_name=None,
@@ -405,6 +439,7 @@ if __name__ == "__main__":
         )
         dnode = Node(
             name="D",
+            tile_ch="D",
             parent_names=["A", "B"],
             shape_str="(4,)",
             fun_name="cos",
