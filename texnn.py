@@ -251,7 +251,7 @@ class DAG:
         for row in range(len0):
             for col in range(len1):
                 tile_ch = self.ll_tile[row][col]
-                
+
                 if tile_ch != DAG.empty_tile:
                     node = self.get_node_from_tile_ch(tile_ch)
                     self.node_to_tile_loc[node] = (row, col)
@@ -268,8 +268,9 @@ class DAG:
         """
         self.child_to_parents = {}
         for child in self.nodes:
-            self.child_to_parents[child] = [self.get_node_from_name(parent_name) for
-                                            parent_name in child.parent_names]
+            self.child_to_parents[child] = [
+                self.get_node_from_name(parent_name) for
+                parent_name in child.parent_names]
         self.parent_to_children = {}
         for parent in self.nodes:
             self.parent_to_children[parent] = []
@@ -409,7 +410,7 @@ if __name__ == "__main__":
     def main():
         anode = Node(
             name="A",
-            tile_ch = "A",
+            tile_ch="A",
             parent_names=[],
             shape_str="(3, 4)",
             fun_name="fun_a",
