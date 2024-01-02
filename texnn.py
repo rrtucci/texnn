@@ -28,19 +28,19 @@ class Node:
     Attributes
     ----------
     color: str
-        the color of node `self` in the bnet
-    fun_args_str: str
+        the color of node
+    fun_args_str: str | None
         the string of function arguments
-    fun_name: str
-        the name of the function which equals `self`
+    fun_name: str | None
+        the name of the function
     name: str
         a name that identifies the node uniquely
-    params_str: str
-        a str containing parameter names and their values
+    params_str: str | None
+        a string containing parameter names and their values
     parent_names: list[str]
-        a list of the names of the parents of node `self`.
+        a list of the names of the parents of the node.
     shape_str: str
-        the string of the shape of the output of node `self`. For example, 
+        the string of the shape of the output of the node. For example,
         "(3, )", "(4, 3)", "(N, M)"
     tile_ch: str
         tile character, a character that identifies the node uniquely
@@ -51,11 +51,12 @@ class Node:
                  tile_ch,
                  parent_names,
                  shape_str,
-                 fun_name,
+                 fun_name=None,
                  fun_args_str=None,
                  params_str=None,
                  color=None):
         """
+        Constructor
         
         Parameters
         ----------
@@ -63,11 +64,12 @@ class Node:
         tile_ch: str
         parent_names: list[str]
         shape_str: str
-        fun_name: str
-        fun_args_str: str
-        params_str: str
-        color: str
+        fun_name: str | None
+        fun_args_str: str | None
+        params_str: str | None
+        color: str | None
         """
+
         self.name = name
         assert len(tile_ch) == 1
         self.tile_ch = tile_ch
@@ -93,7 +95,7 @@ class Node:
         
         Parameters
         ----------
-        shape_str:str
+        shape_str: str
             tensor shape string
 
         Returns
@@ -142,28 +144,28 @@ class Node:
 
 class DAG:
     """
-    This class has methods for drawing a NN (via xy-pic) and writing its 
+    This class has methods for drawing a NN (via xy-pic) and writing its
     structural equations.
-    
+
     Attributes
     ----------
     child_to_parents: dict[Node, list[Node]]
-        a dictionary mapping each node to a list of its parent nodes
+        a dictionary mapping every node to a list of its parent nodes. root
+        nodes have empty list.
     empty_tile: str
-        str for an empty tile,usually "_" 
+        string for an empty tile, set to "_"
     ll_tile: list[str]
-        a list of string which when stacked horizontally represent
-        the bnet that we wish to draw, as a tile mosaic, with one or zero 
-        nodes per tile.
+        a list of strings of equal length which when stacked horizontally
+        represent the bnet that we wish to draw, as a tile mosaic.
     node_to_tile_loc: list[Node, tuple[int]]
-        a dictionary mapping each node to its tile location, which
-        should be a tuple (row, col).
+        a dictionary mapping each node to its tile location, which is a
+        tuple (row, col).
     nodes: list[Node]
-        the list of nodes in the bnet that we wish to draw
+        list of nodes for the bnet that we wish to draw
     parent_to_children: dict[Node, list[Node]]
-        A dictionary mapping every node to a list of its children
-    
-    
+        A dictionary mapping every node to a list of its children. Leaf
+        nodes have empty list.
+
     """
     empty_tile = "_"
 
@@ -174,7 +176,7 @@ class DAG:
         ----------
         nodes: list[Node]
         ll_tile: list[str]
-        fig_label: str
+        name: str
         """
         self.nodes = nodes
         self.ll_tile = ll_tile
@@ -300,7 +302,6 @@ class DAG:
 
     def get_figure_str(self,
                        fig_caption=None,
-                       fig_label=None,
                        add_superscripts=True):
         """
         This method returns a LaTex string for drawing a bnet that 
@@ -308,14 +309,15 @@ class DAG:
         
         Parameters
         ----------
-        fig_caption: str
-        fig_label: str
+        fig_caption: str | None
         add_superscripts: bool
 
         Returns
         -------
 
         """
+        if not fig_caption:
+            fig_caption = ""
         len0 = len(self.ll_tile)
         len1 = len(self.ll_tile[0])
         str0 = r"\begin{figure}[h!]\centering" + "\n"
@@ -352,10 +354,8 @@ class DAG:
                     str0 += r"\ar[" + direction + "]"
             str0 += "\n" + r"\\" + "\n"
         str0 = str0.strip()[:-2] + r"}$$" + "\n"
-        if fig_caption:
-            str0 += r"\caption{" + fig_caption + "}\n"
-        if fig_label:
-            str0 += r"\label{fig-" + fig_label + "}\n"
+        str0 += r"\caption{" + fig_caption + "}\n"
+        str0 += r"\label{fig-texnn-for-" + self.name + "}\n"
         str0 += r"\end{figure}"
         return str0
 
@@ -456,8 +456,7 @@ if __name__ == "__main__":
         name = "silly-bnet"
         dag = DAG(nodes, ll_tile, name)
         print()
-        print(dag.get_figure_str(fig_caption="Silly bnet",
-                                 fig_label="silly"))
+        print(dag.get_figure_str(fig_caption="Silly bnet"))
         print()
         print(dag.get_equations_str())
 
