@@ -34,7 +34,7 @@ class Node:
     fun_name: str
         the name of the function which equals `self`
     name: str
-        the name of node `self`
+        a name that identifies the node uniquely
     params_str: str
         a str containing parameter names and their values
     parent_names: list[str]
