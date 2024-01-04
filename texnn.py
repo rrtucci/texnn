@@ -181,6 +181,11 @@ class DAG:
         """
         self.nodes = nodes
         self.mosaic = mosaic
+        len0 = len(self.mosaic)
+        len1 = len(self.mosaic[0])
+        for row in range(len0):
+            assert len(self.mosaic[row]) == len1, \
+                "Tile rows not all of same length."
         self.name = name
         self.node_to_tile_loc = None
         self.parent_to_children = None
@@ -247,9 +252,6 @@ class DAG:
         """
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
-        for row in range(len0):
-            assert len(self.mosaic[row]) == len1, \
-                "Tile rows not all of same length."
         self.node_to_tile_loc = {}
         for row in range(len0):
             for col in range(len1):
@@ -321,6 +323,7 @@ class DAG:
             fig_caption = ""
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
+        # print("llmg", self.mosaic)
         str0 = r"\begin{figure}[h!]\centering" + "\n"
         str0 += r"$$\xymatrix{" + "\n"
         for row in range(len0):
@@ -447,40 +450,44 @@ class DAG:
         mosaic = []
         for row in range(len0):
             row_str = ""
-            for ch in tile_arr[row]:
+            for ch in tile_arr[row][:]:
                 row_str += ch
             mosaic.append(row_str)
+        # print("llkm", tile_arr, mosaic)
         return mosaic
 
-    def rotate_mosaic(self, how):
+    @staticmethod
+    def rotate_mosaic(mosaic, how):
         """
-        This method replaces `self.mosaic` by a rotated version of it. It
-        can rotate by 90, 180 and 270 degrees.
+        This method returns a rotated version of `mosaic`. It can rotate by
+        +90, +180 and +270 degrees.
 
         Parameters
         ----------
+        mosaic: list[str]
         how: str
             must be in ["+90_degs", "+180_degs", "+270_degs']
 
         Returns
         -------
-        None
+        list[str]
 
         """
-        tile_arr = DAG.get_tile_arr_from_mosaic(self.mosaic)
+        tile_arr = DAG.get_tile_arr_from_mosaic(mosaic)
         if how == "+90_degs":
             new_tile_arr = np.rot90(tile_arr)
+            # print("jjlw", tile_arr, new_tile_arr)
         elif how == "+180_degs":
             new_tile_arr = np.rot90(np.rot90(tile_arr))
         elif how == "+270_degs":
             new_tile_arr = np.rot90(np.rot90(np.rot90(tile_arr)))
         else:
             assert False
-        self.mosaic = DAG.get_mosaic_from_tile_array(new_tile_arr)
+        return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
 
 if __name__ == "__main__":
-    def main1():
+    def main1(rotate=False):
         anode = Node(
             name="A",
             tile_ch="A",
@@ -527,6 +534,10 @@ if __name__ == "__main__":
             "A_C_",
         ]
         name = "silly-bnet"
+        print("\nmosaic:", mosaic)
+        if rotate:
+            mosaic = DAG.rotate_mosaic(mosaic, "+90_degs")
+            print("rotated mosaic:", mosaic)
         dag = DAG(nodes, mosaic, name)
         print()
         print(dag.get_figure_str(fig_caption="Silly bnet"))
@@ -540,7 +551,7 @@ if __name__ == "__main__":
             "34",
             "56"
         ]
-        print("mosaic:\n", mosaic)
+        print("\nmosaic:\n", mosaic)
         tile_arr = DAG.get_tile_arr_from_mosaic(mosaic)
         print("tile_arr:\n", tile_arr)
         new_mosaic = DAG.get_mosaic_from_tile_array(tile_arr)
@@ -550,5 +561,5 @@ if __name__ == "__main__":
         print("rot270:\n", np.rot90(np.rot90(np.rot90(tile_arr))))
 
 
-    main1()
+    main1(rotate=True)
     main2()

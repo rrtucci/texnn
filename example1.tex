@@ -8,12 +8,16 @@
 
 \begin{figure}[h!]\centering
 $$\xymatrix{
-&*+[F*:Lavender]{\underline{B}^{3}}\ar[dr]\ar[rr]&&*+[F*:yellow]{\underline{D}^{4}}
+*+[F*:yellow]{\underline{D}^{4}}&
 \\
-*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ur]\ar[rr]\ar[urrr]&&*+[F*:cyan]{\underline{C}^{4}}&
+&*+[F*:cyan]{\underline{C}^{4}}
+\\
+*+[F*:Lavender]{\underline{B}^{3}}\ar[ur]\ar[uu]&
+\\
+&*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ul]\ar[uu]\ar[uuul]
 }$$
 \caption{Silly bnet}
-\label{fig-silly}
+\label{fig-texnn-for-silly-bnet}
 \end{figure}
 
 \begin{subequations}
@@ -38,5 +42,6 @@ D^{4} = {\rm cos}(A^{3\times  4},B^{3},{\rm axis=1})
 \end{equation}
 
 \end{subequations}
+
 
 \end{document}
