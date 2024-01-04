@@ -19,6 +19,7 @@ The function DAG.get_equations_str() outputs a LaTex str for writing the
 structural equations for a bnet that represents the NN.
 
 """
+import numpy as np
 
 
 class Node:
@@ -154,7 +155,7 @@ class DAG:
         nodes have empty list.
     empty_tile: str
         string for an empty tile, set to "_"
-    ll_tile: list[str]
+    mosaic: list[str]
         a list of strings of equal length which when stacked horizontally
         represent the bnet that we wish to draw, as a tile mosaic.
     node_to_tile_loc: list[Node, tuple[int]]
@@ -169,17 +170,17 @@ class DAG:
     """
     empty_tile = "_"
 
-    def __init__(self, nodes, ll_tile, name):
+    def __init__(self, nodes, mosaic, name):
         """
         
         Parameters
         ----------
         nodes: list[Node]
-        ll_tile: list[str]
+        mosaic: list[str]
         name: str
         """
         self.nodes = nodes
-        self.ll_tile = ll_tile
+        self.mosaic = mosaic
         self.name = name
         self.node_to_tile_loc = None
         self.parent_to_children = None
@@ -244,15 +245,15 @@ class DAG:
         None
 
         """
-        len0 = len(self.ll_tile)
-        len1 = len(self.ll_tile[0])
+        len0 = len(self.mosaic)
+        len1 = len(self.mosaic[0])
         for row in range(len0):
-            assert len(self.ll_tile[row]) == len1, \
+            assert len(self.mosaic[row]) == len1, \
                 "Tile rows not all of same length."
         self.node_to_tile_loc = {}
         for row in range(len0):
             for col in range(len1):
-                tile_ch = self.ll_tile[row][col]
+                tile_ch = self.mosaic[row][col]
 
                 if tile_ch != DAG.empty_tile:
                     node = self.get_node_from_tile_ch(tile_ch)
@@ -318,15 +319,15 @@ class DAG:
         """
         if not fig_caption:
             fig_caption = ""
-        len0 = len(self.ll_tile)
-        len1 = len(self.ll_tile[0])
+        len0 = len(self.mosaic)
+        len1 = len(self.mosaic[0])
         str0 = r"\begin{figure}[h!]\centering" + "\n"
         str0 += r"$$\xymatrix{" + "\n"
         for row in range(len0):
             for col in range(len1):
                 if col != 0:
                     str0 += "&"
-                parent_tile_ch = self.ll_tile[row][col]
+                parent_tile_ch = self.mosaic[row][col]
                 if parent_tile_ch == DAG.empty_tile:
                     continue
                 parent = self.get_node_from_tile_ch(parent_tile_ch)
@@ -405,9 +406,81 @@ class DAG:
         str0 += r"\end{subequations}"
         return str0
 
+    @staticmethod
+    def get_tile_arr_from_mosaic(mosaic):
+        """
+        This method converts `mosaic` to a numpy array of characters.
+
+        Parameters
+        ----------
+        mosaic: list[str]
+
+        Returns
+        -------
+        np.array
+
+        """
+        len0 = len(mosaic)
+        len1 = len(mosaic[0])
+        tile_arr = np.empty(shape=(len0, len1), dtype='U')
+        for row in range(len0):
+            for col in range(len1):
+                tile_arr[row][col] = mosaic[row][col]
+        return tile_arr
+
+    @staticmethod
+    def get_mosaic_from_tile_array(tile_arr):
+        """
+        This method converts a numpy array of characters `tile_arr` to an
+        mosaic.
+
+        Parameters
+        ----------
+        tile_arr: np.array
+
+        Returns
+        -------
+        list[str]
+
+        """
+        len0, len1 = tile_arr.shape
+        mosaic = []
+        for row in range(len0):
+            row_str = ""
+            for ch in tile_arr[row]:
+                row_str += ch
+            mosaic.append(row_str)
+        return mosaic
+
+    def rotate_mosaic(self, how):
+        """
+        This method replaces `self.mosaic` by a rotated version of it. It
+        can rotate by 90, 180 and 270 degrees.
+
+        Parameters
+        ----------
+        how: str
+            must be in ["+90_degs", "+180_degs", "+270_degs']
+
+        Returns
+        -------
+        None
+
+        """
+        tile_arr = DAG.get_tile_arr_from_mosaic(self.mosaic)
+        if how == "+90_degs":
+            new_tile_arr = np.rot90(tile_arr)
+        elif how == "+180_degs":
+            new_tile_arr = np.rot90(np.rot90(tile_arr))
+        elif how == "+270_degs":
+            new_tile_arr = np.rot90(np.rot90(np.rot90(tile_arr)))
+        else:
+            assert False
+        self.mosaic = DAG.get_mosaic_from_tile_array(new_tile_arr)
+
 
 if __name__ == "__main__":
-    def main():
+    def main1():
         anode = Node(
             name="A",
             tile_ch="A",
@@ -449,16 +522,33 @@ if __name__ == "__main__":
             color="yellow"
         )
         nodes = [anode, bnode, cnode, dnode]
-        ll_tile = [
+        mosaic = [
             "_B_D",
             "A_C_",
         ]
         name = "silly-bnet"
-        dag = DAG(nodes, ll_tile, name)
+        dag = DAG(nodes, mosaic, name)
         print()
         print(dag.get_figure_str(fig_caption="Silly bnet"))
         print()
         print(dag.get_equations_str())
 
 
-    main()
+    def main2():
+        mosaic = [
+            "12",
+            "34",
+            "56"
+        ]
+        print("mosaic:\n", mosaic)
+        tile_arr = DAG.get_tile_arr_from_mosaic(mosaic)
+        print("tile_arr:\n", tile_arr)
+        new_mosaic = DAG.get_mosaic_from_tile_array(tile_arr)
+        print("new mosaic:\n", new_mosaic)
+        print("rot90:\n", np.rot90(tile_arr))
+        print("rot180:\n", np.rot90(np.rot90(tile_arr)))
+        print("rot270:\n", np.rot90(np.rot90(np.rot90(tile_arr))))
+
+
+    main1()
+    main2()

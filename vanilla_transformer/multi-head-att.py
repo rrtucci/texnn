@@ -2,7 +2,7 @@ from texnn import *
 
 nodeQ = Node(
     name="Q",
-    tile_ch="Q",
+    tile_ch='Q',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -13,7 +13,7 @@ nodeQ = Node(
 
 nodeK = Node(
     name="K",
-    tile_ch="K",
+    tile_ch='K',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -24,7 +24,7 @@ nodeK = Node(
 
 nodeV = Node(
     name="V",
-    tile_ch="V",
+    tile_ch='V',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -35,7 +35,7 @@ nodeV = Node(
 
 node1 = Node(
     name="1",
-    tile_ch="1",
+    tile_ch='1',
     parent_names=["Q"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -46,7 +46,7 @@ node1 = Node(
 
 node2 = Node(
     name="2",
-    tile_ch="2",
+    tile_ch='2',
     parent_names=["Q"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -57,7 +57,7 @@ node2 = Node(
 
 node3 = Node(
     name="3",
-    tile_ch="3",
+    tile_ch='3',
     parent_names=["Q"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -68,7 +68,7 @@ node3 = Node(
 
 node4 = Node(
     name="4",
-    tile_ch="4",
+    tile_ch='4',
     parent_names=["K"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -78,7 +78,7 @@ node4 = Node(
 )
 node5 = Node(
     name="5",
-    tile_ch="5",
+    tile_ch='5',
     parent_names=["K"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -89,7 +89,7 @@ node5 = Node(
 
 node6 = Node(
     name="6",
-    tile_ch="6",
+    tile_ch='6',
     parent_names=["K"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -100,7 +100,7 @@ node6 = Node(
 
 node7 = Node(
     name="7",
-    tile_ch="7",
+    tile_ch='7',
     parent_names=["V"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -111,7 +111,7 @@ node7 = Node(
 
 node8 = Node(
     name="8",
-    tile_ch="8",
+    tile_ch='8',
     parent_names=["V"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -122,7 +122,7 @@ node8 = Node(
 
 node9 = Node(
     name="9",
-    tile_ch="9",
+    tile_ch='9',
     parent_names=["V"],
     shape_str="(3, 4)",
     fun_name="linear",
@@ -133,7 +133,7 @@ node9 = Node(
 
 nodeX = Node(
     name="X",
-    tile_ch="X",
+    tile_ch='X',
     parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
     shape_str="(3, 4)",
     fun_name="scaled_dot_prod_att",
@@ -145,7 +145,7 @@ nodeX = Node(
 
 nodeY = Node(
     name="Y",
-    tile_ch="Y",
+    tile_ch='Y',
     parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
     shape_str="(3, 4)",
     fun_name="scaled_dot_prod_att",
@@ -156,7 +156,7 @@ nodeY = Node(
 
 nodeZ = Node(
     name="Z",
-    tile_ch="Z",
+    tile_ch='Z',
     parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
     shape_str="(3, 4)",
     fun_name="scaled_dot_prod_att",
@@ -167,7 +167,7 @@ nodeZ = Node(
 
 nodeC = Node(
     name="C",
-    tile_ch="C",
+    tile_ch='C',
     parent_names=["X", "Y", "Z"],
     shape_str="(3, 4)",
     fun_name="concat",
@@ -178,7 +178,7 @@ nodeC = Node(
 
 nodeL = Node(
     name="L",
-    tile_ch="L",
+    tile_ch='L',
     parent_names=["C"],
     shape_str="(3, 4)",
     fun_name="concat",
@@ -195,7 +195,7 @@ nodes = [
     nodeC,
     nodeL
 ]
-ll_tile = [
+mosaic = [
     "____L____",
     "____C____",
     "_X__Y__Z_",
@@ -203,7 +203,7 @@ ll_tile = [
     "_Q__K__V_"
 ]
 name = "multi-head-att"
-dag = DAG(nodes, ll_tile, name)
+dag = DAG(nodes, mosaic, name)
 print()
 print(dag.get_figure_str(
     fig_caption="Multi-head Attention."))

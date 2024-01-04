@@ -2,7 +2,7 @@ from texnn import *
 
 nodeq = Node(
     name="q",
-    tile_ch="q",
+    tile_ch='q',
     parent_names=["n"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -12,7 +12,7 @@ nodeq = Node(
 )
 nodek = Node(
     name="k",
-    tile_ch="k",
+    tile_ch='k',
     parent_names=["n"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -23,7 +23,7 @@ nodek = Node(
 
 noden = Node(
     name="n",
-    tile_ch="n",
+    tile_ch='n',
     parent_names=["N", "F"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -34,7 +34,7 @@ noden = Node(
 
 nodeF = Node(
     name="F",
-    tile_ch="F",
+    tile_ch='F',
     parent_names=["N"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -45,7 +45,7 @@ nodeF = Node(
 
 nodeN = Node(
     name="N",
-    tile_ch="N",
+    tile_ch='N',
     parent_names=["p", "O"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -56,7 +56,7 @@ nodeN = Node(
 
 nodeO = Node(
     name="O",
-    tile_ch="O",
+    tile_ch='O',
     parent_names=["Q", "K", "V"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -67,7 +67,7 @@ nodeO = Node(
 
 nodeQ = Node(
     name="Q",
-    tile_ch="Q",
+    tile_ch='Q',
     parent_names=["p"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -78,7 +78,7 @@ nodeQ = Node(
 
 nodeK = Node(
     name="K",
-    tile_ch="K",
+    tile_ch='K',
     parent_names=["p"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -89,7 +89,7 @@ nodeK = Node(
 
 nodeV = Node(
     name="V",
-    tile_ch="V",
+    tile_ch='V',
     parent_names=["p"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -100,7 +100,7 @@ nodeV = Node(
 
 nodep = Node(
     name="p",
-    tile_ch="p",
+    tile_ch='p',
     parent_names=["R"],
     shape_str="(3, 4)",
     fun_name=None,
@@ -111,7 +111,7 @@ nodep = Node(
 
 nodeR = Node(
     name="R",
-    tile_ch="R",
+    tile_ch='R',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -133,7 +133,7 @@ nodes = [
     nodeR
 ]
 
-ll_tile = [
+mosaic = [
     "____q",
     "____k",
     "n____",
@@ -146,7 +146,7 @@ ll_tile = [
 ]
 
 name = "transformer-encoder"
-dag = DAG(nodes, ll_tile, name)
+dag = DAG(nodes, mosaic, name)
 print()
 print(dag.get_figure_str(
     fig_caption="Encoder."))

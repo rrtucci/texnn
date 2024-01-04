@@ -2,7 +2,7 @@ from texnn import *
 
 Qnode = Node(
     name="Q",
-    tile_ch="Q",
+    tile_ch='Q',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -12,7 +12,7 @@ Qnode = Node(
 )
 Knode = Node(
     name="K",
-    tile_ch="K",
+    tile_ch='K',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -22,7 +22,7 @@ Knode = Node(
 )
 Vnode = Node(
     name="V",
-    tile_ch="V",
+    tile_ch='V',
     parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
@@ -32,7 +32,7 @@ Vnode = Node(
 )
 Bnode = Node(
     name="B",
-    tile_ch="B",
+    tile_ch='B',
     parent_names=["Q", "K"],
     shape_str="(3, 4)",
     fun_name="mat_mult",
@@ -42,7 +42,7 @@ Bnode = Node(
 )
 Ynode = Node(
     name="Y",
-    tile_ch="Y",
+    tile_ch='Y',
     parent_names=["B"],
     shape_str="(3, 4)",
     fun_name="scale",
@@ -53,7 +53,7 @@ Ynode = Node(
 
 Rnode = Node(
     name="R",
-    tile_ch="R",
+    tile_ch='R',
     parent_names=["Y"],
     shape_str="(3, 4)",
     fun_name="mask",
@@ -64,7 +64,7 @@ Rnode = Node(
 
 Gnode = Node(
     name="G",
-    tile_ch="G",
+    tile_ch='G',
     parent_names=["R"],
     shape_str="(3, 4)",
     fun_name="softmax",
@@ -75,7 +75,7 @@ Gnode = Node(
 
 Pnode = Node(
     name="P",
-    tile_ch="P",
+    tile_ch='P',
     parent_names=["G", "V"],
     shape_str="(3, 4)",
     fun_name="mat_mult",
@@ -94,7 +94,7 @@ nodes = [
     Gnode,
     Pnode
 ]
-ll_tile = [
+mosaic = [
     "___P",
     "_G__",
     "_R__",
@@ -103,7 +103,7 @@ ll_tile = [
     "Q_KV",
 ]
 name = "scaled-dot_prod_att"
-dag = DAG(nodes, ll_tile, name)
+dag = DAG(nodes, mosaic, name)
 print()
 print(dag.get_figure_str(fig_caption="Scaled Dot Product Attention."))
 print()
