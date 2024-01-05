@@ -189,10 +189,6 @@ nodes = [
     nodep,
     nodeR,
     nodeq, nodev, nodei]
-name = "transformer-decoder"
+name = "decoder"
 dag = DAG(nodes, mosaic, name)
-print()
-print(dag.get_figure_str(
-    fig_caption="Decoder."))
-print()
-print(dag.get_equations_str())
+dag.write_tex_file(fig_caption="Decoder")

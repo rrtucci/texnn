@@ -489,6 +489,31 @@ class DAG:
             assert False
         return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
+    def write_tex_file(self, fig_caption=None, add_sperscripts=True):
+        header =\
+        r"""\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+
+"""
+        footer =\
+        """
+        
+        
+\end{document}  
+        """
+        with open(self.name + ".tex", "w") as f:
+            str0 = ""
+            str0 += header
+            str0 += self.get_figure_str(fig_caption,
+                                        add_sperscripts)
+            str0 += self.get_equations_str(add_sperscripts)
+            str0 += footer
+            f.write(str0)
 
 if __name__ == "__main__":
     def main1(rotate=False):
@@ -543,10 +568,7 @@ if __name__ == "__main__":
             mosaic = DAG.rotate_mosaic(mosaic, "+90_degs")
             print("rotated mosaic:", mosaic)
         dag = DAG(nodes, mosaic, name)
-        print()
-        print(dag.get_figure_str(fig_caption="Silly bnet"))
-        print()
-        print(dag.get_equations_str())
+        dag.write_tex_file(fig_caption="Silly bnet")
 
 
     def main2():

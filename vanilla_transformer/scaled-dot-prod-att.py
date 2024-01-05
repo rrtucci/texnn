@@ -17,7 +17,7 @@ Qnode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 Knode = Node(
     name="K",
@@ -27,7 +27,7 @@ Knode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 Vnode = Node(
     name="V",
@@ -103,9 +103,6 @@ nodes = [
     Gnode,
     Pnode
 ]
-name = "scaled-dot_prod_att"
+name = "scaled-dot-prod-att"
 dag = DAG(nodes, mosaic, name)
-print()
-print(dag.get_figure_str(fig_caption="Scaled Dot Product Attention."))
-print()
-print(dag.get_equations_str())
+dag.write_tex_file(fig_caption="Scaled Dot Product Attention.")

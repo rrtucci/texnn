@@ -15,7 +15,7 @@ nodeQ = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 nodeK = Node(
@@ -26,7 +26,7 @@ nodeK = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 nodeV = Node(
@@ -204,8 +204,4 @@ nodes = [
 ]
 name = "multi-head-att"
 dag = DAG(nodes, mosaic, name)
-print()
-print(dag.get_figure_str(
-    fig_caption="Multi-head Attention."))
-print()
-print(dag.get_equations_str())
+dag.write_tex_file(fig_caption="Multi-head Attention")

@@ -5,6 +5,7 @@
 \usepackage[color,matrix,frame,arrow,curve]{xy}
 \begin{document}
 
+
 \begin{figure}[h!]\centering
 $$\xymatrix{
 &&&*+[F*:purple]{\underline{P}^{3\times  4}}
@@ -17,53 +18,53 @@ $$\xymatrix{
 \\
 &*+[F*:blue]{\underline{B}^{3\times  4}}\ar[u]&&
 \\
-*+[F*:yellow]{\underline{Q}^{3\times  4}}\ar[ur]&&*+[F*:yellow]{\underline{K}^{3\times  4}}\ar[ul]&*+[F*:yellow]{\underline{V}^{3\times  4}}\ar[uuuuu]
+*+[F*:orange]{\underline{Q}^{3\times  4}}\ar[ur]&&*+[F*:orange]{\underline{K}^{3\times  4}}\ar[ul]&*+[F*:yellow]{\underline{V}^{3\times  4}}\ar[uuuuu]
 }$$
 \caption{Scaled Dot Product Attention.}
-\label{fig-texnn-for-scaled-dot_prod_att}
-\end{figure}
-
-\begin{subequations}
+\label{fig-texnn-for-scaled-dot-prod-att}
+\end{figure}\begin{subequations}
 \begin{equation}
 Q^{3\times  4} =)
-\label{eq-Q-fun-scaled-dot_prod_att}
+\label{eq-Q-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 K^{3\times  4} =)
-\label{eq-K-fun-scaled-dot_prod_att}
+\label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 V^{3\times  4} =)
-\label{eq-V-fun-scaled-dot_prod_att}
+\label{eq-V-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 B^{3\times  4} = {\rm mat\_mult}(Q^{3\times  4},K^{3\times  4})
-\label{eq-B-fun-scaled-dot_prod_att}
+\label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 Y^{3\times  4} = {\rm scale}(B^{3\times  4})
-\label{eq-Y-fun-scaled-dot_prod_att}
+\label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 R^{3\times  4} = {\rm mask}(Y^{3\times  4})
-\label{eq-R-fun-scaled-dot_prod_att}
+\label{eq-R-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 G^{3\times  4} = {\rm softmax}(R^{3\times  4})
-\label{eq-G-fun-scaled-dot_prod_att}
+\label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
 P^{3\times  4} = {\rm mat\_mult}(G^{3\times  4},V^{3\times  4})
-\label{eq-P-fun-scaled-dot_prod_att}
+\label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
 \end{subequations}
-
-\end{document}
+        
+        
+\end{document}  
+        

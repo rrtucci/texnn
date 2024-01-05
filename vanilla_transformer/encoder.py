@@ -8,7 +8,7 @@ nodeq = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 nodek = Node(
     name="k",
@@ -18,7 +18,7 @@ nodek = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 noden = Node(
@@ -73,7 +73,7 @@ nodeQ = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 nodeK = Node(
@@ -84,7 +84,7 @@ nodeK = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 nodeV = Node(
@@ -145,10 +145,6 @@ mosaic = [
     "R____"
 ]
 
-name = "transformer-encoder"
+name = "encoder"
 dag = DAG(nodes, mosaic, name)
-print()
-print(dag.get_figure_str(
-    fig_caption="Encoder."))
-print()
-print(dag.get_equations_str())
+dag.write_tex_file(fig_caption="Encoder")
