@@ -148,16 +148,16 @@ nodes = [
 
 name = "encoder"
 dag = DAG(nodes, mosaic, name)
-preface=\
-r"""\begin{figure}[h!]
-\centering
-\includegraphics[width=2in]
-{encoder.jpg}
-\caption{View of Mount Vesuvius from
-  Pompeii}
-\label{fig-jpg}
-\end{figure}
-
-
+fig_header =\
+r"""\begin{minipage}{.5\linewidth}
+\includegraphics[width=2in]{encoder.jpg}
+\end{minipage}%blank lines between minispaces breaks this
+\begin{minipage}{.5\linewidth}
 """
-dag.write_tex_file(preface, fig_caption="Encoder")
+
+fig_footer=\
+"""\end{minipage}
+"""
+dag.write_tex_file(fig_header,
+                   fig_footer,
+                   fig_caption="Encoder.")

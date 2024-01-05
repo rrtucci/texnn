@@ -7,17 +7,11 @@
 \begin{document}
 
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=3in]
-{scaled-dot-prod-att.jpg}
-\caption{View of Mount Vesuvius from
-  Pompeii}
-\label{fig-jpg}
-\end{figure}
-
-
 \begin{figure}[h!]\centering
+\begin{minipage}{.5\linewidth}
+\includegraphics[width=2in]{scaled-dot-prod-att.jpg}
+\end{minipage}%blank lines between minispaces breaks this
+\begin{minipage}{.5\linewidth}
 $$\xymatrix{
 &&&*+[F*:Orchid]{\underline{P}^{3\times  4}}
 \\
@@ -31,6 +25,7 @@ $$\xymatrix{
 \\
 *+[F*:Dandelion]{\underline{Q}^{3\times  4}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{3\times  4}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{3\times  4}}\ar[uuuuu]
 }$$
+\end{minipage}
 \caption{Scaled Dot Product Attention.}
 \label{fig-texnn-for-scaled-dot-prod-att}
 \end{figure}\begin{subequations}

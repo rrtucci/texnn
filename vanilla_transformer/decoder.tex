@@ -7,17 +7,11 @@
 \begin{document}
 
 
-\begin{figure}[h!]
-\centering
-\includegraphics[width=2in]
-{decoder.jpg}
-\caption{View of Mount Vesuvius from
-  Pompeii}
-\label{fig-jpg}
-\end{figure}
-
-
 \begin{figure}[h!]\centering
+\begin{minipage}{.5\linewidth}
+\includegraphics[width=2in]{decoder.jpg}
+\end{minipage}%blank lines between minispaces breaks this
+\begin{minipage}{.5\linewidth}
 $$\xymatrix{
 &&&*+[F*:SpringGreen]{\underline{G}^{3\times  4}}
 \\
@@ -41,7 +35,8 @@ $$\xymatrix{
 \\
 *+[F*:Dandelion]{\underline{q}^{3\times  4}}\ar[uuuuu]&*+[F*:Dandelion]{\underline{v}^{3\times  4}}\ar[uuuuul]&&*+[F*:Lavender]{\underline{R}^{3\times  4}}\ar[u]
 }$$
-\caption{Decoder}
+\end{minipage}
+\caption{Decoder.}
 \label{fig-texnn-for-decoder}
 \end{figure}\begin{subequations}
 \begin{equation}

@@ -327,6 +327,8 @@ class DAG:
         return str0
 
     def get_figure_str(self,
+                       fig_header=None,
+                       fig_footer=None,
                        fig_caption=None,
                        add_superscripts=True):
         """
@@ -335,6 +337,8 @@ class DAG:
         
         Parameters
         ----------
+        fig_header: str | None
+        fig_footer: str | None
         fig_caption: str | None
         add_superscripts: bool
 
@@ -342,12 +346,17 @@ class DAG:
         -------
 
         """
+        if not fig_header:
+            fig_header = ""
+        if not fig_footer:
+            fig_footer = ""
         if not fig_caption:
             fig_caption = ""
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
         # print("llmg", self.mosaic)
         str0 = r"\begin{figure}[h!]\centering" + "\n"
+        str0 += fig_header
         str0 += r"$$\xymatrix{" + "\n"
         for row in range(len0):
             for col in range(len1):
@@ -381,6 +390,7 @@ class DAG:
                     str0 += r"\ar[" + direction + "]"
             str0 += "\n" + r"\\" + "\n"
         str0 = str0.strip()[:-2] + r"}$$" + "\n"
+        str0 += fig_footer
         str0 += r"\caption{" + fig_caption + "}\n"
         str0 += r"\label{fig-texnn-for-" + self.name + "}\n"
         str0 += r"\end{figure}"
@@ -509,7 +519,8 @@ class DAG:
         return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
     def write_tex_file(self,
-                       preface=None,
+                       fig_header=None,
+                       fig_footer=None,
                        fig_caption=None,
                        add_sperscripts=True):
         """
@@ -517,7 +528,8 @@ class DAG:
 
         Parameters
         ----------
-        preface: str
+        fig_header: str
+        fig_footer: str
         fig_caption: str
         add_sperscripts: bool
 
@@ -528,9 +540,11 @@ class DAG:
         """
         str0 = ""
         str0 += HEADER
-        str0 += preface
-        str0 += self.get_figure_str(fig_caption,
-                                    add_sperscripts)
+        str0 += self.get_figure_str(
+            fig_header,
+            fig_footer,
+            fig_caption,
+            add_sperscripts)
         str0 += self.get_equations_str(add_sperscripts)
         str0 += FOOTER
         with open(self.name + ".tex", "w") as f:

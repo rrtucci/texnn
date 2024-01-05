@@ -7,6 +7,8 @@ mosaic = [
     "123456789",
     "_Q__K__V_"
 ]
+mosaic = DAG.rotate_mosaic(mosaic, "+270_degs")
+
 nodeQ = Node(
     name="Q",
     tile_ch='Q',
@@ -204,16 +206,16 @@ nodes = [
 ]
 name = "multi-head-att"
 dag = DAG(nodes, mosaic, name)
-preface=\
-r"""\begin{figure}[h!]
-\centering
-\includegraphics[width=3in]
-{multi-head-att.jpg}
-\caption{View of Mount Vesuvius from
-  Pompeii}
-\label{fig-jpg}
-\end{figure}
-
-
+fig_header =\
+r"""\begin{minipage}{.5\linewidth}
+\includegraphics[width=2in]{multi-head-att.jpg}
+\end{minipage}%blank lines between minispaces breaks this
+\begin{minipage}{.5\linewidth}
 """
-dag.write_tex_file(preface, fig_caption="Multi-head Attention")
+
+fig_footer=\
+"""\end{minipage}
+"""
+dag.write_tex_file(fig_header,
+                   fig_footer,
+                   fig_caption="Multi-head Attention.")
