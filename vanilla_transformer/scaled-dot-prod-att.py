@@ -17,7 +17,7 @@ Qnode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 Knode = Node(
     name="K",
@@ -27,7 +27,7 @@ Knode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 Vnode = Node(
     name="V",
@@ -37,7 +37,7 @@ Vnode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="Dandelion"
 )
 Bnode = Node(
     name="B",
@@ -47,7 +47,7 @@ Bnode = Node(
     fun_name="mat_mult",
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="Orchid"
 )
 Ynode = Node(
     name="Y",
@@ -68,7 +68,7 @@ Rnode = Node(
     fun_name="mask",
     fun_args_str=None,
     params_str=None,
-    color="red"
+    color="Lavender"
 )
 
 Gnode = Node(
@@ -79,7 +79,7 @@ Gnode = Node(
     fun_name="softmax",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 Pnode = Node(
@@ -90,7 +90,7 @@ Pnode = Node(
     fun_name="mat_mult",
     fun_args_str=None,
     params_str=None,
-    color="purple"
+    color="Orchid"
 )
 
 nodes = [

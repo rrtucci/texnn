@@ -11,8 +11,7 @@ mosaic = [
     "__o_",
     "_QKV",
     "___p",
-    "___R",
-    "qv_i"
+    "qv_R"
 ]
 
 nodeG=Node(
@@ -23,7 +22,7 @@ nodeG=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 nodeI=Node(
     name="I",
@@ -33,7 +32,7 @@ nodeI=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="purple"
+    color="Orchid"
 )
 nodeY=Node(
     name="Y",
@@ -53,7 +52,7 @@ nodeB= Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="SkyBlue"
 )
 nodey=Node(
     name="j",
@@ -73,7 +72,7 @@ nodeO=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodea=Node(
     name="a",
@@ -93,7 +92,7 @@ nodeo=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodeQ=Node(
     name="Q",
@@ -103,7 +102,7 @@ nodeQ=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodeK=Node(
     name="K",
@@ -113,7 +112,7 @@ nodeK=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodeV=Node(
     name="V",
@@ -123,7 +122,7 @@ nodeV=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodep=Node(
     name="p",
@@ -138,12 +137,12 @@ nodep=Node(
 nodeR=Node(
     name="R",
     tile_ch='R',
-    parent_names=["i"],
+    parent_names=[],
     shape_str="(3, 4)",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="red"
+    color="Lavender"
 )
 nodeq=Node(
     name="q",
@@ -153,7 +152,7 @@ nodeq=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodev=Node(
     name="v",
@@ -163,17 +162,7 @@ nodev=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
-)
-nodei=Node(
-    name="i",
-    tile_ch='i',
-    parent_names=[],
-    shape_str="(3, 4)",
-    fun_name=None,
-    fun_args_str=None,
-    params_str=None,
-    color="yellow"
+    color="Dandelion"
 )
 
 nodes = [
@@ -188,7 +177,7 @@ nodes = [
     nodeQ, nodeK, nodeV,
     nodep,
     nodeR,
-    nodeq, nodev, nodei]
+    nodeq, nodev]
 name = "decoder"
 dag = DAG(nodes, mosaic, name)
 dag.write_tex_file(fig_caption="Decoder")

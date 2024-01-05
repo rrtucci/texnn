@@ -15,7 +15,7 @@ nodeQ = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodeK = Node(
@@ -26,7 +26,7 @@ nodeK = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodeV = Node(
@@ -37,7 +37,7 @@ nodeV = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="Dandelion"
 )
 
 node1 = Node(
@@ -48,7 +48,7 @@ node1 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node2 = Node(
@@ -59,7 +59,7 @@ node2 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node3 = Node(
@@ -70,7 +70,7 @@ node3 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node4 = Node(
@@ -81,7 +81,7 @@ node4 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 node5 = Node(
     name="5",
@@ -91,7 +91,7 @@ node5 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node6 = Node(
@@ -102,7 +102,7 @@ node6 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node7 = Node(
@@ -113,7 +113,7 @@ node7 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node8 = Node(
@@ -124,7 +124,7 @@ node8 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 node9 = Node(
@@ -135,7 +135,7 @@ node9 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="green"
+    color="SpringGreen"
 )
 
 nodeX = Node(
@@ -146,7 +146,7 @@ nodeX = Node(
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="Orchid"
 )
 
 
@@ -158,7 +158,7 @@ nodeY = Node(
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="Orchid"
 )
 
 nodeZ = Node(
@@ -169,7 +169,7 @@ nodeZ = Node(
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="Orchid"
 )
 
 nodeC = Node(
@@ -191,7 +191,7 @@ nodeL = Node(
     fun_name="concat",
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="SpringGreen"
 )
 
 

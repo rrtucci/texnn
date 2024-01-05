@@ -20,7 +20,7 @@ nodeq = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 nodek = Node(
     name="k",
@@ -30,7 +30,7 @@ nodek = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 noden = Node(
@@ -52,7 +52,7 @@ nodeF = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="blue"
+    color="SkyBlue"
 )
 
 nodeN = Node(
@@ -74,7 +74,7 @@ nodeO = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodeQ = Node(
@@ -85,7 +85,7 @@ nodeQ = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodeK = Node(
@@ -96,7 +96,7 @@ nodeK = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodeV = Node(
@@ -107,7 +107,7 @@ nodeV = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="orange"
+    color="Dandelion"
 )
 
 nodep = Node(
@@ -129,7 +129,7 @@ nodeR = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="red"
+    color="Lavender"
 )
 
 
