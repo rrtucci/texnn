@@ -204,4 +204,16 @@ nodes = [
 ]
 name = "multi-head-att"
 dag = DAG(nodes, mosaic, name)
-dag.write_tex_file(fig_caption="Multi-head Attention")
+preface=\
+r"""\begin{figure}[h!]
+\centering
+\includegraphics[width=3in]
+{multi-head-att.jpg}
+\caption{View of Mount Vesuvius from
+  Pompeii}
+\label{fig-jpg}
+\end{figure}
+
+
+"""
+dag.write_tex_file(preface, fig_caption="Multi-head Attention")

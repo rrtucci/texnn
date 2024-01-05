@@ -148,4 +148,16 @@ nodes = [
 
 name = "encoder"
 dag = DAG(nodes, mosaic, name)
-dag.write_tex_file(fig_caption="Encoder")
+preface=\
+r"""\begin{figure}[h!]
+\centering
+\includegraphics[width=2in]
+{encoder.jpg}
+\caption{View of Mount Vesuvius from
+  Pompeii}
+\label{fig-jpg}
+\end{figure}
+
+
+"""
+dag.write_tex_file(preface, fig_caption="Encoder")

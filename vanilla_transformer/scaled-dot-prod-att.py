@@ -105,4 +105,16 @@ nodes = [
 ]
 name = "scaled-dot-prod-att"
 dag = DAG(nodes, mosaic, name)
-dag.write_tex_file(fig_caption="Scaled Dot Product Attention.")
+preface=\
+r"""\begin{figure}[h!]
+\centering
+\includegraphics[width=3in]
+{scaled-dot-prod-att.jpg}
+\caption{View of Mount Vesuvius from
+  Pompeii}
+\label{fig-jpg}
+\end{figure}
+
+
+"""
+dag.write_tex_file(preface, fig_caption="Scaled Dot Product Attention.")

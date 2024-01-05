@@ -22,21 +22,23 @@ structural equations for a bnet that represents the NN.
 import numpy as np
 
 HEADER = \
-    r"""\documentclass[12pt]{article}
-    \usepackage[dvipsnames]{xcolor}
-    \usepackage{amsmath}
-    \usepackage{amssymb}
-    \usepackage[color,matrix,frame,arrow,curve]{xy}
-    \begin{document}
-    
-    
-    """
+r"""\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+
+"""
+
 FOOTER = \
-    """
-    
-    
-    \end{document}  
-    """
+"""
+
+
+\end{document}  
+"""
 
 
 class Node:
@@ -506,12 +508,16 @@ class DAG:
             assert False
         return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
-    def write_tex_file(self, fig_caption=None, add_sperscripts=True):
+    def write_tex_file(self,
+                       preface=None,
+                       fig_caption=None,
+                       add_sperscripts=True):
         """
         This method writes a .tex file with the figure and the equations.
 
         Parameters
         ----------
+        preface: str
         fig_caption: str
         add_sperscripts: bool
 
@@ -522,6 +528,7 @@ class DAG:
         """
         str0 = ""
         str0 += HEADER
+        str0 += preface
         str0 += self.get_figure_str(fig_caption,
                                     add_sperscripts)
         str0 += self.get_equations_str(add_sperscripts)
