@@ -1,5 +1,17 @@
 from texnn import *
 
+
+mosaic = [
+    "qk__",
+    "n___",
+    "_F__",
+    "N___",
+    "__O_",
+    "_QKV",
+    "p___",
+    "R___"
+]
+
 nodeq = Node(
     name="q",
     tile_ch='q',
@@ -95,7 +107,7 @@ nodeV = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="yellow"
+    color="orange"
 )
 
 nodep = Node(
@@ -133,17 +145,6 @@ nodes = [
     nodeR
 ]
 
-mosaic = [
-    "____q",
-    "____k",
-    "n____",
-    "_F___",
-    "N____",
-    "__O__",
-    "_QKV_",
-    "p____",
-    "R____"
-]
 
 name = "encoder"
 dag = DAG(nodes, mosaic, name)
