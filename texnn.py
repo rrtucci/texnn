@@ -21,6 +21,23 @@ structural equations for a bnet that represents the NN.
 """
 import numpy as np
 
+HEADER = \
+    r"""\documentclass[12pt]{article}
+    \usepackage[dvipsnames]{xcolor}
+    \usepackage{amsmath}
+    \usepackage{amssymb}
+    \usepackage[color,matrix,frame,arrow,curve]{xy}
+    \begin{document}
+    
+    
+    """
+FOOTER = \
+    """
+    
+    
+    \end{document}  
+    """
+
 
 class Node:
     """
@@ -72,7 +89,7 @@ class Node:
         """
 
         self.name = name
-        assert len(tile_ch) == 1,\
+        assert len(tile_ch) == 1, \
             f"tile_ch has length > 1. {tile_ch}"
         self.tile_ch = tile_ch
         self.parent_names = parent_names
@@ -182,7 +199,7 @@ class DAG:
         """
         self.nodes = nodes
         tiles = [node.tile_ch for node in nodes]
-        assert len(tiles)==len(set(tiles)),\
+        assert len(tiles) == len(set(tiles)), \
             "some tile character is repeated."
         self.mosaic = mosaic
         len0 = len(self.mosaic)
@@ -490,88 +507,31 @@ class DAG:
         return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
     def write_tex_file(self, fig_caption=None, add_sperscripts=True):
-        header =\
-        r"""\documentclass[12pt]{article}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[color,matrix,frame,arrow,curve]{xy}
-\begin{document}
-
-
-"""
-        footer =\
         """
-        
-        
-\end{document}  
+        This method writes a .tex file with the figure and the equations.
+
+        Parameters
+        ----------
+        fig_caption: str
+        add_sperscripts: bool
+
+        Returns
+        -------
+        None
+
         """
+        str0 = ""
+        str0 += HEADER
+        str0 += self.get_figure_str(fig_caption,
+                                    add_sperscripts)
+        str0 += self.get_equations_str(add_sperscripts)
+        str0 += FOOTER
         with open(self.name + ".tex", "w") as f:
-            str0 = ""
-            str0 += header
-            str0 += self.get_figure_str(fig_caption,
-                                        add_sperscripts)
-            str0 += self.get_equations_str(add_sperscripts)
-            str0 += footer
             f.write(str0)
 
+
 if __name__ == "__main__":
-    def main1(rotate=False):
-        mosaic = [
-            "_B_D",
-            "A_C_",
-        ]
-        anode = Node(
-            name="A",
-            tile_ch="A",
-            parent_names=[],
-            shape_str="(3, 4)",
-            fun_name="fun_a",
-            fun_args_str=None,
-            params_str="axis=1",
-            color="yellow"
-        )
-        bnode = Node(
-            name="B",
-            tile_ch="B",
-            parent_names=["A"],
-            shape_str="(3,)",
-            fun_name="fun_b",
-            fun_args_str=None,
-            params_str=None,
-            color="Lavender"
-        )
-        cnode = Node(
-            name="C",
-            tile_ch="C",
-            parent_names=["A", "B"],
-            shape_str="(4,)",
-            fun_name=None,
-            fun_args_str="BA+b^4",
-            params_str=None,
-            color="cyan"
-        )
-        dnode = Node(
-            name="D",
-            tile_ch="D",
-            parent_names=["A", "B"],
-            shape_str="(4,)",
-            fun_name="cos",
-            fun_args_str=None,
-            params_str="axis=1",
-            color="yellow"
-        )
-        nodes = [anode, bnode, cnode, dnode]
-        name = "silly-bnet"
-        print("\nmosaic:", mosaic)
-        if rotate:
-            mosaic = DAG.rotate_mosaic(mosaic, "+90_degs")
-            print("rotated mosaic:", mosaic)
-        dag = DAG(nodes, mosaic, name)
-        dag.write_tex_file(fig_caption="Silly bnet")
-
-
-    def main2():
+    def main1():
         mosaic = [
             "12",
             "34",
@@ -587,5 +547,4 @@ if __name__ == "__main__":
         print("rot270:\n", np.rot90(np.rot90(np.rot90(tile_arr))))
 
 
-    main1(rotate=True)
-    main2()
+    main1()
