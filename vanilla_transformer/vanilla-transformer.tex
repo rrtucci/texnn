@@ -252,5 +252,117 @@ R^{3\times  4} =)
 
 \end{subequations}
 
+\begin{figure}[h!]\centering
+$$\xymatrix{
+&&&*+[F*:green]{\underline{G}^{3\times  4}}
+\\
+&&&*+[F*:purple]{\underline{I}^{3\times  4}}\ar[u]
+\\
+&&&*+[F*:yellow]{\underline{Y}^{3\times  4}}\ar[u]
+\\
+&&*+[F*:blue]{\underline{B}^{3\times  4}}\ar[ur]&
+\\
+&&&*+[F*:yellow]{\underline{j}^{3\times  4}}
+\\
+*+[F*:orange]{\underline{O}^{3\times  4}}\ar[urrr]&&&
+\\
+&&&*+[F*:yellow]{\underline{a}^{3\times  4}}\ar[uuuu]\ar[uuul]\ar[uu]\ar[ulll]
+\\
+&&*+[F*:orange]{\underline{o}^{3\times  4}}\ar[ur]&
+\\
+&*+[F*:orange]{\underline{Q}^{3\times  4}}\ar[ur]&*+[F*:orange]{\underline{K}^{3\times  4}}\ar[u]&*+[F*:orange]{\underline{V}^{3\times  4}}\ar[ul]
+\\
+&&&*+[F*:gray]{\underline{p}^{3\times  4}}\ar[uuu]\ar[ull]\ar[ul]\ar[u]
+\\
+&&&*+[F*:red]{\underline{R}^{3\times  4}}\ar[u]
+\\
+*+[F*:orange]{\underline{q}^{3\times  4}}\ar[uuuuuu]&*+[F*:orange]{\underline{v}^{3\times  4}}\ar[uuuuuul]&&*+[F*:yellow]{\underline{i}^{3\times  4}}\ar[u]
+}$$
+\caption{Decoder.}
+\label{fig-texnn-for-transformer-decoder}
+\end{figure}
+
+\begin{subequations}
+\begin{equation}
+G^{3\times  4} = I^{3\times  4})
+\label{eq-G-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+I^{3\times  4} = Y^{3\times  4})
+\label{eq-I-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+Y^{3\times  4} = B^{3\times  4},a^{3\times  4})
+\label{eq-Y-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+B^{3\times  4} = a^{3\times  4})
+\label{eq-B-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+j^{3\times  4} = O^{3\times  4},a^{3\times  4})
+\label{eq-j-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+O^{3\times  4} = q^{3\times  4},v^{3\times  4},a^{3\times  4})
+\label{eq-O-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+a^{3\times  4} = o^{3\times  4},p^{3\times  4})
+\label{eq-a-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+o^{3\times  4} = Q^{3\times  4},K^{3\times  4},V^{3\times  4})
+\label{eq-o-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+Q^{3\times  4} = p^{3\times  4})
+\label{eq-Q-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+K^{3\times  4} = p^{3\times  4})
+\label{eq-K-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+V^{3\times  4} = p^{3\times  4})
+\label{eq-V-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+p^{3\times  4} = R^{3\times  4})
+\label{eq-p-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+R^{3\times  4} = i^{3\times  4})
+\label{eq-R-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+q^{3\times  4} =)
+\label{eq-q-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+v^{3\times  4} =)
+\label{eq-v-fun-transformer-decoder}
+\end{equation}
+
+\begin{equation}
+i^{3\times  4} =)
+\label{eq-i-fun-transformer-decoder}
+\end{equation}
+
+\end{subequations}
 
 \end{document}

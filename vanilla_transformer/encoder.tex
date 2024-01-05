@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+
+\begin{figure}[h!]\centering
+$$\xymatrix{
+&&&&*+[F*:yellow]{\underline{q}^{3\times  4}}
+\\
+&&&&*+[F*:yellow]{\underline{k}^{3\times  4}}
+\\
+*+[F*:yellow]{\underline{n}^{3\times  4}}\ar[uurrrr]\ar[urrrr]&&&&
+\\
+&*+[F*:blue]{\underline{F}^{3\times  4}}\ar[ul]&&&
+\\
+*+[F*:yellow]{\underline{N}^{3\times  4}}\ar[uu]\ar[ur]&&&&
+\\
+&&*+[F*:orange]{\underline{O}^{3\times  4}}\ar[ull]&&
+\\
+&*+[F*:yellow]{\underline{Q}^{3\times  4}}\ar[ur]&*+[F*:yellow]{\underline{K}^{3\times  4}}\ar[u]&*+[F*:yellow]{\underline{V}^{3\times  4}}\ar[ul]&
+\\
+*+[F*:gray]{\underline{p}^{3\times  4}}\ar[uuu]\ar[ur]\ar[urr]\ar[urrr]&&&&
+\\
+*+[F*:red]{\underline{R}^{3\times  4}}\ar[u]&&&&
+}$$
+\caption{Encoder.}
+\label{fig-texnn-for-transformer-encoder}
+\end{figure}
+
+\begin{subequations}
+\begin{equation}
+q^{3\times  4} = n^{3\times  4})
+\label{eq-q-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+k^{3\times  4} = n^{3\times  4})
+\label{eq-k-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+n^{3\times  4} = N^{3\times  4},F^{3\times  4})
+\label{eq-n-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+F^{3\times  4} = N^{3\times  4})
+\label{eq-F-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+N^{3\times  4} = p^{3\times  4},O^{3\times  4})
+\label{eq-N-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+O^{3\times  4} = Q^{3\times  4},K^{3\times  4},V^{3\times  4})
+\label{eq-O-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+Q^{3\times  4} = p^{3\times  4})
+\label{eq-Q-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+K^{3\times  4} = p^{3\times  4})
+\label{eq-K-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+V^{3\times  4} = p^{3\times  4})
+\label{eq-V-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+p^{3\times  4} = R^{3\times  4})
+\label{eq-p-fun-transformer-encoder}
+\end{equation}
+
+\begin{equation}
+R^{3\times  4} =)
+\label{eq-R-fun-transformer-encoder}
+\end{equation}
+
+\end{subequations}
+
+\end{document}

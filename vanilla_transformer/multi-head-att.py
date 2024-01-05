@@ -1,5 +1,12 @@
 from texnn import *
 
+mosaic = [
+    "____L____",
+    "____C____",
+    "_X__Y__Z_",
+    "123456789",
+    "_Q__K__V_"
+]
 nodeQ = Node(
     name="Q",
     tile_ch='Q',
@@ -194,13 +201,6 @@ nodes = [
     nodeX, nodeY, nodeZ,
     nodeC,
     nodeL
-]
-mosaic = [
-    "____L____",
-    "____C____",
-    "_X__Y__Z_",
-    "123456789",
-    "_Q__K__V_"
 ]
 name = "multi-head-att"
 dag = DAG(nodes, mosaic, name)

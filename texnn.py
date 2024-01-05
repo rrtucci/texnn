@@ -72,7 +72,8 @@ class Node:
         """
 
         self.name = name
-        assert len(tile_ch) == 1
+        assert len(tile_ch) == 1,\
+            f"tile_ch has length > 1. {tile_ch}"
         self.tile_ch = tile_ch
         self.parent_names = parent_names
 
@@ -180,12 +181,15 @@ class DAG:
         name: str
         """
         self.nodes = nodes
+        tiles = [node.tile_ch for node in nodes]
+        assert len(tiles)==len(set(tiles)),\
+            "some tile character is repeated."
         self.mosaic = mosaic
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
         for row in range(len0):
             assert len(self.mosaic[row]) == len1, \
-                "Tile rows not all of same length."
+                f"Tile rows not all of same length.\n{self.mosaic}"
         self.name = name
         self.node_to_tile_loc = None
         self.parent_to_children = None
@@ -488,6 +492,10 @@ class DAG:
 
 if __name__ == "__main__":
     def main1(rotate=False):
+        mosaic = [
+            "_B_D",
+            "A_C_",
+        ]
         anode = Node(
             name="A",
             tile_ch="A",
@@ -529,10 +537,6 @@ if __name__ == "__main__":
             color="yellow"
         )
         nodes = [anode, bnode, cnode, dnode]
-        mosaic = [
-            "_B_D",
-            "A_C_",
-        ]
         name = "silly-bnet"
         print("\nmosaic:", mosaic)
         if rotate:

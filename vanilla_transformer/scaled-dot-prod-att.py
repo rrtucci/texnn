@@ -1,5 +1,14 @@
 from texnn import *
 
+mosaic = [
+    "___P",
+    "_G__",
+    "_R__",
+    "_Y__",
+    "_B__",
+    "Q_KV",
+]
+
 Qnode = Node(
     name="Q",
     tile_ch='Q',
@@ -93,14 +102,6 @@ nodes = [
     Rnode,
     Gnode,
     Pnode
-]
-mosaic = [
-    "___P",
-    "_G__",
-    "_R__",
-    "_Y__",
-    "_B__",
-    "Q_KV",
 ]
 name = "scaled-dot_prod_att"
 dag = DAG(nodes, mosaic, name)
