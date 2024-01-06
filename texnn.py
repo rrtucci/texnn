@@ -105,7 +105,7 @@ class Node:
         self.shape_str = shape_str
         self.fun_name = rm_str(fun_name)
         self.fun_args_str = fun_args_str
-        self.params_str = rm_str(params_str)
+        self.params_str = params_str
         self.color = color
 
     @staticmethod
@@ -435,7 +435,7 @@ class DAG:
                     str0 += parent_nameL + ","
                 if child.params_str:
                     str0 += child.params_str + ","
-                str0 = str0[:-1] + ")"
+                str0 = str0[:-1] + close_paren
             str0 += "\n" + r"\label{eq-" + child.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
@@ -522,7 +522,9 @@ class DAG:
                        fig_header=None,
                        fig_footer=None,
                        fig_caption=None,
-                       add_sperscripts=True):
+                       add_sperscripts=True,
+                       header=HEADER,
+                       footer=FOOTER):
         """
         This method writes a .tex file with the figure and the equations.
 
@@ -532,6 +534,8 @@ class DAG:
         fig_footer: str
         fig_caption: str
         add_sperscripts: bool
+        header: str
+        footer: str
 
         Returns
         -------
@@ -539,14 +543,14 @@ class DAG:
 
         """
         str0 = ""
-        str0 += HEADER
+        str0 += header
         str0 += self.get_figure_str(
             fig_header,
             fig_footer,
             fig_caption,
             add_sperscripts)
         str0 += self.get_equations_str(add_sperscripts)
-        str0 += FOOTER
+        str0 += footer
         with open(self.name + ".tex", "w") as f:
             f.write(str0)
 

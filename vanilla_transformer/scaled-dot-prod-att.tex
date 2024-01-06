@@ -1,11 +1,6 @@
 \documentclass[12pt]{article}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[color,matrix,frame,arrow,curve]{xy}
+\input{bayesuvius.sty}
 \begin{document}
-
 
 \begin{figure}[h!]\centering
 \begin{minipage}{.5\linewidth}
@@ -13,59 +8,59 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:Orchid]{\underline{P}^{3\times  4}}
+&&&*+[F*:Orchid]{\underline{P}^{[L]\times  [d_\rvv]}}
 \\
-&*+[F*:SpringGreen]{\underline{G}^{3\times  4}}\ar[urr]&&
+&*+[F*:SpringGreen]{\underline{G}^{[L]\times  [L]}}\ar[urr]&&
 \\
-&*+[F*:Lavender]{\underline{R}^{3\times  4}}\ar[u]&&
+&*+[F*:Lavender]{\underline{R}^{[L]\times  [L]}}\ar[u]&&
 \\
-&*+[F*:yellow]{\underline{Y}^{3\times  4}}\ar[u]&&
+&*+[F*:yellow]{\underline{Y}^{[L]\times [L]}}\ar[u]&&
 \\
-&*+[F*:Orchid]{\underline{B}^{3\times  4}}\ar[u]&&
+&*+[F*:Orchid]{\underline{B}^{[L]\times  [L]}}\ar[u]&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{3\times  4}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{3\times  4}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{3\times  4}}\ar[uuuuu]
+*+[F*:Dandelion]{\underline{Q}^{[L]\times  [d_\rvq]}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{[L]\times  [d_\rvk]}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{[L]\times  [d_\rvv]}}\ar[uuuuu]
 }$$
 \end{minipage}
 \caption{Scaled Dot Product Attention.}
 \label{fig-texnn-for-scaled-dot-prod-att}
 \end{figure}\begin{subequations}
 \begin{equation}
-Q^{3\times  4} =)
+Q^{[L]\times  [d_\rvq]} = prior
 \label{eq-Q-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-K^{3\times  4} =)
+K^{[L]\times  [d_\rvk]} = prior
 \label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-V^{3\times  4} =)
+V^{[L]\times  [d_\rvv]} = prior
 \label{eq-V-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-B^{3\times  4} = {\rm mat\_mult}(Q^{3\times  4},K^{3\times  4})
+B^{[L]\times  [L]} = Q^{[L]\times  [d_\rvq]}(K^{[L]\times  [d_\rvk]})^\dagger
 \label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-Y^{3\times  4} = {\rm scale}(B^{3\times  4})
+Y^{[L]\times [L]} = \frac{B^{[L]\times  [L]}}{\sqrt{d_\rvk}}
 \label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-R^{3\times  4} = {\rm mask}(Y^{3\times  4})
+R^{[L]\times  [L]} = {\rm mask}(Y^{[L]\times [L]})
 \label{eq-R-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-G^{3\times  4} = {\rm softmax}(R^{3\times  4})
+G^{[L]\times  [L]} = {\rm softmax}(R^{[L]\times  [L]})
 \label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-P^{3\times  4} = {\rm mat\_mult}(G^{3\times  4},V^{3\times  4})
+P^{[L]\times  [d_\rvv]} = G^{[L]\times  [L]}V^{[L]\times  [d_\rvv]}
 \label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
