@@ -389,7 +389,7 @@ class DAG:
     def get_equations_str(self,
                           add_superscript=True,
                           underline=False,
-                          in_blue=True):
+                          eqs_in_blue=True):
         """
         This method returns a LaTex string for writing the structure 
         equations of the bnet we are drawing.
@@ -398,7 +398,7 @@ class DAG:
         ----------
         add_superscript: bool
         underline: bool
-        in_blue: bool
+        eqs_in_blue: bool
 
         Returns
         -------
@@ -406,7 +406,7 @@ class DAG:
 
         """
         str0 = "\n\n" + r"\begin{subequations}" + "\n\n"
-        blue_str = r"\color{blue}" if in_blue else ""
+        blue_str = r"\color{blue}" if eqs_in_blue else ""
         for node in self.nodes:
             str0 += r"\begin{equation}" + blue_str + "\n"
             fun_args_strL = node.fun_args_str
@@ -422,13 +422,16 @@ class DAG:
             open_paren = "("
             close_paren = ")"
             if not node.fun_name:
+                node.fun_name = ""
                 open_paren = ""
                 close_paren = ""
             str0 += node_nameL + " = " + node.fun_name + open_paren
             if node.fun_args_str:
-                str0 += fun_args_strL + close_paren
+                str0 += fun_args_strL
             else:
+                num_parents = 0
                 for parent in self.child_to_parents[node]:
+                    num_parents += 1
                     parent_nameL = parent.name
                     if add_superscript:
                         parent_nameL = Node.get_long_name(
@@ -436,9 +439,11 @@ class DAG:
                             add_superscript,
                             underline)
                     str0 += parent_nameL + ","
-                if node.params_str:
-                    str0 += node.params_str + ","
-                str0 = str0[:-1] + close_paren
+                if num_parents>0:
+                    str0 = str0[:-1]
+            if node.params_str:
+                str0 += ";" + node.params_str
+            str0 += close_paren
             str0 += "\n" + r"\label{eq-" + node.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
@@ -528,7 +533,8 @@ class DAG:
                        add_sperscripts=True,
                        underline=True,
                        header=HEADER,
-                       footer=FOOTER):
+                       footer=FOOTER,
+                       eqs_in_blue=True):
         """
         This method writes a .tex file with the figure and the equations.
 
@@ -541,6 +547,7 @@ class DAG:
         underline: bool
         header: str
         footer: str
+        eqs_in_blue: bool
 
         Returns
         -------
@@ -555,7 +562,9 @@ class DAG:
             fig_caption,
             add_sperscripts,
             underline)
-        str0 += self.get_equations_str(add_sperscripts)
+        str0 += self.get_equations_str(add_sperscripts,
+                                       underline=False,
+                                       eqs_in_blue=eqs_in_blue)
         str0 += footer
         with open(self.name + ".tex", "w") as f:
             f.write(str0)

@@ -192,4 +192,5 @@ fig_footer=\
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Decoder.")
+                   fig_caption="Decoder.",
+                   header=BAY_HEADER)

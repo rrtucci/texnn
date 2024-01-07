@@ -70,8 +70,8 @@ nodeO = Node(
     name="O",
     tile_ch='O',
     parent_names=["Q", "K", "V"],
-    slice_str="(3, 4)",
-    fun_name=None,
+    slice_str="[D], [L]",
+    fun_name="multi_headed_attention",
     fun_args_str=None,
     params_str=None,
     color="Dandelion"
@@ -81,9 +81,9 @@ nodeQ = Node(
     name="Q",
     tile_ch='Q',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r"W_\rvq^{[D],[d]}E^{[d],[L]}",
     params_str=None,
     color="Dandelion"
 )
@@ -92,9 +92,9 @@ nodeK = Node(
     name="K",
     tile_ch='K',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r"W_\rvk^{[D],[d]}E^{[d],[L]}",
     params_str=None,
     color="Dandelion"
 )
@@ -103,9 +103,9 @@ nodeV = Node(
     name="V",
     tile_ch='V',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D],[L]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r"W_\rvv^{[D],[d]}E^{[d],[L]}",
     params_str=None,
     color="Dandelion"
 )
@@ -113,22 +113,22 @@ nodeV = Node(
 nodep = Node(
     name="p",
     tile_ch='p',
-    parent_names=["R"],
-    slice_str="(3, 4)",
+    parent_names=["x"],
+    slice_str="[L]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str="M^{[L], [L]}<x>",
     params_str=None,
     color="gray"
 )
 
 nodeR = Node(
-    name="R",
+    name="x",
     tile_ch='R',
     parent_names=[],
-    slice_str="(3, 4)",
+    slice_str="[L]",
     fun_name=None,
     fun_args_str=None,
-    params_str=None,
+    params_str="prior",
     color="Lavender"
 )
 
@@ -160,4 +160,5 @@ fig_footer=\
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Encoder.")
+                   fig_caption="Encoder.",
+                   header=BAY_HEADER)
