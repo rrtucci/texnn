@@ -29,13 +29,14 @@ structural equations for a bnet that represents the NN.
 import numpy as np
 from globals import *
 
+
 class Node:
     """
     This class just stores a bunch of strings with info about a node.
     
     Attributes
     ----------
-    color: str
+    color: str | None
         the color of node
     fun_args_str: str | None
         the string of function arguments
@@ -51,7 +52,7 @@ class Node:
         a string containing parameter names and their values
     parent_names: list[str]
         a list of the names of the parents of the node.
-    slice_str: str
+    slice_str: str | None
         a string indicating slice of the node array. To be added as a
         superscript. For example, "3,[5]", "[3],[5]", "3,[n]", "3, [4:7]",
         r"\alpha,[n]". Must use raw string if using backslashes. [n]=[0:n]
@@ -67,7 +68,8 @@ class Node:
                  fun_name=None,
                  fun_args_str=None,
                  params_str=None,
-                 color=None):
+                 color=None,
+                 style_name="plain"):
         """
         Constructor
         
@@ -76,14 +78,16 @@ class Node:
         name: str
         tile_ch: str
         parent_names: list[str]
-        slice_str: str
+        slice_str: str | None
         fun_name: str | None
         fun_args_str: str | None
         params_str: str | None
         color: str | None
+        style_name: str
         """
 
         self.name = name
+        self.style_name = style_name
         assert len(tile_ch) == 1, \
             f"tile_ch has length > 1. {tile_ch}"
         self.tile_ch = tile_ch
@@ -102,7 +106,9 @@ class Node:
         self.color = color
 
     @staticmethod
-    def get_long_name(node, underline_it=False):
+    def get_long_name(node,
+                      add_superscript=True,
+                      underline=True):
         """
         This method takes as input a node name and underlines it iff 
         underline = True. In addition, output string adds to the input 
@@ -111,7 +117,8 @@ class Node:
         Parameters
         ----------
         node: Node
-        underline_it: bool
+        add_superscript: bool
+        underline: bool
 
         Returns
         -------
@@ -119,9 +126,12 @@ class Node:
 
         """
         node_name = node.name
-        if underline_it:
+        if underline:
             node_name = r"\underline{" + node.name + r"}"
-        return node_name + "^{" + node.slice_str + "}"
+        if not node.slice_str or not add_superscript:
+            return node_name
+        else:
+            return node_name + "^{" + node.slice_str + "}"
 
 
 class DAG:
@@ -268,7 +278,10 @@ class DAG:
                         child not in self.parent_to_children[parent]:
                     self.parent_to_children[parent].append(child)
 
-    def get_long_str(self, str0):
+    def get_long_str(self,
+                     str0,
+                     add_superscript=True,
+                     underline=True):
         """
         This method returns the str `str0` after replacing in it,
         every occurrence of a node name enclosed by angle brakets <>,
@@ -280,6 +293,8 @@ class DAG:
         Parameters
         ----------
         str0: str
+        add_superscript: bool
+        underline: bool
 
         Returns
         -------
@@ -288,14 +303,17 @@ class DAG:
         """
         for node in self.nodes:
             str0 = str0.replace('<' + node.name + '>',
-                                Node.get_long_name(node))
+                                Node.get_long_name(node,
+                                                   add_superscript,
+                                                   underline))
         return str0
 
     def get_figure_str(self,
                        fig_header=None,
                        fig_footer=None,
                        fig_caption=None,
-                       add_superscripts=True):
+                       add_superscript=True,
+                       underline=True):
         """
         This method returns a LaTex string for drawing a bnet that 
         represents a neural net.
@@ -305,7 +323,8 @@ class DAG:
         fig_header: str | None
         fig_footer: str | None
         fig_caption: str | None
-        add_superscripts: bool
+        add_superscript: bool
+        underline: bool
 
         Returns
         -------
@@ -331,13 +350,19 @@ class DAG:
                 if parent_tile_ch == DAG.empty_tile:
                     continue
                 parent = self.get_node_from_tile_ch(parent_tile_ch)
-                box_str = r"*+[F*]{"
-                if parent.color:
-                    box_str = r"*+[F*:" + parent.color + "]{"
-                str0 += box_str
-                long_name = r"\underline{" + parent.name + "}"
-                if add_superscripts:
-                    long_name = Node.get_long_name(parent, underline_it=True)
+                style_name = parent.style_name
+                if parent.color and style_name=="plain":
+                    style_name = "box"
+                node_xy = NODE_STYLE_NAME_TO_XY_STR[style_name]
+                if not parent.color:
+                    node_xy = node_xy.replace("*:yellow", "")
+                else:
+                    node_xy = node_xy.replace("yellow", parent.color)
+                str0 += node_xy + "{"
+                long_name = Node.get_long_name(
+                    parent,
+                    add_superscript,
+                    underline)
                 str0 += long_name + "}"
                 for child in self.parent_to_children[parent]:
                     child_row, child_col = self.node_to_tile_loc[child]
@@ -361,29 +386,36 @@ class DAG:
         str0 += r"\end{figure}"
         return str0
 
-    def get_equations_str(self, add_superscripts=True):
+    def get_equations_str(self,
+                          add_superscript=True,
+                          underline=False):
         """
         This method returns a LaTex string for writing the structure 
         equations of the bnet we are drawing.
         
         Parameters
         ----------
-        add_superscripts: bool
+        add_superscript: bool
+        underline: bool
 
         Returns
         -------
         str
 
         """
-        str0 = r"\begin{subequations}" + "\n"
+        str0 = "\n\n" + r"\begin{subequations}" + "\n\n"
         for node in self.nodes:
             str0 += r"\begin{equation}" + "\n"
-            node_nameL = node.name
             fun_args_strL = node.fun_args_str
-            if add_superscripts:
-                node_nameL = Node.get_long_name(node)
+            node_nameL = Node.get_long_name(node,
+                                            add_superscript,
+                                            underline)
+            if add_superscript:
                 if node.fun_args_str:
-                    fun_args_strL = self.get_long_str(node.fun_args_str)
+                    fun_args_strL = self.get_long_str(
+                        node.fun_args_str,
+                        add_superscript,
+                        underline)
             open_paren = "("
             close_paren = ")"
             if not node.fun_name:
@@ -395,8 +427,11 @@ class DAG:
             else:
                 for parent in self.child_to_parents[node]:
                     parent_nameL = parent.name
-                    if add_superscripts:
-                        parent_nameL = Node.get_long_name(parent)
+                    if add_superscript:
+                        parent_nameL = Node.get_long_name(
+                            parent,
+                            add_superscript,
+                            underline)
                     str0 += parent_nameL + ","
                 if node.params_str:
                     str0 += node.params_str + ","
@@ -488,6 +523,7 @@ class DAG:
                        fig_footer=None,
                        fig_caption=None,
                        add_sperscripts=True,
+                       underline=True,
                        header=HEADER,
                        footer=FOOTER):
         """
@@ -499,6 +535,7 @@ class DAG:
         fig_footer: str
         fig_caption: str
         add_sperscripts: bool
+        underline: bool
         header: str
         footer: str
 
@@ -513,7 +550,8 @@ class DAG:
             fig_header,
             fig_footer,
             fig_caption,
-            add_sperscripts)
+            add_sperscripts,
+            underline)
         str0 += self.get_equations_str(add_sperscripts)
         str0 += footer
         with open(self.name + ".tex", "w") as f:

@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+
+\begin{figure}[h!]\centering
+$$\xymatrix{
+*+[F*:red]{VisitedAsia}\ar[d]&&&*+[F]{Smokes}\ar[dl]\ar[dr]&
+\\
+*++[o][F--]{Tuberculosis}\ar[dr]&&*++[o][F*:yellow]{LungCancer}\ar[dl]&&{Bronchitis}\ar[ddll]
+\\
+&{Or}\ar[dl]\ar[dr]&&&
+\\
+{X-Ray}&&{Dyspnea}&&
+}$$
+\caption{Asia Bnet.}
+\label{fig-texnn-for-asia}
+\end{figure}
+
+\begin{subequations}
+
+\begin{equation}
+VisitedAsia = {\rm P})
+\label{eq-VisitedAsia-fun-asia}
+\end{equation}
+
+\begin{equation}
+Smokes = {\rm P})
+\label{eq-Smokes-fun-asia}
+\end{equation}
+
+\begin{equation}
+Tuberculosis = {\rm P}(VisitedAsia)
+\label{eq-Tuberculosis-fun-asia}
+\end{equation}
+
+\begin{equation}
+LungCancer = {\rm P}(Smokes)
+\label{eq-LungCancer-fun-asia}
+\end{equation}
+
+\begin{equation}
+Bronchitis = {\rm P}(Smokes)
+\label{eq-Bronchitis-fun-asia}
+\end{equation}
+
+\begin{equation}
+Or = {\rm P}(LungCancer,Tuberculosis)
+\label{eq-Or-fun-asia}
+\end{equation}
+
+\begin{equation}
+X-Ray = {\rm P}(Or)
+\label{eq-X-Ray-fun-asia}
+\end{equation}
+
+\begin{equation}
+Dyspnea = {\rm P}(Or,Bronchitis)
+\label{eq-Dyspnea-fun-asia}
+\end{equation}
+
+\end{subequations}
+
+
+\end{document}  

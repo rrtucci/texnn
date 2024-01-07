@@ -23,3 +23,18 @@ r"""\documentclass[12pt]{article}
 \begin{document}
 
 """
+
+#replace yellow by other color or remove "*:yellow"
+NODE_STYLE_NAME_TO_XY_STR={
+    "plain": "",
+    "box": "*+[F*:yellow]",
+    "double-box": "*+[F=*:yellow]",
+    "dotted-box": "*+[F.*:yellow]",
+    "dashed-box": "*+[F--*:yellow]",
+    "shaded-box": "*+[F-,*:yellow]",
+    "rounded-box": "*+[F-:<3pt>]",
+    "oval": "*++[o][F*:yellow]",
+    "dashed-oval": "*++[o][F--*:yellow]"
+}
+
+
