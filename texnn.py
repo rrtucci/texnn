@@ -20,26 +20,7 @@ structural equations for a bnet that represents the NN.
 
 """
 import numpy as np
-
-HEADER = \
-r"""\documentclass[12pt]{article}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{graphicx}
-\usepackage{amsmath}
-\usepackage{amssymb}
-\usepackage[color,matrix,frame,arrow,curve]{xy}
-\begin{document}
-
-
-"""
-
-FOOTER = \
-"""
-
-
-\end{document}  
-"""
-
+from globals import *
 
 class Node:
     """
@@ -114,7 +95,7 @@ class Node:
         """
         This method takes as input a node name and underlines it iff 
         underline = True. In addition, output string adds to the input 
-        string a superscript with its dimensions str.
+        string a superscript with its slice str.
         
         Parameters
         ----------
@@ -278,9 +259,12 @@ class DAG:
 
     def get_long_str(self, str0):
         """
-        This method returns the str `str0` after replacing in it every 
-        occurrence of a node name by that same node name with a superscript 
-        added. The superscript shows the dimensions str for that node.
+        This method returns the str `str0` after replacing in it,
+        every occurrence of a node name enclosed by angle brakets <>,
+        by that same node name with a superscript added. The superscript
+        shows the slice str for that node. For example, if "A_0" is a node
+        with slice str "[5],[3]", it will replace every occurrence of
+        "<A_0>" by "A_0^{[5],[3]}".
         
         Parameters
         ----------
@@ -292,7 +276,8 @@ class DAG:
 
         """
         for node in self.nodes:
-            str0 = str0.replace(node.name, Node.get_long_name(node))
+            str0 = str0.replace('<' + node.name + '>',
+                                Node.get_long_name(node))
         return str0
 
     def get_figure_str(self,
@@ -380,32 +365,32 @@ class DAG:
 
         """
         str0 = r"\begin{subequations}" + "\n"
-        for child in self.nodes:
+        for node in self.nodes:
             str0 += r"\begin{equation}" + "\n"
-            child_nameL = child.name
-            fun_args_strL = child.fun_args_str
+            node_nameL = node.name
+            fun_args_strL = node.fun_args_str
             if add_superscripts:
-                child_nameL = Node.get_long_name(child)
-                if child.fun_args_str:
-                    fun_args_strL = self.get_long_str(child.fun_args_str)
+                node_nameL = Node.get_long_name(node)
+                if node.fun_args_str:
+                    fun_args_strL = self.get_long_str(node.fun_args_str)
             open_paren = "("
             close_paren = ")"
-            if not child.fun_name:
+            if not node.fun_name:
                 open_paren = ""
                 close_paren = ""
-            str0 += child_nameL + " = " + child.fun_name + open_paren
-            if child.fun_args_str:
+            str0 += node_nameL + " = " + node.fun_name + open_paren
+            if node.fun_args_str:
                 str0 += fun_args_strL + close_paren
             else:
-                for parent in self.child_to_parents[child]:
+                for parent in self.child_to_parents[node]:
                     parent_nameL = parent.name
                     if add_superscripts:
                         parent_nameL = Node.get_long_name(parent)
                     str0 += parent_nameL + ","
-                if child.params_str:
-                    str0 += child.params_str + ","
+                if node.params_str:
+                    str0 += node.params_str + ","
                 str0 = str0[:-1] + close_paren
-            str0 += "\n" + r"\label{eq-" + child.name + \
+            str0 += "\n" + r"\label{eq-" + node.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
         str0 += r"\end{subequations}"

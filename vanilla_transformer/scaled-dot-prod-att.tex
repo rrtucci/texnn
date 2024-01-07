@@ -8,59 +8,59 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:Orchid]{\underline{P}^{[L]\times  [d_\rvv]}}
+&&&*+[F*:Orchid]{\underline{P}^{[d], [L]}}
 \\
-&*+[F*:SpringGreen]{\underline{G}^{[L]\times  [L]}}\ar[urr]&&
+&*+[F*:SpringGreen]{\underline{G}^{[L], [L]}}\ar[urr]&&
 \\
-&*+[F*:Lavender]{\underline{R}^{[L]\times  [L]}}\ar[u]&&
+&*+[F*:Lavender]{\underline{R}^{[L], [L]}}\ar[u]&&
 \\
-&*+[F*:yellow]{\underline{Y}^{[L]\times [L]}}\ar[u]&&
+&*+[F*:yellow]{\underline{Y}^{[L],[L]}}\ar[u]&&
 \\
-&*+[F*:Orchid]{\underline{B}^{[L]\times  [L]}}\ar[u]&&
+&*+[F*:Orchid]{\underline{B}^{[L], [L]}}\ar[u]&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{[L]\times  [d_\rvq]}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{[L]\times  [d_\rvk]}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{[L]\times  [d_\rvv]}}\ar[uuuuu]
+*+[F*:Dandelion]{\underline{Q}^{[d],[L]}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{[d],[L]}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{[d],[L]}}\ar[uuuuu]
 }$$
 \end{minipage}
 \caption{Scaled Dot Product Attention.}
 \label{fig-texnn-for-scaled-dot-prod-att}
 \end{figure}\begin{subequations}
 \begin{equation}
-Q^{[L]\times  [d_\rvq]} = prior
+Q^{[d],[L]} = prior
 \label{eq-Q-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-K^{[L]\times  [d_\rvk]} = prior
+K^{[d],[L]} = prior
 \label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-V^{[L]\times  [d_\rvv]} = prior
+V^{[d],[L]} = prior
 \label{eq-V-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-B^{[L]\times  [L]} = Q^{[L]\times  [d_\rvq]}(K^{[L]\times  [d_\rvk]})^\dagger
+B^{[L], [L]} = (Q^{[d],[L]})^T K^{[d],[L]}
 \label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-Y^{[L]\times [L]} = \frac{B^{[L]\times  [L]}}{\sqrt{d_\rvk}}
+Y^{[L],[L]} = \frac{B^{[L], [L]}}{\sqrt{d_\rvk}}
 \label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-R^{[L]\times  [L]} = {\rm mask}(Y^{[L]\times [L]})
+R^{[L], [L]} = {\rm mask}(Y^{[L],[L]})
 \label{eq-R-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-G^{[L]\times  [L]} = {\rm softmax}(R^{[L]\times  [L]})
+G^{[L], [L]} = {\rm softmax}(R^{[L], [L]})
 \label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}
-P^{[L]\times  [d_\rvv]} = G^{[L]\times  [L]}V^{[L]\times  [d_\rvv]}
+P^{[d], [L]} = V^{[d],[L]}G^{[L], [L]}
 \label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 

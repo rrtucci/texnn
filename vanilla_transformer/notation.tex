@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\input{bayesuvius.sty}
+\begin{document}
+
+$L=$ number of words in a segment, $\lam\in[L]$
+
+$d=$ hidden dimension  per head,
+$\delta\in[d]$. $d_\rvq=d_\rvk=d_\rvv$.
+
+$n=$ number of heads, $\nu \in[n]$
+
+\beq
+e^\delta = \sum_\lam E^{\delta \lam}x^\lam
+\eeq
+
+\beq
+Q^{\nu,\delta, \lam}=\sum_{\delta'}
+W_\rvq^{\nu, \delta, \delta'}E^{\delta', \lam}
+\eeq
+
+
+\beq
+K^{\nu,\delta, \lam}=
+\sum_{\delta'}
+W_\rvk^{\nu, \delta, \delta'}
+E^{\delta', \lam}
+\eeq
+
+\beq
+V^{\nu,\delta, \lam}=
+\sum_{\delta'}
+W_\rvv^{\nu, \delta, \delta'}
+E^{\delta', \lam}
+\eeq
+
+
+
+\beq
+B^{
+\nu,\lam, \lam'}=
+\frac{
+\sum_\delta Q^{\nu,\delta,\lam}
+K^{\nu,\delta,\lam'}
+}{\sqrt{d}}
+\eeq
+
+\beqa
+A^{\nu, [d], [L]}&=&
+\sum_\lam
+V^{\nu, [d], \lam}
+\underbrace{
+{\rm softmax}(B^{\nu, \lam ,[L]})}_{
+(B^*)^{\nu, \lam, [L]}}
+\\
+&=&
+V^{\nu, [d], [L]}(B^*)^{\nu, [L], [L]}
+\eeqa
+
+$D=nd=$ Hidden dimension for all heads. 
+$\Delta\in [D]$
+
+\beq
+A^{[n], [d], [L]} \rarrow A^{[D], [L]}
+\eeq
+
+
+\beq
+Q^{[D], [L]}=
+W_\rvq^{[D],[d]}E^{[d],[L]}
+\eeq
+
+\beq
+K^{[D], [L]}=
+W_\rvk^{[D],[d]}E^{[d],[L]}
+\eeq
+
+\beq
+V^{[D], [L]}=
+W_\rvv^{[D],[d]}E^{[d],[L]}
+\eeq
+
+\end{document}

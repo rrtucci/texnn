@@ -8,111 +8,111 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&*+[F*:SpringGreen]{\underline{1}^{3\times  4}}\ar[dr]\ar[ddddr]\ar[dddddddr]&&&
+&*+[F*:SpringGreen]{\underline{Q_0}^{[d],[L]}}\ar[dr]&&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{[L]\times  [d_\rvq]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{2}^{3\times  4}}\ar[r]\ar[dddr]\ar[ddddddr]&*+[F*:Orchid]{\underline{X}^{3\times  4}}\ar[dddr]&&
+*+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{Q_1}^{[d],[L]}}\ar[dddr]&*+[F*:Orchid]{\underline{A_0}^{[d],[L]}}\ar[dddr]&&
 \\
-&*+[F*:SpringGreen]{\underline{3}^{3\times  4}}\ar[ur]\ar[ddr]\ar[dddddr]&&&
+&*+[F*:SpringGreen]{\underline{Q_2}^{[d],[L]}}\ar[dddddr]&&&
 \\
-&*+[F*:SpringGreen]{\underline{4}^{3\times  4}}\ar[uur]\ar[dr]\ar[ddddr]&&&
+&*+[F*:SpringGreen]{\underline{K_0}^{[d],[L]}}\ar[uur]&&&
 \\
-*+[F*:Dandelion]{\underline{K}^{[L]\times  [d_\rvk]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{5}^{3\times  4}}\ar[uuur]\ar[r]\ar[dddr]&*+[F*:Orchid]{\underline{Y}^{3\times  4}}\ar[r]&*+[F*:yellow]{\underline{C}^{3\times  4}}\ar[r]&*+[F*:SpringGreen]{\underline{L}^{3\times  4}}
+*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{K_1}^{[d],[L]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[L]}}\ar[r]&*+[F*:yellow]{\underline{A}^{[D],[L]}}\ar[r]&*+[F*:SpringGreen]{\underline{F}^{[D],[L]}}
 \\
-&*+[F*:SpringGreen]{\underline{6}^{3\times  4}}\ar[uuuur]\ar[ur]\ar[ddr]&&&
+&*+[F*:SpringGreen]{\underline{K_2}^{[d],[L]}}\ar[ddr]&&&
 \\
-&*+[F*:SpringGreen]{\underline{7}^{3\times  4}}\ar[uuuuur]\ar[uur]\ar[dr]&&&
+&*+[F*:SpringGreen]{\underline{V_0}^{[d],[L]}}\ar[uuuuur]&&&
 \\
-*+[F*:Dandelion]{\underline{V}^{[L]\times  [d_\rvv]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{8}^{3\times  4}}\ar[uuuuuur]\ar[uuur]\ar[r]&*+[F*:Orchid]{\underline{Z}^{3\times  4}}\ar[uuur]&&
+*+[F*:Dandelion]{\underline{V}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:SpringGreen]{\underline{V_1}^{[d],[L]}}\ar[uuur]&*+[F*:Orchid]{\underline{A_2}^{[d],[L]}}\ar[uuur]&&
 \\
-&*+[F*:SpringGreen]{\underline{9}^{3\times  4}}\ar[uuuuuuur]\ar[uuuur]\ar[ur]&&&
+&*+[F*:SpringGreen]{\underline{V_2}^{[d],[L]}}\ar[ur]&&&
 }$$
 \end{minipage}
 \caption{Multi-head Attention.}
 \label{fig-texnn-for-multi-head-att}
 \end{figure}\begin{subequations}
 \begin{equation}
-Q^{[L]\times  [d_\rvq]} = prior
+Q^{[D], [L]} = prior
 \label{eq-Q-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-K^{[L]\times  [d_\rvk]} = prior
+K^{[D], [L]} = prior
 \label{eq-K-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-V^{[L]\times  [d_\rvv]} = prior
+V^{[D], [L]} = prior
 \label{eq-V-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-1^{3\times  4} = {\rm linear}(Q^{[L]\times  [d_\rvq]})
-\label{eq-1-fun-multi-head-att}
+Q_0^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
+\label{eq-Q_0-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-2^{3\times  4} = {\rm linear}(Q^{[L]\times  [d_\rvq]})
-\label{eq-2-fun-multi-head-att}
+Q_1^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
+\label{eq-Q_1-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-3^{3\times  4} = {\rm linear}(Q^{[L]\times  [d_\rvq]})
-\label{eq-3-fun-multi-head-att}
+Q_2^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
+\label{eq-Q_2-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-4^{3\times  4} = {\rm linear}(K^{[L]\times  [d_\rvk]})
-\label{eq-4-fun-multi-head-att}
+K_0^{[d],[L]} = {\rm linear}(K^{[D], [L]})
+\label{eq-K_0-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-5^{3\times  4} = {\rm linear}(K^{[L]\times  [d_\rvk]})
-\label{eq-5-fun-multi-head-att}
+K_1^{[d],[L]} = {\rm linear}(K^{[D], [L]})
+\label{eq-K_1-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-6^{3\times  4} = {\rm linear}(K^{[L]\times  [d_\rvk]})
-\label{eq-6-fun-multi-head-att}
+K_2^{[d],[L]} = {\rm linear}(K^{[D], [L]})
+\label{eq-K_2-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-7^{3\times  4} = {\rm linear}(V^{[L]\times  [d_\rvv]})
-\label{eq-7-fun-multi-head-att}
+V_0^{[d],[L]} = {\rm linear}(V^{[D], [L]})
+\label{eq-V_0-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-8^{3\times  4} = {\rm linear}(V^{[L]\times  [d_\rvv]})
-\label{eq-8-fun-multi-head-att}
+V_1^{[d],[L]} = {\rm linear}(V^{[D], [L]})
+\label{eq-V_1-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-9^{3\times  4} = {\rm linear}(V^{[L]\times  [d_\rvv]})
-\label{eq-9-fun-multi-head-att}
+V_2^{[d],[L]} = {\rm linear}(V^{[D], [L]})
+\label{eq-V_2-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-X^{3\times  4} = {\rm scaled\_dot\_prod\_att}(1^{3\times  4},2^{3\times  4},3^{3\times  4},4^{3\times  4},5^{3\times  4},6^{3\times  4},7^{3\times  4},8^{3\times  4},9^{3\times  4})
-\label{eq-X-fun-multi-head-att}
+A_0^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_0^{[d],[L]},K_0^{[d],[L]},V_0^{[d],[L]})
+\label{eq-A_0-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-Y^{3\times  4} = {\rm scaled\_dot\_prod\_att}(1^{3\times  4},2^{3\times  4},3^{3\times  4},4^{3\times  4},5^{3\times  4},6^{3\times  4},7^{3\times  4},8^{3\times  4},9^{3\times  4})
-\label{eq-Y-fun-multi-head-att}
+A_1^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_1^{[d],[L]},K_1^{[d],[L]},V_1^{[d],[L]})
+\label{eq-A_1-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-Z^{3\times  4} = {\rm scaled\_dot\_prod\_att}(1^{3\times  4},2^{3\times  4},3^{3\times  4},4^{3\times  4},5^{3\times  4},6^{3\times  4},7^{3\times  4},8^{3\times  4},9^{3\times  4})
-\label{eq-Z-fun-multi-head-att}
+A_2^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_2^{[d],[L]},K_2^{[d],[L]},V_2^{[d],[L]})
+\label{eq-A_2-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-C^{3\times  4} = [X^{3\times  4}|Y^{3\times  4}|Z^{3\times  4}]
-\label{eq-C-fun-multi-head-att}
+A^{[D],[L]} = [A_0^{[d],[L]}|A_1^{[d],[L]}|A_2^{[d],[L]}]
+\label{eq-A-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}
-L^{3\times  4} = C^{3\times  4}W_\rvo^{[d_\rvv]\times [d]}
-\label{eq-L-fun-multi-head-att}
+F^{[D],[L]} = W_\rvo^{[D][D]}A^{[D],[L]}
+\label{eq-F-fun-multi-head-att}
 \end{equation}
 
 \end{subequations}

@@ -13,7 +13,7 @@ Qnode = Node(
     name="Q",
     tile_ch='Q',
     parent_names=[],
-    slice_str=r"[L], [d_\rvq]",
+    slice_str=r"[d],[L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -23,7 +23,7 @@ Knode = Node(
     name="K",
     tile_ch='K',
     parent_names=[],
-    slice_str=r"[L], [d_\rvk]",
+    slice_str=r"[d],[L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -33,7 +33,7 @@ Vnode = Node(
     name="V",
     tile_ch='V',
     parent_names=[],
-    slice_str=r"[L], [d_\rvv]",
+    slice_str=r"[d],[L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -45,7 +45,7 @@ Bnode = Node(
     parent_names=["Q", "K"],
     slice_str="[L], [L]",
     fun_name=None,
-    fun_args_str=r"Q(K)^\dagger",
+    fun_args_str=r"(<Q>)^T <K>",
     params_str=None,
     color="Orchid"
 )
@@ -55,7 +55,7 @@ Ynode = Node(
     parent_names=["B"],
     slice_str="[L],[L]",
     fun_name=None,
-    fun_args_str=r"\frac{B}{\sqrt{d_\rvk}}",
+    fun_args_str=r"\frac{<B>}{\sqrt{d_\rvk}}",
     params_str=None,
     color="yellow"
 )
@@ -86,9 +86,9 @@ Pnode = Node(
     name="P",
     tile_ch='P',
     parent_names=["G", "V"],
-    slice_str=r"[L], [d_\rvv]",
+    slice_str=r"[d], [L]",
     fun_name=None,
-    fun_args_str="GV",
+    fun_args_str="<V><G>",
     params_str=None,
     color="Orchid"
 )
@@ -105,12 +105,7 @@ nodes = [
 ]
 name = "scaled-dot-prod-att"
 dag = DAG(nodes, mosaic, name)
-header=\
-r"""\documentclass[12pt]{article}
-\input{bayesuvius.sty}
-\begin{document}
 
-"""
 fig_header =\
 r"""\begin{minipage}{.5\linewidth}
 \includegraphics[width=2in]{scaled-dot-prod-att.jpg}
@@ -124,4 +119,4 @@ fig_footer=\
 dag.write_tex_file(fig_header,
                    fig_footer,
                    fig_caption="Scaled Dot Product Attention.",
-                   header=header)
+                   header=BAY_HEADER)

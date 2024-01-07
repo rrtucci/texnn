@@ -9,42 +9,42 @@
 
 \begin{figure}[h!]\centering
 $$\xymatrix{
-&*+[F*:Lavender]{\underline{B}^{3}}\ar[dr]\ar[rr]&&*+[F*:yellow]{\underline{D}^{4}}
+&*+[F*:Lavender]{\underline{B}^{[3]}}\ar[dr]\ar[rr]&&*+[F*:yellow]{\underline{D}^{[4]}}
 \\
-*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ur]\ar[rr]\ar[urrr]&&*+[F*:cyan]{\underline{C}^{4}}&
+*+[F*:yellow]{\underline{A}^{[3], [4]}}\ar[ur]\ar[rr]\ar[urrr]&&*+[F*:cyan]{\underline{C}^{[4]}}&
 }$$
 \caption{Silly bnet}
 \label{fig-texnn-for-silly-bnet}
 \end{figure}\begin{subequations}
 \begin{equation}
-A^{3\times  4} = {\rm fun\_a}(axis=1)
+A^{[3], [4]} = {\rm fun\_a}(axis=1)
 \label{eq-A-fun-silly-bnet}
 \end{equation}
 
 \begin{equation}
-B^{3} = {\rm fun\_b}(A^{3\times  4})
+B^{[3]} = {\rm fun\_b}(A^{[3], [4]})
 \label{eq-B-fun-silly-bnet}
 \end{equation}
 
 \begin{equation}
-C^{4} = B^{3}A^{3\times  4}+b^4
+C^{[4]} = B^{[3]}A^{[3], [4]}+b^4
 \label{eq-C-fun-silly-bnet}
 \end{equation}
 
 \begin{equation}
-D^{4} = {\rm cos}(A^{3\times  4},B^{3},axis=1)
+D^{[4]} = {\rm cos}(A^{[3], [4]},B^{[3]},axis=1)
 \label{eq-D-fun-silly-bnet}
 \end{equation}
 
 \end{subequations}\begin{figure}[h!]\centering
 $$\xymatrix{
-*+[F*:yellow]{\underline{D}^{4}}&
+*+[F*:yellow]{\underline{D}^{[4]}}&
 \\
-&*+[F*:cyan]{\underline{C}^{4}}
+&*+[F*:cyan]{\underline{C}^{[4]}}
 \\
-*+[F*:Lavender]{\underline{B}^{3}}\ar[ur]\ar[uu]&
+*+[F*:Lavender]{\underline{B}^{[3]}}\ar[ur]\ar[uu]&
 \\
-&*+[F*:yellow]{\underline{A}^{3\times  4}}\ar[ul]\ar[uu]\ar[uuul]
+&*+[F*:yellow]{\underline{A}^{[3], [4]}}\ar[ul]\ar[uu]\ar[uuul]
 }$$
 \caption{rotated silly bnet}
 \label{fig-texnn-for-rotated-silly-bnet}

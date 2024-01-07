@@ -1,7 +1,7 @@
 from texnn import *
 
 mosaic = [
-    "____L____",
+    "____F____",
     "____C____",
     "_X__Y__Z_",
     "123456789",
@@ -13,7 +13,7 @@ nodeQ = Node(
     name="Q",
     tile_ch='Q',
     parent_names=[],
-    slice_str=r"[L], [d_\rvq]",
+    slice_str=r"[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -24,7 +24,7 @@ nodeK = Node(
     name="K",
     tile_ch='K',
     parent_names=[],
-    slice_str=r"[L], [d_\rvk]",
+    slice_str=r"[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -35,7 +35,7 @@ nodeV = Node(
     name="V",
     tile_ch='V',
     parent_names=[],
-    slice_str=r"[L], [d_\rvv]",
+    slice_str=r"[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
@@ -43,10 +43,10 @@ nodeV = Node(
 )
 
 node1 = Node(
-    name="1",
+    name="Q_0",
     tile_ch='1',
     parent_names=["Q"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -54,10 +54,10 @@ node1 = Node(
 )
 
 node2 = Node(
-    name="2",
+    name="Q_1",
     tile_ch='2',
     parent_names=["Q"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -65,10 +65,10 @@ node2 = Node(
 )
 
 node3 = Node(
-    name="3",
+    name="Q_2",
     tile_ch='3',
     parent_names=["Q"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -76,20 +76,20 @@ node3 = Node(
 )
 
 node4 = Node(
-    name="4",
+    name="K_0",
     tile_ch='4',
     parent_names=["K"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
     color="SpringGreen"
 )
 node5 = Node(
-    name="5",
+    name="K_1",
     tile_ch='5',
     parent_names=["K"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -97,10 +97,10 @@ node5 = Node(
 )
 
 node6 = Node(
-    name="6",
+    name="K_2",
     tile_ch='6',
     parent_names=["K"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -108,10 +108,10 @@ node6 = Node(
 )
 
 node7 = Node(
-    name="7",
+    name="V_0",
     tile_ch='7',
     parent_names=["V"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -119,10 +119,10 @@ node7 = Node(
 )
 
 node8 = Node(
-    name="8",
+    name="V_1",
     tile_ch='8',
     parent_names=["V"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -130,10 +130,10 @@ node8 = Node(
 )
 
 node9 = Node(
-    name="9",
+    name="V_2",
     tile_ch='9',
     parent_names=["V"],
-    slice_str="(3, 4)",
+    slice_str="[d],[L]",
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
@@ -141,10 +141,10 @@ node9 = Node(
 )
 
 nodeX = Node(
-    name="X",
+    name="A_0",
     tile_ch='X',
-    parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    slice_str="(3, 4)",
+    parent_names=["Q_0", "K_0", "V_0"],
+    slice_str="[d],[L]",
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
@@ -153,10 +153,10 @@ nodeX = Node(
 
 
 nodeY = Node(
-    name="Y",
+    name="A_1",
     tile_ch='Y',
-    parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    slice_str="(3, 4)",
+    parent_names=["Q_1", "K_1", "V_1"],
+    slice_str="[d],[L]",
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
@@ -164,10 +164,10 @@ nodeY = Node(
 )
 
 nodeZ = Node(
-    name="Z",
+    name="A_2",
     tile_ch='Z',
-    parent_names=["1", "2", "3", "4", "5", "6", "7", "8", "9"],
-    slice_str="(3, 4)",
+    parent_names=["Q_2", "K_2","V_2"],
+    slice_str="[d],[L]",
     fun_name="scaled_dot_prod_att",
     fun_args_str=None,
     params_str=None,
@@ -175,23 +175,23 @@ nodeZ = Node(
 )
 
 nodeC = Node(
-    name="C",
+    name="A",
     tile_ch='C',
-    parent_names=["X", "Y", "Z"],
-    slice_str="(3, 4)",
+    parent_names=["A_0", "A_1", "A_2"],
+    slice_str="[D],[L]",
     fun_name=None,
-    fun_args_str="[X|Y|Z]",
+    fun_args_str="[<A_0>|<A_1>|<A_2>]",
     params_str=None,
     color="yellow"
 )
 
 nodeL = Node(
-    name="L",
-    tile_ch='L',
-    parent_names=["C"],
-    slice_str="(3, 4)",
+    name="F",
+    tile_ch='F',
+    parent_names=["A"],
+    slice_str="[D],[L]",
     fun_name=None,
-    fun_args_str=r"CW_\rvo^{[d_\rvv]\times [d]}",
+    fun_args_str=r"W_\rvo^{[D][D]}<A>",
     params_str=None,
     color="SpringGreen"
 )
