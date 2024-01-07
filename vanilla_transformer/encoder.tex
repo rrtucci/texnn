@@ -10,11 +10,11 @@
 $$\xymatrix{
 *+[F*:Dandelion]{\underline{q}^{(3, 4)}}&*+[F*:Dandelion]{\underline{k}^{(3, 4)}}&&
 \\
-*+[F*:yellow]{\underline{n}^{(3, 4)}}\ar[u]\ar[ur]&&&
+*+[F*:yellow]{\underline{n}^{[L]}}\ar[u]\ar[ur]&&&
 \\
-&*+[F*:SkyBlue]{\underline{F}^{(3, 4)}}\ar[ul]&&
+&*+[F*:SkyBlue]{\underline{F}^{[L]}}\ar[ul]&&
 \\
-*+[F*:yellow]{\underline{N}^{(3, 4)}}\ar[uu]\ar[ur]&&&
+*+[F*:yellow]{\underline{N}^{[L]}}\ar[uu]\ar[ur]&&&
 \\
 &&*+[F*:Dandelion]{\underline{O}^{[D], [L]}}\ar[ull]&
 \\
@@ -32,57 +32,57 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-\underline{q}^{(3, 4)} = \underline{n}^{(3, 4)}
+q^{(3, 4)} = n^{[L]}
 \label{eq-q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{k}^{(3, 4)} = \underline{n}^{(3, 4)}
+k^{(3, 4)} = n^{[L]}
 \label{eq-k-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{n}^{(3, 4)} = \underline{N}^{(3, 4)},\underline{F}^{(3, 4)}
+n^{[L]} = {\rm normalize}(N^{[L]} + F^{[L]})
 \label{eq-n-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{F}^{(3, 4)} = \underline{N}^{(3, 4)}
+F^{[L]} = N^{[L]}
 \label{eq-F-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{N}^{(3, 4)} = \underline{p}^{[L]},\underline{O}^{[D], [L]}
+N^{[L]} = {\rm normalize}(p^{[L]} + O^{[D], [L]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{O}^{[D], [L]} = {\rm multi\_headed\_attention}(\underline{Q}^{[D], [L]},\underline{K}^{[D], [L]},\underline{V}^{[D],[L]})
+O^{[D], [L]} = {\rm multi\_headed\_attention}(Q^{[D], [L]},K^{[D], [L]},V^{[D],[L]})
 \label{eq-O-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{Q}^{[D], [L]} = W_\rvq^{[D],[d]}E^{[d],[L]}
+Q^{[D], [L]} = W_\rvq^{[D],[d]}E^{[d],[L]}
 \label{eq-Q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{K}^{[D], [L]} = W_\rvk^{[D],[d]}E^{[d],[L]}
+K^{[D], [L]} = W_\rvk^{[D],[d]}E^{[d],[L]}
 \label{eq-K-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{V}^{[D],[L]} = W_\rvv^{[D],[d]}E^{[d],[L]}
+V^{[D],[L]} = W_\rvv^{[D],[d]}E^{[d],[L]}
 \label{eq-V-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{p}^{[L]} = M^{[L], [L]}\underline{x}^{[L]}
+p^{[L]} = M^{[L], [L]}x^{[L]}
 \label{eq-p-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-\underline{x}^{[L]} = prior
+x^{[L]} = ;prior
 \label{eq-x-fun-encoder}
 \end{equation}
 

@@ -77,7 +77,8 @@ nodeX = Node(
     fun_name="P",
     fun_args_str=None,
     params_str=None,
-    color=None
+    color="blue",
+    style_name='rounded-box'
 )
 nodeD = Node(
     name="Dyspnea",

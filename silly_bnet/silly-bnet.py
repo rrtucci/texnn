@@ -30,7 +30,7 @@ cnode = Node(
     parent_names=["A", "B"],
     slice_str="[4]",
     fun_name=None,
-    fun_args_str="<B><A>+b^4",
+    fun_args_str='"B""A"+b^4',
     params_str=None,
     color="cyan"
 )

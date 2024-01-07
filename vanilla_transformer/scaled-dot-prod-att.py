@@ -45,7 +45,7 @@ Bnode = Node(
     parent_names=["Q", "K"],
     slice_str="[L], [L]",
     fun_name=None,
-    fun_args_str=r"(<Q>)^T <K>",
+    fun_args_str=r'("Q")^T "K"',
     params_str=None,
     color="Orchid"
 )
@@ -55,7 +55,7 @@ Ynode = Node(
     parent_names=["B"],
     slice_str="[L],[L]",
     fun_name=None,
-    fun_args_str=r"\frac{<B>}{\sqrt{d_\rvk}}",
+    fun_args_str=r'\frac{"B"}{\sqrt{d_\rvk}}',
     params_str=None,
     color="yellow"
 )
@@ -88,7 +88,7 @@ Pnode = Node(
     parent_names=["G", "V"],
     slice_str=r"[d], [L]",
     fun_name=None,
-    fun_args_str="<V><G>",
+    fun_args_str='"V" "G"',
     params_str=None,
     color="Orchid"
 )

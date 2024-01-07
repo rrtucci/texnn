@@ -284,11 +284,11 @@ class DAG:
                      underline=True):
         """
         This method returns the str `str0` after replacing in it,
-        every occurrence of a node name enclosed by angle brakets <>,
-        by that same node name with a superscript added. The superscript
-        shows the slice str for that node. For example, if "A_0" is a node
-        with slice str "[5],[3]", it will replace every occurrence of
-        "<A_0>" by "A_0^{[5],[3]}".
+        every occurrence of a node name enclosed in double quotes, by that
+        same node name without the quotes and with a superscript added. The
+        superscript shows the slice str for that node. For example, if "A_0"
+        is a node with slice str "[5],[3]", it will replace every occurrence
+        of '"A_0"' by "A_0^{[5],[3]}".
         
         Parameters
         ----------
@@ -302,7 +302,7 @@ class DAG:
 
         """
         for node in self.nodes:
-            str0 = str0.replace('<' + node.name + '>',
+            str0 = str0.replace('"' + node.name + '"',
                                 Node.get_long_name(node,
                                                    add_superscript,
                                                    underline))

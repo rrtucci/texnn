@@ -180,7 +180,7 @@ nodeC = Node(
     parent_names=["A_0", "A_1", "A_2"],
     slice_str="[D],[L]",
     fun_name=None,
-    fun_args_str="[<A_0>|<A_1>|<A_2>]",
+    fun_args_str='["A_0"|"A_1"|"A_2"]',
     params_str=None,
     color="yellow"
 )
@@ -191,7 +191,7 @@ nodeL = Node(
     parent_names=["A"],
     slice_str="[D],[L]",
     fun_name=None,
-    fun_args_str=r"W_\rvo^{[D][D]}<A>",
+    fun_args_str=r'W_\rvo^{[D][D]}"A"',
     params_str=None,
     color="SpringGreen"
 )
