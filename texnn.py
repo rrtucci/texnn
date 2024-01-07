@@ -3,9 +3,16 @@
 texnn (pronounced like "Texan") is a Python script that outputs LaTex (tex)
 strings for visualizing a Neural Net (nn) as a causal DAG (Bayesian Network).
 
-texnn is a stand-alone app, although I wrote it specifically to aid me in
-writing a chapter on transformer architectures for my free, open source book
-Bayesuvius.
+texnn is capable of reproducing with ease most of the xy-pic generated bnets
+(Bayesian Networks) displayed in my book
+
+[Bayesuvius](https://github.com/rrtucci/Bayesuvius)
+
+texnn is a stand-alone app. I wrote it specifically to aid me in writing a
+chapter on transformer architectures (see directory "vanilla_transformer")
+for my free, open source book Bayesuvius. But I soon realized that it could
+be easily converted into a general tool that is independent of the transformer
+topic and of Bayesuvius.
 
 texnn uses the LaTex package xy-pic for drawing.
 
@@ -35,7 +42,11 @@ class Node:
     fun_name: str | None
         the name of the function
     name: str
-        a name that identifies the node uniquely
+        a name that identifies the node uniquely. We recommend that you input
+        all node names in double quotes and all tile_ch in single quotes.
+        That way, if you want to replace the name of a node from "A"
+        to "B", and the tile_ch='A', you can do a replace of "A"  without
+        changing the tile_ch.
     params_str: str | None
         a string containing parameter names and their values
     parent_names: list[str]
