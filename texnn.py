@@ -388,7 +388,8 @@ class DAG:
 
     def get_equations_str(self,
                           add_superscript=True,
-                          underline=False):
+                          underline=False,
+                          in_blue=True):
         """
         This method returns a LaTex string for writing the structure 
         equations of the bnet we are drawing.
@@ -397,6 +398,7 @@ class DAG:
         ----------
         add_superscript: bool
         underline: bool
+        in_blue: bool
 
         Returns
         -------
@@ -404,8 +406,9 @@ class DAG:
 
         """
         str0 = "\n\n" + r"\begin{subequations}" + "\n\n"
+        blue_str = r"\color{blue}" if in_blue else ""
         for node in self.nodes:
-            str0 += r"\begin{equation}" + "\n"
+            str0 += r"\begin{equation}" + blue_str + "\n"
             fun_args_strL = node.fun_args_str
             node_nameL = Node.get_long_name(node,
                                             add_superscript,
