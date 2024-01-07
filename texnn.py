@@ -59,9 +59,10 @@ class Node:
         a string containing parameter names and their values
     parent_names: list[str]
         a list of the names of the parents of the node.
-    shape_str: str
-        the string of the shape of the output of the node. For example,
-        "(3, )", "(4, 3)", "(N, M)"
+    slice_str: str
+        a string indicating slice of the node array. To be added as a
+        superscript. For example, "3,[5]", "[3],[5]", "3,[n]", "3, [4:7]",
+        r"\alpha,[n]". Must use raw string if using backslashes. [n]=[0:n]
     tile_ch: str
         tile character, a character that identifies the node uniquely
     """
@@ -70,7 +71,7 @@ class Node:
                  name,
                  tile_ch,
                  parent_names,
-                 shape_str,
+                 slice_str,
                  fun_name=None,
                  fun_args_str=None,
                  params_str=None,
@@ -83,7 +84,7 @@ class Node:
         name: str
         tile_ch: str
         parent_names: list[str]
-        shape_str: str
+        slice_str: str
         fun_name: str | None
         fun_args_str: str | None
         params_str: str | None
@@ -102,42 +103,11 @@ class Node:
             else:
                 return ""
 
-        self.shape_str = shape_str
+        self.slice_str = slice_str
         self.fun_name = rm_str(fun_name)
         self.fun_args_str = fun_args_str
         self.params_str = params_str
         self.color = color
-
-    @staticmethod
-    def get_dimensions_str(shape_str):
-        """
-        This method takes as input a tensor shape string and returns as 
-        output a dimensions string. For example. "(8, 5, 3)" ->"8X5X3"
-        
-        Parameters
-        ----------
-        shape_str: str
-            tensor shape string
-
-        Returns
-        -------
-        str
-            dimensions string
-
-        """
-        # remove parentheses
-        str0 = shape_str.strip()[1:-1].strip(",")
-        l_ch = str0.split(",")
-        shape_len = len(l_ch)
-        str1 = ""
-        if shape_len == 1:
-            return l_ch[0]
-        for i in range(shape_len):
-            if i != shape_len - 1:
-                str1 += l_ch[i] + r"\times "
-            else:
-                str1 += str(l_ch[i])
-        return str1
 
     @staticmethod
     def get_long_name(node, underline_it=False):
@@ -159,8 +129,7 @@ class Node:
         node_name = node.name
         if underline_it:
             node_name = r"\underline{" + node.name + r"}"
-        return node_name + "^{" + Node.get_dimensions_str(
-            node.shape_str) + "}"
+        return node_name + "^{" + node.slice_str + "}"
 
 
 class DAG:
