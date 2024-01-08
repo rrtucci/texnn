@@ -64,12 +64,13 @@ class Node:
                  name,
                  tile_ch,
                  parent_names,
-                 slice_str,
+                 slice_str=None,
                  fun_name=None,
                  fun_args_str=None,
                  params_str=None,
                  color=None,
-                 style_name="plain"):
+                 style_name="plain",
+                 post_eq_comment=None):
         """
         Constructor
         
@@ -84,6 +85,7 @@ class Node:
         params_str: str | None
         color: str | None
         style_name: str
+        post_eq_comment: str
         """
 
         self.name = name
@@ -92,6 +94,7 @@ class Node:
             f"tile_ch has length > 1. {tile_ch}"
         self.tile_ch = tile_ch
         self.parent_names = parent_names
+        self.post_eq_comment = post_eq_comment
 
         def rm_str(str0):
             if str0:
@@ -354,7 +357,7 @@ class DAG:
                     continue
                 parent = self.get_node_from_tile_ch(parent_tile_ch)
                 style_name = parent.style_name
-                if parent.color and style_name=="plain":
+                if parent.color and style_name == "plain":
                     style_name = "box"
                 node_xy = NODE_STYLE_NAME_TO_XY_STR[style_name]
                 if not parent.color:
@@ -392,7 +395,8 @@ class DAG:
     def get_equations_str(self,
                           add_superscript=True,
                           underline=False,
-                          eqs_in_blue=True):
+                          eqs_in_blue=True,
+                          conditional_prob=False):
         """
         This method returns a LaTex string for writing the structure 
         equations of the bnet we are drawing.
@@ -402,20 +406,51 @@ class DAG:
         add_superscript: bool
         underline: bool
         eqs_in_blue: bool
+            equations in blue
+        conditional_prob: bool
+            Suppose A is the node that an equation is about and B, C are its
+            parents. If this is true, the equation starts "P(A|B,C)=",
+            whereas if it's False, it starts "A=".
 
         Returns
         -------
         str
 
         """
+        def get_parent_str(node):
+            parent_str = ""
+            num_parents = 0
+            for parent in self.child_to_parents[node]:
+                num_parents += 1
+                parent_nameL = parent.name
+                if add_superscript:
+                    parent_nameL = Node.get_long_name(
+                        parent,
+                        add_superscript,
+                        underline)
+                parent_str += parent_nameL + ","
+            if num_parents > 0:
+                parent_str = parent_str[:-1]
+            return parent_str
+
         str0 = "\n\n" + r"\begin{subequations}" + "\n\n"
         blue_str = r"\color{blue}" if eqs_in_blue else ""
         for node in self.nodes:
             str0 += r"\begin{equation}" + blue_str + "\n"
-            fun_args_strL = node.fun_args_str
             node_nameL = Node.get_long_name(node,
                                             add_superscript,
                                             underline)
+            if not conditional_prob:
+                str0 += node_nameL + " = "
+            else:
+                str0 += "P(" + node_nameL
+                if node.parent_names:
+                    str0 += "|" + get_parent_str(node)
+                semicolon = ";" if node.parent_names else ""
+                if node.params_str:
+                    str0 += semicolon + node.params_str
+                str0 += ")="
+            fun_args_strL = node.fun_args_str
             if add_superscript:
                 if node.fun_args_str:
                     fun_args_strL = self.get_long_str(
@@ -428,25 +463,18 @@ class DAG:
                 node.fun_name = ""
                 open_paren = ""
                 close_paren = ""
-            str0 += node_nameL + " = " + node.fun_name + open_paren
+            str0 += node.fun_name + open_paren
             if node.fun_args_str:
                 str0 += fun_args_strL
-            else:
-                num_parents = 0
-                for parent in self.child_to_parents[node]:
-                    num_parents += 1
-                    parent_nameL = parent.name
-                    if add_superscript:
-                        parent_nameL = Node.get_long_name(
-                            parent,
-                            add_superscript,
-                            underline)
-                    str0 += parent_nameL + ","
-                if num_parents>0:
-                    str0 = str0[:-1]
-            if node.params_str:
-                str0 += ";" + node.params_str
+            if not conditional_prob:
+                if not node.fun_args_str:
+                    str0 += get_parent_str(node)
+                semicolon = ";" if node.parent_names else ""
+                if node.params_str:
+                    str0 += semicolon + node.params_str
             str0 += close_paren
+            if node.post_eq_comment:
+                str0 += r"\;\text{" + node.post_eq_comment + "}"
             str0 += "\n" + r"\label{eq-" + node.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
@@ -537,7 +565,8 @@ class DAG:
                        underline=True,
                        header=HEADER,
                        footer=FOOTER,
-                       eqs_in_blue=True):
+                       eqs_in_blue=True,
+                       conditional_prob=False):
         """
         This method writes a .tex file with the figure and the equations.
 
@@ -560,14 +589,16 @@ class DAG:
         str0 = ""
         str0 += header
         str0 += self.get_figure_str(
-            fig_header,
-            fig_footer,
-            fig_caption,
-            add_sperscripts,
-            underline)
-        str0 += self.get_equations_str(add_sperscripts,
-                                       underline=False,
-                                       eqs_in_blue=eqs_in_blue)
+            fig_header=fig_header,
+            fig_footer=fig_footer,
+            fig_caption=fig_caption,
+            add_superscript=add_sperscripts,
+            underline=underline)
+        str0 += self.get_equations_str(
+            add_superscript=add_sperscripts,
+            underline=False,
+            eqs_in_blue=eqs_in_blue,
+            conditional_prob=conditional_prob)
         str0 += footer
         with open(self.name + ".tex", "w") as f:
             f.write(str0)

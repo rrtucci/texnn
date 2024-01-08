@@ -79,4 +79,27 @@ V^{[D], [L]}=
 W_\rvv^{[D],[d]}E^{[d],[L]}
 \eeq
 
+Positional Encoding Matrix 
+$E_{pos}^{[d],[L]}$
+
+\beq
+E_{pos}^{\delta, \lam}=
+\left\{
+\begin{array}{ll}
+\sin\left(\frac{\lam}
+{10^{4\delta/d}}\right)= \sin(\frac{\lam}{\lam_0(\delta)})
+& \text{if $\delta$ is even}
+\\
+\cos\left(\frac{\lam}{10^{4(\delta-1)/d}}\right)=
+\cos(\frac{\lam}{\lam_0(\delta)})
+& \text{if $\delta$ is odd}
+\end{array}
+\right.
+\eeq
+$E_{pos}^{\delta, \lam}$ changes phase by $\pi/2$ with 
+every change in $\delta$ of 1. Its wavelength 
+$\lam_0$ is independent
+of $L$, but increases rapidly with $d$, from $\lam_0(d=0)=1$ to 
+$\lam_0(d)= 10^4$.
+
 \end{document}

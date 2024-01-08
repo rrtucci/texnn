@@ -8,9 +8,9 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:SpringGreen]{\underline{G}^{[D], [L]}}
+&&&*+[F*:SpringGreen]{\underline{G}^{[L]}}
 \\
-&&&*+[F*:Orchid]{\underline{I}^{[D], [L]}}\ar[u]
+&&&*+[F*:Orchid]{\underline{I}^{[L]}}\ar[u]
 \\
 &&&*+[F*:yellow]{\underline{Y}^{[D], [L]}}\ar[u]
 \\
@@ -18,17 +18,17 @@ $$\xymatrix{
 \\
 &&&*+[F*:yellow]{\underline{j}^{[D], [L]}}\ar[uu]\ar[ul]
 \\
-*+[F*:Dandelion]{\underline{o}^{[L]}}\ar[urrr]&&&
+&*+[F*:Dandelion]{\underline{o}^{[L]}}\ar[urr]&&
 \\
-*+[F*:Dandelion]{\underline{q}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{k}^{[D], [L]}}\ar[ul]&*+[F*:Dandelion]{\underline{v}^{[D], [L]}}\ar[ull]&*+[F*:yellow]{\underline{a}^{[D], [L]}}\ar[uu]\ar[l]
+*+[F*:Dandelion]{\underline{q}^{[D], [L]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{v}^{[D], [L]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[D], [L]}}\ar[uu]\ar[l]
 \\
 &*+[F*:Dandelion]{\underline{O}^{[L]}}\ar[urr]&&
 \\
 *+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D], [L]}}\ar[ul]&
 \\
-&&&*+[F*:gray]{\underline{p}^{[D], [L]}}\ar[uuu]\ar[ulll]\ar[ull]\ar[ul]
+&&&*+[F*:gray]{\underline{p}^{[L]}}\ar[uuu]\ar[ulll]\ar[ull]\ar[ul]
 \\
-&&&*+[F*:Lavender]{\underline{R}^{[D], [L]}}\ar[u]
+&&&*+[F*:Lavender]{\underline{R}^{[L]}}\ar[u]
 }$$
 \end{minipage}
 \caption{Decoder.}
@@ -38,12 +38,12 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-G^{[D], [L]} = I^{[D], [L]}
+G^{[L]} = I^{[L]}
 \label{eq-G-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-I^{[D], [L]} = Y^{[D], [L]}
+I^{[L]} = Y^{[D], [L]}
 \label{eq-I-fun-decoder}
 \end{equation}
 
@@ -53,7 +53,7 @@ Y^{[D], [L]} = {\rm normalize}(F^{[D], [L]} + a^{[D], [L]})
 \end{equation}
 
 \begin{equation}\color{blue}
-F^{[D], [L]} = j^{[D], [L]}
+F^{[D], [L]} = {\rm feed\_forward\_nn}(j^{[D], [L]})
 \label{eq-F-fun-decoder}
 \end{equation}
 
@@ -68,7 +68,7 @@ o^{[L]} = q^{[D], [L]},k^{[D], [L]},v^{[D], [L]}
 \end{equation}
 
 \begin{equation}\color{blue}
-a^{[D], [L]} = {\rm normalize}(O^{[L]} + p^{[D], [L]})
+a^{[D], [L]} = {\rm normalize}(O^{[L]} + p^{[L]})
 \label{eq-a-fun-decoder}
 \end{equation}
 
@@ -83,27 +83,27 @@ O^{[L]} = Q^{[D], [L]},K^{[D], [L]},V^{[D], [L]}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[D], [L]} = p^{[D], [L]}
+Q^{[D], [L]} = p^{[L]}
 \label{eq-Q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[D], [L]} = p^{[D], [L]}
+K^{[D], [L]} = p^{[L]}
 \label{eq-K-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[D], [L]} = p^{[D], [L]}
+V^{[D], [L]} = p^{[L]}
 \label{eq-V-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-p^{[D], [L]} = R^{[D], [L]}
+p^{[L]} = R^{[L]}
 \label{eq-p-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-R^{[D], [L]} = 
+R^{[L]} = 
 \label{eq-R-fun-decoder}
 \end{equation}
 

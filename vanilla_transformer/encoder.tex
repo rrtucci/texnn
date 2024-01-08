@@ -8,7 +8,7 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-*+[F*:Dandelion]{\underline{q}^{(3, 4)}}&*+[F*:Dandelion]{\underline{k}^{(3, 4)}}&&
+*+[F*:Dandelion]{\underline{q}^{[D], [L]}}&*+[F*:Dandelion]{\underline{k}^{[D], [L]}}&&
 \\
 *+[F*:yellow]{\underline{n}^{[L]}}\ar[u]\ar[ur]&&&
 \\
@@ -32,12 +32,12 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-q^{(3, 4)} = n^{[L]}
+q^{[D], [L]} = n^{[L]}
 \label{eq-q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-k^{(3, 4)} = n^{[L]}
+k^{[D], [L]} = n^{[L]}
 \label{eq-k-fun-encoder}
 \end{equation}
 
@@ -47,7 +47,7 @@ n^{[L]} = {\rm normalize}(N^{[L]} + F^{[L]})
 \end{equation}
 
 \begin{equation}\color{blue}
-F^{[L]} = N^{[L]}
+F^{[L]} = {\rm feed\_forwrd\_nn}(N^{[L]})
 \label{eq-F-fun-encoder}
 \end{equation}
 
@@ -82,7 +82,7 @@ p^{[L]} = M^{[L], [L]}x^{[L]}
 \end{equation}
 
 \begin{equation}\color{blue}
-x^{[L]} = ;prior
+x^{[L]} = prior
 \label{eq-x-fun-encoder}
 \end{equation}
 
