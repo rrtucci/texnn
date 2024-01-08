@@ -52,6 +52,9 @@ class Node:
         a string containing parameter names and their values
     parent_names: list[str]
         a list of the names of the parents of the node.
+    post_eq_comment: str | None
+        Comment that you wish to appear in Roman font after the structure
+        equation for this node.
     slice_str: str | None
         a string indicating slice of the node array. To be added as a
         superscript. For example, "3,[5]", "[3],[5]", "3,[n]", "3, [4:7]",
@@ -417,6 +420,7 @@ class DAG:
         str
 
         """
+
         def get_parent_str(node):
             parent_str = ""
             num_parents = 0
@@ -580,6 +584,7 @@ class DAG:
         header: str
         footer: str
         eqs_in_blue: bool
+        conditional_prob: bool
 
         Returns
         -------
