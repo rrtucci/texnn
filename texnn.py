@@ -183,7 +183,7 @@ class DAG:
         node_names = [node.name for node in nodes]
         assert len(node_names) == len(set(node_names)), \
             "some node name is repeated."
-        nodes.sort(key=lambda node: node.name)
+        self.nodes.sort(key=lambda node: node.name)
         self.mosaic = mosaic
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
