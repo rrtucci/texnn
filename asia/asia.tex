@@ -9,11 +9,11 @@
 
 \begin{figure}[h!]\centering
 $$\xymatrix{
-*+[F*:red]{VisitedAsia}\ar[d]&&&*+[F]{Smokes}\ar[dl]\ar[dr]&
+*+[F*:red]{VisitedAsia}\ar[d]&&&*+[F]{Smokes}\ar[dr]\ar[dl]&
 \\
 *++[o][F--]{Tuberculosis}\ar[dr]&&*++[o][F*:yellow]{LungCancer}\ar[dl]&&{Bronchitis}\ar[ddll]
 \\
-&{Or}\ar[dl]\ar[dr]&&&
+&{Or}\ar[dr]\ar[dl]&&&
 \\
 *+[F-:<3pt>]{X-Ray}&&{Dyspnea}&&
 }$$
@@ -24,8 +24,23 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-P(VisitedAsia)=\;\text{put equation comment here}
-\label{eq-VisitedAsia-fun-asia}
+P(Bronchitis|Smokes)=
+\label{eq-Bronchitis-fun-asia}
+\end{equation}
+
+\begin{equation}\color{blue}
+P(Dyspnea|Or,Bronchitis)=
+\label{eq-Dyspnea-fun-asia}
+\end{equation}
+
+\begin{equation}\color{blue}
+P(LungCancer|Smokes)=
+\label{eq-LungCancer-fun-asia}
+\end{equation}
+
+\begin{equation}\color{blue}
+P(Or|LungCancer,Tuberculosis)=
+\label{eq-Or-fun-asia}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -39,28 +54,13 @@ P(Tuberculosis|VisitedAsia)=
 \end{equation}
 
 \begin{equation}\color{blue}
-P(LungCancer|Smokes)=
-\label{eq-LungCancer-fun-asia}
-\end{equation}
-
-\begin{equation}\color{blue}
-P(Bronchitis|Smokes)=
-\label{eq-Bronchitis-fun-asia}
-\end{equation}
-
-\begin{equation}\color{blue}
-P(Or|LungCancer,Tuberculosis)=
-\label{eq-Or-fun-asia}
+P(VisitedAsia)=\;\text{put equation comment here}
+\label{eq-VisitedAsia-fun-asia}
 \end{equation}
 
 \begin{equation}\color{blue}
 P(X-Ray|Or)=
 \label{eq-X-Ray-fun-asia}
-\end{equation}
-
-\begin{equation}\color{blue}
-P(Dyspnea|Or,Bronchitis)=
-\label{eq-Dyspnea-fun-asia}
 \end{equation}
 
 \end{subequations}
