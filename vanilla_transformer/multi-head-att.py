@@ -50,7 +50,7 @@ node1 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node2 = Node(
@@ -61,7 +61,7 @@ node2 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node3 = Node(
@@ -72,7 +72,7 @@ node3 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node4 = Node(
@@ -83,7 +83,7 @@ node4 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 node5 = Node(
     name="K_1",
@@ -93,7 +93,7 @@ node5 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node6 = Node(
@@ -104,7 +104,7 @@ node6 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node7 = Node(
@@ -115,7 +115,7 @@ node7 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node8 = Node(
@@ -126,7 +126,7 @@ node8 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 node9 = Node(
@@ -137,7 +137,7 @@ node9 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="Orchid"
 )
 
 nodeX = Node(
@@ -186,14 +186,14 @@ nodeC = Node(
 )
 
 nodeL = Node(
-    name="F",
+    name="O",
     tile_ch='F',
     parent_names=["A"],
-    slice_str="[D],[L]",
+    slice_str="[L]",
     fun_name=None,
-    fun_args_str=r'W_\rvo^{[D][D]}"A"',
+    fun_args_str=r'W_\rvo^{[1][D]}"A"',
     params_str=None,
-    color="SpringGreen"
+    color="Dandelion"
 )
 
 
@@ -214,7 +214,7 @@ r"""\documentclass[12pt]{article}
 """
 fig_header =\
 r"""\begin{minipage}{.5\linewidth}
-\includegraphics[width=2in]{multi-head-att.jpg}
+\includegraphics[width=2in]{multi-head-att.png}
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 """

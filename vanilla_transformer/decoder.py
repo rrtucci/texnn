@@ -7,18 +7,18 @@ mosaic = [
     "__B_",
     "___j",
     "O___",
-    "___a",
-    "__o_",
-    "_QKV",
+    "qkva",
+    "_o__",
+    "QKV_",
     "___p",
-    "qv_R"
+    "___R"
 ]
 
 nodeG=Node(
     name="G",
     tile_ch='G',
     parent_names=["I"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -28,7 +28,7 @@ nodeI=Node(
     name="I",
     tile_ch='I',
     parent_names=["Y"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -37,18 +37,18 @@ nodeI=Node(
 nodeY=Node(
     name="Y",
     tile_ch='Y',
-    parent_names=["B", "a"],
-    slice_str="(3, 4)",
-    fun_name=None,
-    fun_args_str=None,
+    parent_names=["F", "j"],
+    slice_str="[D], [L]",
+    fun_name="normalize",
+    fun_args_str='"F" + "a"',
     params_str=None,
     color="yellow"
 )
 nodeB= Node(
-    name="B",
+    name="F",
     tile_ch='B',
-    parent_names=["a"],
-    slice_str="(3, 4)",
+    parent_names=["j"],
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -57,18 +57,18 @@ nodeB= Node(
 nodey=Node(
     name="j",
     tile_ch='j',
-    parent_names=["O", "a"],
-    slice_str="(3, 4)",
-    fun_name=None,
-    fun_args_str=None,
+    parent_names=["o", "a"],
+    slice_str="[D], [L]",
+    fun_name="normalize",
+    fun_args_str='"o" + "a"',
     params_str=None,
     color="yellow"
 )
 nodeO=Node(
-    name="O",
+    name="o",
     tile_ch='O',
-    parent_names=["q", "v", "a"],
-    slice_str="(3, 4)",
+    parent_names=["q", "k", "v"],
+    slice_str="[L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -77,18 +77,29 @@ nodeO=Node(
 nodea=Node(
     name="a",
     tile_ch='a',
-    parent_names=["o", "p"],
-    slice_str="(3, 4)",
-    fun_name=None,
-    fun_args_str=None,
+    parent_names=["O", "p"],
+    slice_str="[D], [L]",
+    fun_name="normalize",
+    fun_args_str='"O" + "p"',
     params_str=None,
     color="yellow"
 )
+nodev=Node(
+    name="v",
+    tile_ch='v',
+    parent_names=["a"],
+    slice_str="[D], [L]",
+    fun_name=None,
+    fun_args_str='"a"',
+    params_str=None,
+    color="Dandelion"
+)
+
 nodeo=Node(
-    name="o",
+    name="O",
     tile_ch='o',
     parent_names=["Q", "K", "V"],
-    slice_str="(3, 4)",
+    slice_str="[L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -98,7 +109,7 @@ nodeQ=Node(
     name="Q",
     tile_ch='Q',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -108,7 +119,7 @@ nodeK=Node(
     name="K",
     tile_ch='K',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -118,7 +129,7 @@ nodeV=Node(
     name="V",
     tile_ch='V',
     parent_names=["p"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -128,7 +139,7 @@ nodep=Node(
     name="p",
     tile_ch='p',
     parent_names=["R"],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -138,7 +149,7 @@ nodeR=Node(
     name="R",
     tile_ch='R',
     parent_names=[],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -148,17 +159,17 @@ nodeq=Node(
     name="q",
     tile_ch='q',
     parent_names=[],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
     color="Dandelion"
 )
-nodev=Node(
-    name="v",
-    tile_ch='v',
+nodek=Node(
+    name="k",
+    tile_ch='k',
     parent_names=[],
-    slice_str="(3, 4)",
+    slice_str="[D], [L]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
@@ -172,12 +183,12 @@ nodes = [
     nodeB,
     nodey,
     nodeO,
-    nodea,
+    nodea, nodev,
     nodeo,
     nodeQ, nodeK, nodeV,
     nodep,
     nodeR,
-    nodeq, nodev]
+    nodeq, nodek]
 name = "decoder"
 dag = DAG(nodes, mosaic, name)
 fig_header =\

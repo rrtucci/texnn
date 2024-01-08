@@ -17,7 +17,7 @@ Qnode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
-    color="Dandelion"
+    color="Orchid"
 )
 Knode = Node(
     name="K",
@@ -27,7 +27,7 @@ Knode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
-    color="Dandelion"
+    color="Orchid"
 )
 Vnode = Node(
     name="V",
@@ -37,7 +37,7 @@ Vnode = Node(
     fun_name=None,
     fun_args_str=None,
     params_str="prior",
-    color="Dandelion"
+    color="Orchid"
 )
 Bnode = Node(
     name="B",
@@ -47,7 +47,7 @@ Bnode = Node(
     fun_name=None,
     fun_args_str=r'("Q")^T "K"',
     params_str=None,
-    color="Orchid"
+    color="Dandelion"
 )
 Ynode = Node(
     name="Y",
@@ -83,7 +83,7 @@ Gnode = Node(
 )
 
 Pnode = Node(
-    name="P",
+    name="A",
     tile_ch='P',
     parent_names=["G", "V"],
     slice_str=r"[d], [L]",

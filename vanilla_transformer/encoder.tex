@@ -16,7 +16,7 @@ $$\xymatrix{
 \\
 *+[F*:yellow]{\underline{N}^{[L]}}\ar[uu]\ar[ur]&&&
 \\
-&&*+[F*:Dandelion]{\underline{O}^{[D], [L]}}\ar[ull]&
+&&*+[F*:Dandelion]{\underline{O}^{[L]}}\ar[ull]&
 \\
 &*+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[L]}}\ar[ul]
 \\
@@ -52,12 +52,12 @@ F^{[L]} = N^{[L]}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[L]} = {\rm normalize}(p^{[L]} + O^{[D], [L]})
+N^{[L]} = {\rm normalize}(p^{[L]} + O^{[L]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[D], [L]} = {\rm multi\_headed\_attention}(Q^{[D], [L]},K^{[D], [L]},V^{[D],[L]})
+O^{[L]} = {\rm multi\_headed\_attention}(Q^{[D], [L]},K^{[D], [L]},V^{[D],[L]})
 \label{eq-O-fun-encoder}
 \end{equation}
 

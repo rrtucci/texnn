@@ -8,7 +8,7 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:Orchid]{\underline{P}^{[d], [L]}}
+&&&*+[F*:Orchid]{\underline{A}^{[d], [L]}}
 \\
 &*+[F*:SpringGreen]{\underline{G}^{[L], [L]}}\ar[urr]&&
 \\
@@ -16,52 +16,55 @@ $$\xymatrix{
 \\
 &*+[F*:yellow]{\underline{Y}^{[L],[L]}}\ar[u]&&
 \\
-&*+[F*:Orchid]{\underline{B}^{[L], [L]}}\ar[u]&&
+&*+[F*:Dandelion]{\underline{B}^{[L], [L]}}\ar[u]&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{[d],[L]}}\ar[ur]&&*+[F*:Dandelion]{\underline{K}^{[d],[L]}}\ar[ul]&*+[F*:Dandelion]{\underline{V}^{[d],[L]}}\ar[uuuuu]
+*+[F*:Orchid]{\underline{Q}^{[d],[L]}}\ar[ur]&&*+[F*:Orchid]{\underline{K}^{[d],[L]}}\ar[ul]&*+[F*:Orchid]{\underline{V}^{[d],[L]}}\ar[uuuuu]
 }$$
 \end{minipage}
 \caption{Scaled Dot Product Attention.}
 \label{fig-texnn-for-scaled-dot-prod-att}
-\end{figure}\begin{subequations}
-\begin{equation}
-Q^{[d],[L]} = prior
+\end{figure}
+
+\begin{subequations}
+
+\begin{equation}\color{blue}
+Q^{[d],[L]} = ;prior
 \label{eq-Q-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
-K^{[d],[L]} = prior
+\begin{equation}\color{blue}
+K^{[d],[L]} = ;prior
 \label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
-V^{[d],[L]} = prior
+\begin{equation}\color{blue}
+V^{[d],[L]} = ;prior
 \label{eq-V-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\color{blue}
 B^{[L], [L]} = (Q^{[d],[L]})^T K^{[d],[L]}
 \label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\color{blue}
 Y^{[L],[L]} = \frac{B^{[L], [L]}}{\sqrt{d_\rvk}}
 \label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\color{blue}
 R^{[L], [L]} = {\rm mask}(Y^{[L],[L]})
 \label{eq-R-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
+\begin{equation}\color{blue}
 G^{[L], [L]} = {\rm softmax}(R^{[L], [L]})
 \label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
-\begin{equation}
-P^{[d], [L]} = V^{[d],[L]}G^{[L], [L]}
-\label{eq-P-fun-scaled-dot-prod-att}
+\begin{equation}\color{blue}
+A^{[d], [L]} = V^{[d],[L]} G^{[L], [L]}
+\label{eq-A-fun-scaled-dot-prod-att}
 \end{equation}
 
 \end{subequations}

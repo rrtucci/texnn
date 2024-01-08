@@ -174,6 +174,9 @@ class DAG:
         tiles = [node.tile_ch for node in nodes]
         assert len(tiles) == len(set(tiles)), \
             "some tile character is repeated."
+        node_names = [node.name for node in nodes]
+        assert len(node_names) == len(set(node_names)), \
+            "some node name is repeated."
         self.mosaic = mosaic
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])

@@ -8,27 +8,27 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:SpringGreen]{\underline{G}^{(3, 4)}}
+&&&*+[F*:SpringGreen]{\underline{G}^{[D], [L]}}
 \\
-&&&*+[F*:Orchid]{\underline{I}^{(3, 4)}}\ar[u]
+&&&*+[F*:Orchid]{\underline{I}^{[D], [L]}}\ar[u]
 \\
-&&&*+[F*:yellow]{\underline{Y}^{(3, 4)}}\ar[u]
+&&&*+[F*:yellow]{\underline{Y}^{[D], [L]}}\ar[u]
 \\
-&&*+[F*:SkyBlue]{\underline{B}^{(3, 4)}}\ar[ur]&
+&&*+[F*:SkyBlue]{\underline{F}^{[D], [L]}}\ar[ur]&
 \\
-&&&*+[F*:yellow]{\underline{j}^{(3, 4)}}
+&&&*+[F*:yellow]{\underline{j}^{[D], [L]}}\ar[uu]\ar[ul]
 \\
-*+[F*:Dandelion]{\underline{O}^{(3, 4)}}\ar[urrr]&&&
+*+[F*:Dandelion]{\underline{o}^{[L]}}\ar[urrr]&&&
 \\
-&&&*+[F*:yellow]{\underline{a}^{(3, 4)}}\ar[uuuu]\ar[uuul]\ar[uu]\ar[ulll]
+*+[F*:Dandelion]{\underline{q}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{k}^{[D], [L]}}\ar[ul]&*+[F*:Dandelion]{\underline{v}^{[D], [L]}}\ar[ull]&*+[F*:yellow]{\underline{a}^{[D], [L]}}\ar[uu]\ar[l]
 \\
-&&*+[F*:Dandelion]{\underline{o}^{(3, 4)}}\ar[ur]&
+&*+[F*:Dandelion]{\underline{O}^{[L]}}\ar[urr]&&
 \\
-&*+[F*:Dandelion]{\underline{Q}^{(3, 4)}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{(3, 4)}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{(3, 4)}}\ar[ul]
+*+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D], [L]}}\ar[ul]&
 \\
-&&&*+[F*:gray]{\underline{p}^{(3, 4)}}\ar[uuu]\ar[ull]\ar[ul]\ar[u]
+&&&*+[F*:gray]{\underline{p}^{[D], [L]}}\ar[uuu]\ar[ulll]\ar[ull]\ar[ul]
 \\
-*+[F*:Dandelion]{\underline{q}^{(3, 4)}}\ar[uuuuu]&*+[F*:Dandelion]{\underline{v}^{(3, 4)}}\ar[uuuuul]&&*+[F*:Lavender]{\underline{R}^{(3, 4)}}\ar[u]
+&&&*+[F*:Lavender]{\underline{R}^{[D], [L]}}\ar[u]
 }$$
 \end{minipage}
 \caption{Decoder.}
@@ -38,78 +38,83 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-G^{(3, 4)} = I^{(3, 4)}
+G^{[D], [L]} = I^{[D], [L]}
 \label{eq-G-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-I^{(3, 4)} = Y^{(3, 4)}
+I^{[D], [L]} = Y^{[D], [L]}
 \label{eq-I-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-Y^{(3, 4)} = B^{(3, 4)},a^{(3, 4)}
+Y^{[D], [L]} = {\rm normalize}(F^{[D], [L]} + a^{[D], [L]})
 \label{eq-Y-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-B^{(3, 4)} = a^{(3, 4)}
-\label{eq-B-fun-decoder}
+F^{[D], [L]} = j^{[D], [L]}
+\label{eq-F-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-j^{(3, 4)} = O^{(3, 4)},a^{(3, 4)}
+j^{[D], [L]} = {\rm normalize}(o^{[L]} + a^{[D], [L]})
 \label{eq-j-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{(3, 4)} = q^{(3, 4)},v^{(3, 4)},a^{(3, 4)}
-\label{eq-O-fun-decoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-a^{(3, 4)} = o^{(3, 4)},p^{(3, 4)}
-\label{eq-a-fun-decoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-o^{(3, 4)} = Q^{(3, 4)},K^{(3, 4)},V^{(3, 4)}
+o^{[L]} = q^{[D], [L]},k^{[D], [L]},v^{[D], [L]}
 \label{eq-o-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{(3, 4)} = p^{(3, 4)}
+a^{[D], [L]} = {\rm normalize}(O^{[L]} + p^{[D], [L]})
+\label{eq-a-fun-decoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+v^{[D], [L]} = a^{[D], [L]}
+\label{eq-v-fun-decoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+O^{[L]} = Q^{[D], [L]},K^{[D], [L]},V^{[D], [L]}
+\label{eq-O-fun-decoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q^{[D], [L]} = p^{[D], [L]}
 \label{eq-Q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{(3, 4)} = p^{(3, 4)}
+K^{[D], [L]} = p^{[D], [L]}
 \label{eq-K-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{(3, 4)} = p^{(3, 4)}
+V^{[D], [L]} = p^{[D], [L]}
 \label{eq-V-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-p^{(3, 4)} = R^{(3, 4)}
+p^{[D], [L]} = R^{[D], [L]}
 \label{eq-p-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-R^{(3, 4)} =
+R^{[D], [L]} = 
 \label{eq-R-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{(3, 4)} =
+q^{[D], [L]} = 
 \label{eq-q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-v^{(3, 4)} =
-\label{eq-v-fun-decoder}
+k^{[D], [L]} = 
+\label{eq-k-fun-decoder}
 \end{equation}
 
 \end{subequations}
