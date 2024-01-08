@@ -113,7 +113,7 @@ class Node:
 
     @staticmethod
     def get_long_name(node,
-                      add_superscript=True,
+                      add_superscripts=True,
                       underline=True):
         """
         This method takes as input a node name and underlines it iff 
@@ -123,7 +123,7 @@ class Node:
         Parameters
         ----------
         node: Node
-        add_superscript: bool
+        add_superscripts: bool
         underline: bool
 
         Returns
@@ -134,7 +134,7 @@ class Node:
         node_name = node.name
         if underline:
             node_name = r"\underline{" + node.name + r"}"
-        if not node.slice_str or not add_superscript:
+        if not node.slice_str or not add_superscripts:
             return node_name
         else:
             return node_name + "^{" + node.slice_str + "}"
@@ -289,7 +289,7 @@ class DAG:
 
     def get_long_str(self,
                      str0,
-                     add_superscript=True,
+                     add_superscripts=True,
                      underline=True):
         """
         This method returns the str `str0` after replacing in it,
@@ -302,7 +302,7 @@ class DAG:
         Parameters
         ----------
         str0: str
-        add_superscript: bool
+        add_superscripts: bool
         underline: bool
 
         Returns
@@ -313,7 +313,7 @@ class DAG:
         for node in self.nodes:
             str0 = str0.replace('"' + node.name + '"',
                                 Node.get_long_name(node,
-                                                   add_superscript,
+                                                   add_superscripts,
                                                    underline))
         return str0
 
@@ -321,7 +321,7 @@ class DAG:
                        fig_header=None,
                        fig_footer=None,
                        fig_caption=None,
-                       add_superscript=True,
+                       add_superscripts=True,
                        underline=True):
         """
         This method returns a LaTex string for drawing a bnet that 
@@ -332,7 +332,7 @@ class DAG:
         fig_header: str | None
         fig_footer: str | None
         fig_caption: str | None
-        add_superscript: bool
+        add_superscripts: bool
         underline: bool
 
         Returns
@@ -370,7 +370,7 @@ class DAG:
                 str0 += node_xy + "{"
                 long_name = Node.get_long_name(
                     parent,
-                    add_superscript,
+                    add_superscripts,
                     underline)
                 str0 += long_name + "}"
                 for child in self.parent_to_children[parent]:
@@ -396,7 +396,7 @@ class DAG:
         return str0
 
     def get_equations_str(self,
-                          add_superscript=True,
+                          add_superscripts=True,
                           underline=False,
                           eqs_in_blue=True,
                           conditional_prob=False):
@@ -406,7 +406,7 @@ class DAG:
         
         Parameters
         ----------
-        add_superscript: bool
+        add_superscripts: bool
         underline: bool
         eqs_in_blue: bool
             equations in blue
@@ -427,10 +427,10 @@ class DAG:
             for parent in self.child_to_parents[node]:
                 num_parents += 1
                 parent_nameL = parent.name
-                if add_superscript:
+                if add_superscripts:
                     parent_nameL = Node.get_long_name(
                         parent,
-                        add_superscript,
+                        add_superscripts,
                         underline)
                 parent_str += parent_nameL + ","
             if num_parents > 0:
@@ -442,7 +442,7 @@ class DAG:
         for node in self.nodes:
             str0 += r"\begin{equation}" + blue_str + "\n"
             node_nameL = Node.get_long_name(node,
-                                            add_superscript,
+                                            add_superscripts,
                                             underline)
             if not conditional_prob:
                 str0 += node_nameL + " = "
@@ -455,11 +455,11 @@ class DAG:
                     str0 += semicolon + node.params_str
                 str0 += ")="
             fun_args_strL = node.fun_args_str
-            if add_superscript:
+            if add_superscripts:
                 if node.fun_args_str:
                     fun_args_strL = self.get_long_str(
                         node.fun_args_str,
-                        add_superscript,
+                        add_superscripts,
                         underline)
             open_paren = "("
             close_paren = ")"
@@ -565,7 +565,7 @@ class DAG:
                        fig_header=None,
                        fig_footer=None,
                        fig_caption=None,
-                       add_sperscripts=True,
+                       add_superscripts=True,
                        underline=True,
                        header=HEADER,
                        footer=FOOTER,
@@ -579,7 +579,7 @@ class DAG:
         fig_header: str
         fig_footer: str
         fig_caption: str
-        add_sperscripts: bool
+        add_superscripts: bool
         underline: bool
         header: str
         footer: str
@@ -597,10 +597,10 @@ class DAG:
             fig_header=fig_header,
             fig_footer=fig_footer,
             fig_caption=fig_caption,
-            add_superscript=add_sperscripts,
+            add_superscripts=add_superscripts,
             underline=underline)
         str0 += self.get_equations_str(
-            add_superscript=add_sperscripts,
+            add_superscripts=add_superscripts,
             underline=False,
             eqs_in_blue=eqs_in_blue,
             conditional_prob=conditional_prob)
