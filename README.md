@@ -11,6 +11,5 @@ be easily converted into a general tool that is independent of the transformer
 topic and of Bayesuvius.
 
 texnn uses the LaTex package xy-pic for drawing.
-[Bayesuvius](https://github.com/rrtucci/Bayesuvius).
 
 texnn uses the LaTex package xy-pic for drawing.
