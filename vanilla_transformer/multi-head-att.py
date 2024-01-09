@@ -50,7 +50,8 @@ node1 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node2 = Node(
@@ -61,7 +62,8 @@ node2 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node3 = Node(
@@ -72,7 +74,8 @@ node3 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node4 = Node(
@@ -83,7 +86,8 @@ node4 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 node5 = Node(
     name="K_1",
@@ -93,7 +97,8 @@ node5 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node6 = Node(
@@ -104,7 +109,8 @@ node6 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node7 = Node(
@@ -115,7 +121,8 @@ node7 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node8 = Node(
@@ -126,7 +133,8 @@ node8 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 node9 = Node(
@@ -137,7 +145,8 @@ node9 = Node(
     fun_name="linear",
     fun_args_str=None,
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment="(split, then project a component)"
 )
 
 nodeX = Node(
@@ -180,7 +189,7 @@ nodeC = Node(
     parent_names=["A_0", "A_1", "A_2"],
     slice_str="[D],[\ell]",
     fun_name=None,
-    fun_args_str='["A_0"|"A_1"|"A_2"]',
+    fun_args_str=r'["A_0"|"A_1"|"A_2"]',
     params_str=None,
     color="yellow"
 )

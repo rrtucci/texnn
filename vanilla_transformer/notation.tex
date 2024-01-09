@@ -148,8 +148,9 @@ A^{[n_\rvh], [d], [\ell]}
 A^{[D], [\ell]}
 \eeq
 
-
-Positional Encoding Matrix 
+\begin{itemize}
+\item{\bf Positional Encoding Matrix}
+ 
 $E_{pos}^{[d],[\ell]}$
 
 \beq
@@ -157,20 +158,22 @@ E_{pos}^{\delta, \beta}=
 \left\{
 \begin{array}{ll}
 \sin\left(\frac{\beta}
-{10^{4\delta/d}}\right)= \sin(2\pi \frac{\beta}{W\ell(\delta)})
+{10^{4\delta/d}}\right)= \sin(2\pi \frac{\beta}{\lam(\delta)})
 & \text{if $\delta$ is even}
 \\
 \cos\left(\frac{\beta}{10^{4(\delta-1)/d}}\right)=
-\cos(2\pi\frac{\beta}{W\ell(\delta)})
+\cos(2\pi\frac{\beta}{\lam(\delta)})
 & \text{if $\delta$ is odd}
 \end{array}
 \right.
 \eeq
 $E_{pos}^{\delta, \beta}$ changes in phase by $\pi/2$  
 every time $\delta$ changes by 1. Its wavelength 
-$W\ell$ is independent
-of $\ell$, but increases rapidly with $\delta$, from $W\ell(\delta=0)=2\pi*1$ to 
-$W\ell(\delta=d)= 2\pi* 10^4$.
+$\lam$ is independent
+of $\beta$, but increases rapidly with $\delta$, from $\lam(\delta=0)=2\pi*1$ to 
+$\lam(\delta=d)= 2\pi* 10^4$.
+
+\item {\bf ReLU}
 
 For a tensor $T$ of arbitrary shape
 \beq
@@ -178,7 +181,7 @@ ReLU(T) = (T)_+ = max(0, T)
 \eeq
 max element-wise
 
-Feed Forward neural net
+\item {\bf Feed Forward neural net}
 \beq
 F(x^{[1], [\ell]}) = ReLU(x^{[1],[\ell]}
 W_1^{[\ell], [d]} + b_1^{[1],[d]}) W_2^{[d], [\ell]} + b_1^{[1],[\ell]}
@@ -188,6 +191,43 @@ W_1^{[\ell], [d]} + b_1^{[1],[d]}) W_2^{[d], [\ell]} + b_1^{[1],[\ell]}
 F(x^{[\ell]}) = W_2^{[\ell], [d]}ReLU(
 W_1^{[d], [\ell]}x^{[\ell]} + b_1^{[d]})  + b_1^{[\ell]}
 \eeq
+
+\item {\bf softmax}
+
+softmax() takes a vector and returns
+a vector of probabilities of the same length
+
+\beq
+x^{[n]}\rarrow P^{[n]}
+\eeq
+where
+
+\beq
+P^\alp=
+\frac{\exp(x^\alp)}
+{\sum_{\alp\in[n]} \exp(x^\alp )}
+\;\;
+\left(P^{[n]}=\frac{\exp(x^{[n]})}
+{\norm{\exp(x^{[n]})
+}_0}
+\right)
+\eeq
+
+For example,
+\beq
+(1,0,0)\rarrow (e,1,1)/norm
+\eeq
+
+\beq
+(10,0,0)\rarrow (e^{10}, 1, 1)/norm \approx (1,0,0)
+\eeq
+
+For any $a\in\RR$,
+\beq
+(a,a,a)\rarrow (1, 1, 1)/3
+\eeq
+\end{itemize}
+
 
 
 
