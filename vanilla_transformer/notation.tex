@@ -5,6 +5,8 @@
 Our tensor notation is discussed in Section 
 \ref{sec-numpy-tensors} of Bayesuvius.
 
+
+
 $\ell=$ number of words in a sentence segment. $\alp\in [\ell]$, $\ell\sim 100$
 
 $L=$ number of words in vocabulary, $\beta\in[L]$, $L>> \ell$
@@ -12,21 +14,73 @@ $L=$ number of words in vocabulary, $\beta\in[L]$, $L>> \ell$
 $d=d_\rvq=d_\rvk=d_\rvv=64$, hidden dimension  per head,
 $\delta\in[d]$. 
 
-$n_\rvh=8$ number of heads, $\nu \in[n_\rvh]$
+$n_\rvh=8$, number of heads, $\nu \in[n_\rvh]$
 
 $D=n_\rvh d=8(64)=512$, hidden dimension for all heads. 
 $\Delta\in [D]$
+
+reshaping
+\beq
+T^{\nu, \delta}\rarrow T^{\Delta(\nu, \delta)}
+\;\;
+\left(
+T^{[n_\rvh], [d]} \rarrow T^{[D]}
+\right)
+\eeq
+
+\beq
+T^{\Delta(\nu, \delta)}\rarrow T^{\nu, \delta}
+\;\;
+\left(
+T^{[D]}\rarrow T^{[n_\rvh], [d]}
+\right)
+\eeq
+
+concatenation
+\beq
+T^{[n]}= (T^0, T^1,\ldots, T^{n-1})= 
+(T^\nu)_{\nu\in[n]}
+\eeq
+
+Hadamard product (element-wise, entry-wise multiplication)
+\beq
+T^{[n]}* S^{[n]}= (T^\nu S^\nu)_{\nu\in[n]}
+\eeq
+
+
+Matrix multiplication
+( $T^{[n]}= T^{[n], [1]}$ is a column vector)
+
+\beq
+(T^{[n]})^T S^{[n]}=\text{scalar}
+\eeq
+
+\beq
+T^{[a],[b]}S^{[b], [c]}
+=\left[\sum_{\beta\in[b]} T^{\alp, \beta}
+S^{\beta, \gamma}\right]
+_{\alp_\in [a], \gamma \in [c]}
+\eeq
 
 
 \beq
 e^{\delta, \alp} = \sum_\beta 
 E^{\delta, \beta}
 x^{\beta, \alp}
+\;\;
+\left(
+e^{[d],[\ell]}= E^{[d], [L]}x^{[L], [\ell]}
+\right)
 \eeq
 
 \beq
 Q^{\nu,\delta, \alp}=\sum_{\delta'}
 W_\rvq^{\nu, \delta, \delta'}e^{\delta', \alp}
+\;\;
+\left(
+Q^{[D], [\ell]}=
+W_\rvq^{[D],[d]}E^{[d],[\ell]}
+\right)
 \eeq
 
 
@@ -35,6 +89,11 @@ K^{\nu,\delta, \alp}=
 \sum_{\delta'}
 W_\rvk^{\nu, \delta, \delta'}
 e^{\delta', \alp}
+\;\;
+\left(
+K^{[D], [\ell]}=
+W_\rvk^{[D],[d]}E^{[d],[\ell]}
+\right)
 \eeq
 
 \beq
@@ -42,6 +101,11 @@ V^{\nu,\delta, \alp}=
 \sum_{\delta'}
 W_\rvv^{\nu, \delta, \delta'}
 e^{\delta', \alp}
+\;\;
+\left(
+V^{[D], [\ell]}=
+W_\rvv^{[D],[d]}E^{[d],[\ell]}
+\right)
 \eeq
 
 
@@ -49,44 +113,41 @@ e^{\delta', \alp}
 \beq
 B^{
 \nu,\alp, \alp'}=
-\frac{
+\frac{1}{\sqrt{d}}
 \sum_\delta Q^{\nu,\delta,\alp}
 K^{\nu,\delta,\alp'}
-}{\sqrt{d}}
+\;\;
+\left(
+B^{[n_h],[\ell],[\ell]}
+=\left[
+\frac{1}{\sqrt{d}}
+(Q^{\nu, [d], [\ell]})^T
+K^{\nu, [d], [\ell]}\right]_{\nu\in[n_\rvh]}
+\right)
 \eeq
 
 \beqa
-A^{\nu, [d], [\ell]}&=&
+A^{[n_\rvh], [d], [\ell]}&=&
+\left[
 \sum_\alp
 V^{\nu, [d], \alp}
 \underbrace{
 {\rm softmax}(B^{\nu, \alp ,[\ell]})}_{
 (B^*)^{\nu, \alp, [\ell]}}
+\right]_{\nu\in[n_\rvh]}
 \\
 &=&
+\left[
 V^{\nu, [d], [\ell]}(B^*)^{\nu, [\ell], [\ell]}
+\right]_{\nu\in[n_\rvh]}
 \eeqa
 
-
 \beq
-A^{[n_\rvh], [d], [\ell]} \rarrow A^{[D], [\ell]}
+A^{[n_\rvh], [d], [\ell]}
+\rarrow
+A^{[D], [\ell]}
 \eeq
 
-
-\beq
-Q^{[D], [\ell]}=
-W_\rvq^{[D],[d]}E^{[d],[\ell]}
-\eeq
-
-\beq
-K^{[D], [\ell]}=
-W_\rvk^{[D],[d]}E^{[d],[\ell]}
-\eeq
-
-\beq
-V^{[D], [\ell]}=
-W_\rvv^{[D],[d]}E^{[d],[\ell]}
-\eeq
 
 Positional Encoding Matrix 
 $E_{pos}^{[d],[\ell]}$
