@@ -112,7 +112,7 @@ nodeQ=Node(
     parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=r'W_\rvq^{[D],[D]}"e"',
+    fun_args_str=r'W_\rvq^{[D],[d]}"e"',
     params_str=None,
     color="Dandelion"
 )
@@ -122,7 +122,7 @@ nodeK=Node(
     parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=r'W_\rvk^{[D],[D]}"e"',
+    fun_args_str=r'W_\rvk^{[D],[d]}"e"',
     params_str=None,
     color="Dandelion"
 )
@@ -132,16 +132,16 @@ nodeV=Node(
     parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=r'W_\rvv^{[D],[D]}"e"',
+    fun_args_str=r'W_\rvv^{[D],[d]}"e"',
     color="Dandelion"
 )
 nodep=Node(
     name="e",
     tile_ch='p',
     parent_names=["x"],
-    slice_str="[D],[\ell]",
+    slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'E^{[D],[L]}"x"',
+    fun_args_str=r'E^{[d],[L]}"x"',
     params_str=None,
     color="gray"
 )

@@ -20,7 +20,7 @@ $$\xymatrix{
 \\
 &*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{e}^{[D], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
+*+[F*:gray]{\underline{e}^{[d], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
 \\
 *+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
 }$$
@@ -37,12 +37,12 @@ F^{[D], [\ell]} = {\rm feed\_forwrd\_nn}(N^{[D], [\ell]})
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[D], [\ell]} = W_\rvk^{[D],[d]}E^{[d],[\ell]}
+K^{[D], [\ell]} = W_\rvk^{[D],[d]}e^{[d], [\ell]}
 \label{eq-K-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[D], [\ell]} = {\rm normalize}(e^{[D], [\ell]} + O^{[D], [\ell]})
+N^{[D], [\ell]} = {\rm normalize}(e^{[d], [\ell]} + O^{[D], [\ell]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
@@ -52,17 +52,17 @@ O^{[D], [\ell]} = {\rm multi\_headed\_attention}(Q^{[D], [\ell]},K^{[D], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[D], [\ell]} = W_\rvq^{[D],[d]}E^{[d],[\ell]}
+Q^{[D], [\ell]} = W_\rvq^{[D],[d]}e^{[d], [\ell]}
 \label{eq-Q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[D],[\ell]} = W_\rvv^{[D],[d]}E^{[d],[\ell]}
+V^{[D],[\ell]} = W_\rvv^{[D],[d]}e^{[d], [\ell]}
 \label{eq-V-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[D], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
+e^{[d], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
 \label{eq-e-fun-encoder}
 \end{equation}
 
