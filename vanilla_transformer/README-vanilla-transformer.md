@@ -3,7 +3,7 @@ example of texnn usage was written for a chapter of my
 free, open source book [Bayesuvius](https://github.com/rrtucci/Bayesuvius).
 
 The example is based on the following Refs.:
-1. [abhishek gupta blog post "Explanation of “Attention Is All You Need” 
+1. [Abhishek Gupta blog post "Explanation of “Attention Is All You Need” 
    with Code by Abhishek Thakur"](https://sargupta93.medium.com/explanation-of-attention-is-all-you-need-with-code-by-abhishek-thakur-89861d24ea9d)
 
 2. [Lilian Weng blog post, "The transformer family V.2"](https://lilianweng.github.io/posts/2023-01-27-the-transformer-family-v2/)
