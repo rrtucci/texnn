@@ -38,6 +38,10 @@ class Node:
     ----------
     color: str | None
         the color of node
+    full_right_side_of_eq: str | None
+        if this is not None, it will be used as full right side of structure
+        equation. All other strings that could influence the right side of
+        the equation will be ignored.
     fun_args_str: str | None
         the string of function arguments
     fun_name: str | None
@@ -73,7 +77,8 @@ class Node:
                  params_str=None,
                  color=None,
                  style_name="plain",
-                 post_eq_comment=None):
+                 post_eq_comment=None,
+                 full_right_side_of_eq=None):
         """
         Constructor
         
@@ -87,8 +92,9 @@ class Node:
         fun_args_str: str | None
         params_str: str | None
         color: str | None
-        style_name: str
-        post_eq_comment: str
+        style_name: str | None
+        post_eq_comment: str | None
+        full_right_side_of_eq: str | None
         """
 
         self.name = name
@@ -98,6 +104,7 @@ class Node:
         self.tile_ch = tile_ch
         self.parent_names = parent_names
         self.post_eq_comment = post_eq_comment
+        self.full_right_side_of_eq = full_right_side_of_eq
 
         def rm_str(str0):
             if str0:
@@ -451,10 +458,14 @@ class DAG:
                 str0 += "P(" + node_nameL
                 if node.parent_names:
                     str0 += "|" + get_parent_str(node)
-                semicolon = ";" if node.parent_names else ""
                 if node.params_str:
-                    str0 += semicolon + node.params_str
+                    str0 += ";" + node.params_str
                 str0 += ")="
+            if node.full_right_side_of_eq:
+                str0 += node.full_right_side_of_eq + "\n"
+                str0 += r"\end{equation}" + "\n\n"
+                continue
+
             fun_args_strL = node.fun_args_str
             if add_superscripts:
                 if node.fun_args_str:

@@ -2,12 +2,19 @@
 \input{bayesuvius.sty}
 \begin{document}
 
+Our tensor notation is discussed in Section 
+\ref{sec-numpy-tensors} of Bayesuvius.
+
 $L=$ number of words in a segment, $\lam\in[L]$
 
-$d=$ hidden dimension  per head,
-$\delta\in[d]$. $d_\rvq=d_\rvk=d_\rvv$.
+$d=64$ hidden dimension  per head,
+$\delta\in[d]$. $d_\rvq=d_\rvk=d_\rvv=d$
 
-$n=$ number of heads, $\nu \in[n]$
+$n=8$ number of heads, $\nu \in[n]$
+
+$D=nd=8(64)=512$, hidden dimension for all heads. 
+$\Delta\in [D]$
+
 
 \beq
 e^\delta = \sum_\lam E^{\delta \lam}x^\lam
@@ -56,8 +63,6 @@ V^{\nu, [d], \lam}
 V^{\nu, [d], [L]}(B^*)^{\nu, [L], [L]}
 \eeqa
 
-$D=nd=$ Hidden dimension for all heads. 
-$\Delta\in [D]$
 
 \beq
 A^{[n], [d], [L]} \rarrow A^{[D], [L]}
@@ -87,19 +92,38 @@ E_{pos}^{\delta, \lam}=
 \left\{
 \begin{array}{ll}
 \sin\left(\frac{\lam}
-{10^{4\delta/d}}\right)= \sin(\frac{\lam}{\lam_0(\delta)})
+{10^{4\delta/d}}\right)= \sin(2\pi \frac{\lam}{WL(\delta)})
 & \text{if $\delta$ is even}
 \\
 \cos\left(\frac{\lam}{10^{4(\delta-1)/d}}\right)=
-\cos(\frac{\lam}{\lam_0(\delta)})
+\cos(2\pi\frac{\lam}{WL(\delta)})
 & \text{if $\delta$ is odd}
 \end{array}
 \right.
 \eeq
-$E_{pos}^{\delta, \lam}$ changes phase by $\pi/2$ with 
-every change in $\delta$ of 1. Its wavelength 
-$\lam_0$ is independent
-of $L$, but increases rapidly with $d$, from $\lam_0(d=0)=1$ to 
-$\lam_0(d)= 10^4$.
+$E_{pos}^{\delta, \lam}$ changes in phase by $\pi/2$  
+every time $\delta$ changes by 1. Its wavelength 
+$WL$ is independent
+of $L$, but increases rapidly with $\delta$, from $WL(\delta=0)=2\pi*1$ to 
+$WL(\delta=d)= 2\pi* 10^4$.
+
+For a tensor $T$ of arbitrary shape
+\beq
+ReLU(T) = (T)_+ = max(0, T)
+\eeq
+max element-wise
+
+Feed Forward neural net
+\beq
+F(x^{[1], [L]}) = ReLU(x^{[1],[L]}
+W_1^{[L], [d]} + b_1^{[1],[d]}) W_2^{[d], [L]} + b_1^{[1],[L]}
+\eeq
+
+\beq
+F(x^{[L]}) = W_2^{[L], [d]}ReLU(
+W_1^{[d], [L]}x^{[L]} + b_1^{[d]})  + b_1^{[L]}
+\eeq
+
+
 
 \end{document}

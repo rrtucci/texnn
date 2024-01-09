@@ -11,11 +11,11 @@ nodeV = Node(
     tile_ch='V',
     parent_names=[],
     slice_str=None,
-    fun_name=None,
-    fun_args_str=None,
-    params_str=None,
+    fun_name="fun",
+    fun_args_str="x,y",
+    params_str=r"\sigma=5",
     color="red",
-    post_eq_comment="put equation comment here"
+    post_eq_comment="(an equation comment)"
 )
 nodeS = Node(
     name="Smokes",
@@ -26,7 +26,8 @@ nodeS = Node(
     fun_args_str=None,
     params_str=None,
     color=None,
-    style_name="box"
+    style_name="box",
+    full_right_side_of_eq= r"\text{full right side of equation}"
 )
 nodeT = Node(
     name="Tuberculosis",
