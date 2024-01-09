@@ -10,11 +10,11 @@
 $$\xymatrix{
 &&&*+[F*:Orchid]{\underline{A}^{[d], [\ell]}}
 \\
-&*+[F*:SpringGreen]{\underline{G}^{[\ell], [\ell]}}\ar[urr]&&
+&*+[F*:SpringGreen]{\underline{P}^{[\ell], [\ell]}}\ar[urr]&&
 \\
-&*+[F*:Lavender]{\underline{R}^{[\ell], [\ell]}}\ar[u]&&
+&*+[F*:Lavender]{\underline{M}^{[\ell], [\ell]}}\ar[u]&&
 \\
-&*+[F*:yellow]{\underline{Y}^{[\ell],[\ell]}}\ar[u]&&
+&*+[F*:yellow]{\underline{S}^{[\ell],[\ell]}}\ar[u]&&
 \\
 &*+[F*:Dandelion]{\underline{B}^{[\ell], [\ell]}}\ar[u]&&
 \\
@@ -28,7 +28,7 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[d], [\ell]} = V^{[d],[\ell]} G^{[\ell], [\ell]}
+A^{[d], [\ell]} = V^{[d],[\ell]} P^{[\ell], [\ell]}
 \label{eq-A-fun-scaled-dot-prod-att}
 \end{equation}
 
@@ -38,13 +38,18 @@ B^{[\ell], [\ell]} = (Q^{[d],[\ell]})^T K^{[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-G^{[\ell], [\ell]} = {\rm softmax}(R^{[\ell], [\ell]})
-\label{eq-G-fun-scaled-dot-prod-att}
+K^{[d],[\ell]} = prior
+\label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[d],[\ell]} = prior
-\label{eq-K-fun-scaled-dot-prod-att}
+M^{[\ell], [\ell]} = {\rm mask}(S^{[\ell],[\ell]})
+\label{eq-M-fun-scaled-dot-prod-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+P^{[\ell], [\ell]} = {\rm softmax}(M^{[\ell], [\ell]})\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
+\label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -53,18 +58,13 @@ Q^{[d],[\ell]} = prior
 \end{equation}
 
 \begin{equation}\color{blue}
-R^{[\ell], [\ell]} = {\rm mask}(Y^{[\ell],[\ell]})
-\label{eq-R-fun-scaled-dot-prod-att}
+S^{[\ell],[\ell]} = \frac{B^{[\ell], [\ell]}}{\sqrt{d}}
+\label{eq-S-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
 V^{[d],[\ell]} = prior
 \label{eq-V-fun-scaled-dot-prod-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-Y^{[\ell],[\ell]} = \frac{B^{[\ell], [\ell]}}{\sqrt{d_\rvk}}
-\label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \end{subequations}

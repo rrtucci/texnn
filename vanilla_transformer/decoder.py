@@ -15,14 +15,15 @@ mosaic = [
 ]
 
 nodeG=Node(
-    name="G",
+    name="P",
     tile_ch='G',
     parent_names=["I"],
     slice_str="[L],[\ell]",
-    fun_name=None,
+    fun_name="softmax",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="SpringGreen",
+    post_eq_comment=r"$(\sum_{\alp\in[\ell]}P^{[L], \alp}=1)$"
 )
 nodeI=Node(
     name="I",
@@ -77,10 +78,10 @@ nodeO=Node(
 nodea=Node(
     name="a",
     tile_ch='a',
-    parent_names=["O", "p"],
+    parent_names=["O", "e"],
     slice_str="[D], [\ell]",
     fun_name="normalize",
-    fun_args_str='"O" + "p"',
+    fun_args_str='"O" + "e"',
     params_str=None,
     color="yellow"
 )
@@ -108,45 +109,44 @@ nodeo=Node(
 nodeQ=Node(
     name="Q",
     tile_ch='Q',
-    parent_names=["p"],
+    parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'W_\rvq^{[D],[D]}"e"',
     params_str=None,
     color="Dandelion"
 )
 nodeK=Node(
     name="K",
     tile_ch='K',
-    parent_names=["p"],
+    parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'W_\rvk^{[D],[D]}"e"',
     params_str=None,
     color="Dandelion"
 )
 nodeV=Node(
     name="V",
     tile_ch='V',
-    parent_names=["p"],
+    parent_names=["e"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
-    params_str=None,
+    fun_args_str=r'W_\rvv^{[D],[D]}"e"',
     color="Dandelion"
 )
 nodep=Node(
-    name="p",
+    name="e",
     tile_ch='p',
-    parent_names=["R"],
+    parent_names=["x"],
     slice_str="[D],[\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'E^{[D],[L]}"x"',
     params_str=None,
     color="gray"
 )
 nodeR=Node(
-    name="R",
+    name="x",
     tile_ch='R',
     parent_names=[],
     slice_str="[L],[\ell]",

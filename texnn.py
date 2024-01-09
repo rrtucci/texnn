@@ -490,7 +490,7 @@ class DAG:
                     str0 += semicolon + node.params_str
             str0 += close_paren
             if node.post_eq_comment:
-                str0 += r"\;\text{" + node.post_eq_comment + "}"
+                str0 += r"\;\;\text{" + node.post_eq_comment + "}"
             str0 += "\n" + r"\label{eq-" + node.name + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"

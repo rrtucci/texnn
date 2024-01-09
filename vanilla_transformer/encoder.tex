@@ -20,7 +20,7 @@ $$\xymatrix{
 \\
 &*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{p}^{[D], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
+*+[F*:gray]{\underline{e}^{[D], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
 \\
 *+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
 }$$
@@ -42,7 +42,7 @@ K^{[D], [\ell]} = W_\rvk^{[D],[d]}E^{[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[D], [\ell]} = {\rm normalize}(p^{[D], [\ell]} + O^{[D], [\ell]})
+N^{[D], [\ell]} = {\rm normalize}(e^{[D], [\ell]} + O^{[D], [\ell]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
@@ -62,6 +62,11 @@ V^{[D],[\ell]} = W_\rvv^{[D],[d]}E^{[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
+e^{[D], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
+\label{eq-e-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
 k^{[D], [\ell]} = n^{[D], [\ell]}
 \label{eq-k-fun-encoder}
 \end{equation}
@@ -69,11 +74,6 @@ k^{[D], [\ell]} = n^{[D], [\ell]}
 \begin{equation}\color{blue}
 n^{[D], [\ell]} = {\rm normalize}(N^{[D], [\ell]} + F^{[D], [\ell]})
 \label{eq-n-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-p^{[D], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
-\label{eq-p-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}

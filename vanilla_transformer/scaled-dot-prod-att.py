@@ -50,20 +50,20 @@ Bnode = Node(
     color="Dandelion"
 )
 Ynode = Node(
-    name="Y",
+    name="S",
     tile_ch='Y',
     parent_names=["B"],
     slice_str="[\ell],[\ell]",
     fun_name=None,
-    fun_args_str=r'\frac{"B"}{\sqrt{d_\rvk}}',
+    fun_args_str=r'\frac{"B"}{\sqrt{d}}',
     params_str=None,
     color="yellow"
 )
 
 Rnode = Node(
-    name="R",
+    name="M",
     tile_ch='R',
-    parent_names=["Y"],
+    parent_names=["S"],
     slice_str="[\ell], [\ell]",
     fun_name="mask",
     fun_args_str=None,
@@ -72,23 +72,24 @@ Rnode = Node(
 )
 
 Gnode = Node(
-    name="G",
+    name="P",
     tile_ch='G',
-    parent_names=["R"],
+    parent_names=["M"],
     slice_str="[\ell], [\ell]",
     fun_name="softmax",
     fun_args_str=None,
     params_str=None,
-    color="SpringGreen"
+    color="SpringGreen",
+    post_eq_comment=r"$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$"
 )
 
 Pnode = Node(
     name="A",
     tile_ch='P',
-    parent_names=["G", "V"],
+    parent_names=["P", "V"],
     slice_str=r"[d], [\ell]",
     fun_name=None,
-    fun_args_str='"V" "G"',
+    fun_args_str='"V" "P"',
     params_str=None,
     color="Orchid"
 )
