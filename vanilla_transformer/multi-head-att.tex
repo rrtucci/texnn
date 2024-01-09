@@ -8,23 +8,23 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&*+[F*:Orchid]{\underline{Q_0}^{[d],[L]}}\ar[dr]&&&
+&*+[F*:Orchid]{\underline{Q_0}^{[d],[\ell]}}\ar[dr]&&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{Q_1}^{[d],[L]}}\ar[dddr]&*+[F*:Orchid]{\underline{A_0}^{[d],[L]}}\ar[dddr]&&
+*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{Q_1}^{[d],[\ell]}}\ar[dddr]&*+[F*:Orchid]{\underline{A_0}^{[d],[\ell]}}\ar[dddr]&&
 \\
-&*+[F*:Orchid]{\underline{Q_2}^{[d],[L]}}\ar[dddddr]&&&
+&*+[F*:Orchid]{\underline{Q_2}^{[d],[\ell]}}\ar[dddddr]&&&
 \\
-&*+[F*:Orchid]{\underline{K_0}^{[d],[L]}}\ar[uur]&&&
+&*+[F*:Orchid]{\underline{K_0}^{[d],[\ell]}}\ar[uur]&&&
 \\
-*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{K_1}^{[d],[L]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[L]}}\ar[r]&*+[F*:yellow]{\underline{A}^{[D],[L]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[L]}}
+*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{K_1}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[\ell]}}\ar[r]&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[D],[\ell]}}
 \\
-&*+[F*:Orchid]{\underline{K_2}^{[d],[L]}}\ar[ddr]&&&
+&*+[F*:Orchid]{\underline{K_2}^{[d],[\ell]}}\ar[ddr]&&&
 \\
-&*+[F*:Orchid]{\underline{V_0}^{[d],[L]}}\ar[uuuuur]&&&
+&*+[F*:Orchid]{\underline{V_0}^{[d],[\ell]}}\ar[uuuuur]&&&
 \\
-*+[F*:Dandelion]{\underline{V}^{[D], [L]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{V_1}^{[d],[L]}}\ar[uuur]&*+[F*:Orchid]{\underline{A_2}^{[d],[L]}}\ar[uuur]&&
+*+[F*:Dandelion]{\underline{V}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{V_1}^{[d],[\ell]}}\ar[uuur]&*+[F*:Orchid]{\underline{A_2}^{[d],[\ell]}}\ar[uuur]&&
 \\
-&*+[F*:Orchid]{\underline{V_2}^{[d],[L]}}\ar[ur]&&&
+&*+[F*:Orchid]{\underline{V_2}^{[d],[\ell]}}\ar[ur]&&&
 }$$
 \end{minipage}
 \caption{Multi-head Attention.}
@@ -34,88 +34,88 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-Q^{[D], [L]} = ;prior
-\label{eq-Q-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-K^{[D], [L]} = ;prior
-\label{eq-K-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V^{[D], [L]} = ;prior
-\label{eq-V-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-Q_0^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
-\label{eq-Q_0-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-Q_1^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
-\label{eq-Q_1-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-Q_2^{[d],[L]} = {\rm linear}(Q^{[D], [L]})
-\label{eq-Q_2-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-K_0^{[d],[L]} = {\rm linear}(K^{[D], [L]})
-\label{eq-K_0-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-K_1^{[d],[L]} = {\rm linear}(K^{[D], [L]})
-\label{eq-K_1-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-K_2^{[d],[L]} = {\rm linear}(K^{[D], [L]})
-\label{eq-K_2-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V_0^{[d],[L]} = {\rm linear}(V^{[D], [L]})
-\label{eq-V_0-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V_1^{[d],[L]} = {\rm linear}(V^{[D], [L]})
-\label{eq-V_1-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V_2^{[d],[L]} = {\rm linear}(V^{[D], [L]})
-\label{eq-V_2-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-A_0^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_0^{[d],[L]},K_0^{[d],[L]},V_0^{[d],[L]})
-\label{eq-A_0-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-A_1^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_1^{[d],[L]},K_1^{[d],[L]},V_1^{[d],[L]})
-\label{eq-A_1-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-A_2^{[d],[L]} = {\rm scaled\_dot\_prod\_att}(Q_2^{[d],[L]},K_2^{[d],[L]},V_2^{[d],[L]})
-\label{eq-A_2-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-A^{[D],[L]} = [A_0^{[d],[L]}|A_1^{[d],[L]}|A_2^{[d],[L]}]
+A^{[D],[\ell]} = [A_0^{[d],[\ell]}|A_1^{[d],[\ell]}|A_2^{[d],[\ell]}]
 \label{eq-A-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[L]} = W_\rvo^{[1][D]}A^{[D],[L]}
+A_0^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_0^{[d],[\ell]},K_0^{[d],[\ell]},V_0^{[d],[\ell]})
+\label{eq-A_0-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+A_1^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_1^{[d],[\ell]},K_1^{[d],[\ell]},V_1^{[d],[\ell]})
+\label{eq-A_1-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+A_2^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_2^{[d],[\ell]},K_2^{[d],[\ell]},V_2^{[d],[\ell]})
+\label{eq-A_2-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+K^{[D], [\ell]} = prior
+\label{eq-K-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+K_0^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})
+\label{eq-K_0-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+K_1^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})
+\label{eq-K_1-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+K_2^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})
+\label{eq-K_2-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+O^{[D],[\ell]} = W_\rvo^{[D][D]}A^{[D],[\ell]}
 \label{eq-O-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q^{[D], [\ell]} = prior
+\label{eq-Q-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q_0^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})
+\label{eq-Q_0-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q_1^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})
+\label{eq-Q_1-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q_2^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})
+\label{eq-Q_2-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+V^{[D], [\ell]} = prior
+\label{eq-V-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+V_0^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})
+\label{eq-V_0-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+V_1^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})
+\label{eq-V_1-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+V_2^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})
+\label{eq-V_2-fun-multi-head-att}
 \end{equation}
 
 \end{subequations}

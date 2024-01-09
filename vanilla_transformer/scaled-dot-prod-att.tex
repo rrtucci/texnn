@@ -8,17 +8,17 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:Orchid]{\underline{A}^{[d], [L]}}
+&&&*+[F*:Orchid]{\underline{A}^{[d], [\ell]}}
 \\
-&*+[F*:SpringGreen]{\underline{G}^{[L], [L]}}\ar[urr]&&
+&*+[F*:SpringGreen]{\underline{G}^{[\ell], [\ell]}}\ar[urr]&&
 \\
-&*+[F*:Lavender]{\underline{R}^{[L], [L]}}\ar[u]&&
+&*+[F*:Lavender]{\underline{R}^{[\ell], [\ell]}}\ar[u]&&
 \\
-&*+[F*:yellow]{\underline{Y}^{[L],[L]}}\ar[u]&&
+&*+[F*:yellow]{\underline{Y}^{[\ell],[\ell]}}\ar[u]&&
 \\
-&*+[F*:Dandelion]{\underline{B}^{[L], [L]}}\ar[u]&&
+&*+[F*:Dandelion]{\underline{B}^{[\ell], [\ell]}}\ar[u]&&
 \\
-*+[F*:Orchid]{\underline{Q}^{[d],[L]}}\ar[ur]&&*+[F*:Orchid]{\underline{K}^{[d],[L]}}\ar[ul]&*+[F*:Orchid]{\underline{V}^{[d],[L]}}\ar[uuuuu]
+*+[F*:Orchid]{\underline{Q}^{[d],[\ell]}}\ar[ur]&&*+[F*:Orchid]{\underline{K}^{[d],[\ell]}}\ar[ul]&*+[F*:Orchid]{\underline{V}^{[d],[\ell]}}\ar[uuuuu]
 }$$
 \end{minipage}
 \caption{Scaled Dot Product Attention.}
@@ -28,43 +28,43 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-Q^{[d],[L]} = ;prior
-\label{eq-Q-fun-scaled-dot-prod-att}
+A^{[d], [\ell]} = V^{[d],[\ell]} G^{[\ell], [\ell]}
+\label{eq-A-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[d],[L]} = ;prior
-\label{eq-K-fun-scaled-dot-prod-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V^{[d],[L]} = ;prior
-\label{eq-V-fun-scaled-dot-prod-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-B^{[L], [L]} = (Q^{[d],[L]})^T K^{[d],[L]}
+B^{[\ell], [\ell]} = (Q^{[d],[\ell]})^T K^{[d],[\ell]}
 \label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-Y^{[L],[L]} = \frac{B^{[L], [L]}}{\sqrt{d_\rvk}}
-\label{eq-Y-fun-scaled-dot-prod-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-R^{[L], [L]} = {\rm mask}(Y^{[L],[L]})
-\label{eq-R-fun-scaled-dot-prod-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-G^{[L], [L]} = {\rm softmax}(R^{[L], [L]})
+G^{[\ell], [\ell]} = {\rm softmax}(R^{[\ell], [\ell]})
 \label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-A^{[d], [L]} = V^{[d],[L]} G^{[L], [L]}
-\label{eq-A-fun-scaled-dot-prod-att}
+K^{[d],[\ell]} = prior
+\label{eq-K-fun-scaled-dot-prod-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q^{[d],[\ell]} = prior
+\label{eq-Q-fun-scaled-dot-prod-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+R^{[\ell], [\ell]} = {\rm mask}(Y^{[\ell],[\ell]})
+\label{eq-R-fun-scaled-dot-prod-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+V^{[d],[\ell]} = prior
+\label{eq-V-fun-scaled-dot-prod-att}
+\end{equation}
+
+\begin{equation}\color{blue}
+Y^{[\ell],[\ell]} = \frac{B^{[\ell], [\ell]}}{\sqrt{d_\rvk}}
+\label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \end{subequations}

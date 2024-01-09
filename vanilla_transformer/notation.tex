@@ -5,107 +5,111 @@
 Our tensor notation is discussed in Section 
 \ref{sec-numpy-tensors} of Bayesuvius.
 
-$L=$ number of words in a segment, $\lam\in[L]$
+$\ell=$ number of words in a sentence segment. $\alp\in [\ell]$, $\ell\sim 100$
 
-$d=64$ hidden dimension  per head,
-$\delta\in[d]$. $d_\rvq=d_\rvk=d_\rvv=d$
+$L=$ number of words in vocabulary, $\beta\in[L]$, $L>> \ell$
 
-$n=8$ number of heads, $\nu \in[n]$
+$d=d_\rvq=d_\rvk=d_\rvv=64$, hidden dimension  per head,
+$\delta\in[d]$. 
 
-$D=nd=8(64)=512$, hidden dimension for all heads. 
+$n_\rvh=8$ number of heads, $\nu \in[n_\rvh]$
+
+$D=d=8(64)=512$, hidden dimension for all heads. 
 $\Delta\in [D]$
 
 
 \beq
-e^\delta = \sum_\lam E^{\delta \lam}x^\lam
+e^{\delta, \alp} = \sum_\beta 
+E^{\delta, \beta}
+x^{\beta, \alp}
 \eeq
 
 \beq
-Q^{\nu,\delta, \lam}=\sum_{\delta'}
-W_\rvq^{\nu, \delta, \delta'}E^{\delta', \lam}
+Q^{\nu,\delta, \alp}=\sum_{\delta'}
+W_\rvq^{\nu, \delta, \delta'}e^{\delta', \alp}
 \eeq
 
 
 \beq
-K^{\nu,\delta, \lam}=
+K^{\nu,\delta, \alp}=
 \sum_{\delta'}
 W_\rvk^{\nu, \delta, \delta'}
-E^{\delta', \lam}
+e^{\delta', \alp}
 \eeq
 
 \beq
-V^{\nu,\delta, \lam}=
+V^{\nu,\delta, \alp}=
 \sum_{\delta'}
 W_\rvv^{\nu, \delta, \delta'}
-E^{\delta', \lam}
+e^{\delta', \alp}
 \eeq
 
 
 
 \beq
 B^{
-\nu,\lam, \lam'}=
+\nu,\alp, \alp'}=
 \frac{
-\sum_\delta Q^{\nu,\delta,\lam}
-K^{\nu,\delta,\lam'}
+\sum_\delta Q^{\nu,\delta,\alp}
+K^{\nu,\delta,\alp'}
 }{\sqrt{d}}
 \eeq
 
 \beqa
-A^{\nu, [d], [L]}&=&
-\sum_\lam
-V^{\nu, [d], \lam}
+A^{\nu, [d], [\ell]}&=&
+\sum_\alp
+V^{\nu, [d], \alp}
 \underbrace{
-{\rm softmax}(B^{\nu, \lam ,[L]})}_{
-(B^*)^{\nu, \lam, [L]}}
+{\rm softmax}(B^{\nu, \alp ,[\ell]})}_{
+(B^*)^{\nu, \alp, [\ell]}}
 \\
 &=&
-V^{\nu, [d], [L]}(B^*)^{\nu, [L], [L]}
+V^{\nu, [d], [\ell]}(B^*)^{\nu, [\ell], [\ell]}
 \eeqa
 
 
 \beq
-A^{[n], [d], [L]} \rarrow A^{[D], [L]}
+A^{[n_\rvh], [d], [\ell]} \rarrow A^{[D], [\ell]}
 \eeq
 
 
 \beq
-Q^{[D], [L]}=
-W_\rvq^{[D],[d]}E^{[d],[L]}
+Q^{[D], [\ell]}=
+W_\rvq^{[D],[d]}E^{[d],[\ell]}
 \eeq
 
 \beq
-K^{[D], [L]}=
-W_\rvk^{[D],[d]}E^{[d],[L]}
+K^{[D], [\ell]}=
+W_\rvk^{[D],[d]}E^{[d],[\ell]}
 \eeq
 
 \beq
-V^{[D], [L]}=
-W_\rvv^{[D],[d]}E^{[d],[L]}
+V^{[D], [\ell]}=
+W_\rvv^{[D],[d]}E^{[d],[\ell]}
 \eeq
 
 Positional Encoding Matrix 
-$E_{pos}^{[d],[L]}$
+$E_{pos}^{[d],[\ell]}$
 
 \beq
-E_{pos}^{\delta, \lam}=
+E_{pos}^{\delta, \beta}=
 \left\{
 \begin{array}{ll}
-\sin\left(\frac{\lam}
-{10^{4\delta/d}}\right)= \sin(2\pi \frac{\lam}{WL(\delta)})
+\sin\left(\frac{\beta}
+{10^{4\delta/d}}\right)= \sin(2\pi \frac{\beta}{W\ell(\delta)})
 & \text{if $\delta$ is even}
 \\
-\cos\left(\frac{\lam}{10^{4(\delta-1)/d}}\right)=
-\cos(2\pi\frac{\lam}{WL(\delta)})
+\cos\left(\frac{\beta}{10^{4(\delta-1)/d}}\right)=
+\cos(2\pi\frac{\beta}{W\ell(\delta)})
 & \text{if $\delta$ is odd}
 \end{array}
 \right.
 \eeq
-$E_{pos}^{\delta, \lam}$ changes in phase by $\pi/2$  
+$E_{pos}^{\delta, \beta}$ changes in phase by $\pi/2$  
 every time $\delta$ changes by 1. Its wavelength 
-$WL$ is independent
-of $L$, but increases rapidly with $\delta$, from $WL(\delta=0)=2\pi*1$ to 
-$WL(\delta=d)= 2\pi* 10^4$.
+$W\ell$ is independent
+of $\ell$, but increases rapidly with $\delta$, from $W\ell(\delta=0)=2\pi*1$ to 
+$W\ell(\delta=d)= 2\pi* 10^4$.
 
 For a tensor $T$ of arbitrary shape
 \beq
@@ -115,13 +119,13 @@ max element-wise
 
 Feed Forward neural net
 \beq
-F(x^{[1], [L]}) = ReLU(x^{[1],[L]}
-W_1^{[L], [d]} + b_1^{[1],[d]}) W_2^{[d], [L]} + b_1^{[1],[L]}
+F(x^{[1], [\ell]}) = ReLU(x^{[1],[\ell]}
+W_1^{[\ell], [d]} + b_1^{[1],[d]}) W_2^{[d], [\ell]} + b_1^{[1],[\ell]}
 \eeq
 
 \beq
-F(x^{[L]}) = W_2^{[L], [d]}ReLU(
-W_1^{[d], [L]}x^{[L]} + b_1^{[d]})  + b_1^{[L]}
+F(x^{[\ell]}) = W_2^{[\ell], [d]}ReLU(
+W_1^{[d], [\ell]}x^{[\ell]} + b_1^{[d]})  + b_1^{[\ell]}
 \eeq
 
 

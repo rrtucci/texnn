@@ -8,21 +8,21 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-*+[F*:Dandelion]{\underline{q}^{[D], [L]}}&*+[F*:Dandelion]{\underline{k}^{[D], [L]}}&&
+*+[F*:Dandelion]{\underline{q}^{[D], [\ell]}}&*+[F*:Dandelion]{\underline{k}^{[D], [\ell]}}&&
 \\
-*+[F*:yellow]{\underline{n}^{[L]}}\ar[u]\ar[ur]&&&
+*+[F*:yellow]{\underline{n}^{[D], [\ell]}}\ar[ur]\ar[u]&&&
 \\
-&*+[F*:SkyBlue]{\underline{F}^{[L]}}\ar[ul]&&
+&*+[F*:SkyBlue]{\underline{F}^{[D], [\ell]}}\ar[ul]&&
 \\
-*+[F*:yellow]{\underline{N}^{[L]}}\ar[uu]\ar[ur]&&&
+*+[F*:yellow]{\underline{N}^{[D], [\ell]}}\ar[ur]\ar[uu]&&&
 \\
-&&*+[F*:Dandelion]{\underline{O}^{[L]}}\ar[ull]&
+&&*+[F*:Dandelion]{\underline{O}^{[D], [\ell]}}\ar[ull]&
 \\
-&*+[F*:Dandelion]{\underline{Q}^{[D], [L]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [L]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[L]}}\ar[ul]
+&*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{p}^{[L]}}\ar[uuu]\ar[ur]\ar[urr]\ar[urrr]&&&
+*+[F*:gray]{\underline{p}^{[D], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
 \\
-*+[F*:Lavender]{\underline{x}^{[L]}}\ar[u]&&&
+*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
 }$$
 \end{minipage}
 \caption{Encoder.}
@@ -32,57 +32,57 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-q^{[D], [L]} = n^{[L]}
-\label{eq-q-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-k^{[D], [L]} = n^{[L]}
-\label{eq-k-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-n^{[L]} = {\rm normalize}(N^{[L]} + F^{[L]})
-\label{eq-n-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-F^{[L]} = {\rm feed\_forwrd\_nn}(N^{[L]})
+F^{[D], [\ell]} = {\rm feed\_forwrd\_nn}(N^{[D], [\ell]})
 \label{eq-F-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[L]} = {\rm normalize}(p^{[L]} + O^{[L]})
-\label{eq-N-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-O^{[L]} = {\rm multi\_headed\_attention}(Q^{[D], [L]},K^{[D], [L]},V^{[D],[L]})
-\label{eq-O-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-Q^{[D], [L]} = W_\rvq^{[D],[d]}E^{[d],[L]}
-\label{eq-Q-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-K^{[D], [L]} = W_\rvk^{[D],[d]}E^{[d],[L]}
+K^{[D], [\ell]} = W_\rvk^{[D],[d]}E^{[d],[\ell]}
 \label{eq-K-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[D],[L]} = W_\rvv^{[D],[d]}E^{[d],[L]}
+N^{[D], [\ell]} = {\rm normalize}(p^{[D], [\ell]} + O^{[D], [\ell]})
+\label{eq-N-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+O^{[D], [\ell]} = {\rm multi\_headed\_attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D],[\ell]})
+\label{eq-O-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q^{[D], [\ell]} = W_\rvq^{[D],[d]}E^{[d],[\ell]}
+\label{eq-Q-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+V^{[D],[\ell]} = W_\rvv^{[D],[d]}E^{[d],[\ell]}
 \label{eq-V-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-p^{[L]} = M^{[L], [L]}x^{[L]}
+k^{[D], [\ell]} = n^{[D], [\ell]}
+\label{eq-k-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+n^{[D], [\ell]} = {\rm normalize}(N^{[D], [\ell]} + F^{[D], [\ell]})
+\label{eq-n-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+p^{[D], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
 \label{eq-p-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-x^{[L]} = prior
+q^{[D], [\ell]} = n^{[D], [\ell]}
+\label{eq-q-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+x^{[L],[\ell]} = prior
 \label{eq-x-fun-encoder}
 \end{equation}
 
