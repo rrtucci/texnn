@@ -37,7 +37,7 @@ class Node:
     Attributes
     ----------
     color: str | None
-        the color of node
+        color of the node
     full_right_side_of_eq: str | None
         if this is not None, it will be used as full right side of structure
         equation. All other strings that could influence the right side of
