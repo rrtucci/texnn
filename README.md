@@ -11,3 +11,15 @@ be easily converted into a general tool that is independent of the transformer
 topic and of Bayesuvius.
 
 texnn uses the LaTex package xy-pic for drawing.
+
+Gallery:
+
+* [Silly Bnet](https://github.com/rrtucci/texnn/blob/master/silly_bnet/silly-bnet.pdf)
+
+* [Asia](https://github.com/rrtucci/texnn/blob/master/asia/asia.pdf)
+
+* Vanilla Transformer
+  * [Scaled dot product attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/scaled-dot-prod-att.pdf)
+  * [Multi-head Attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/multi-head-att.pdf)
+  * [Encoder](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/encoder.pdf)
+  * [Decoder](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/decoder.pdf)
