@@ -32,7 +32,7 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-F^{[D], [\ell]} = {\rm feed\_forwrd\_nn}(N^{[D], [\ell]})
+F^{[D], [\ell]} = {\rm feed\_forward\_nn}(N^{[D], [\ell]})
 \label{eq-F-fun-encoder}
 \end{equation}
 
@@ -62,7 +62,7 @@ V^{[D],[\ell]} = W_\rvv^{[D],[d]}e^{[d], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[d], [\ell]} = M^{[\ell], [\ell]}x^{[L],[\ell]}
+e^{[d], [\ell]} = E^{[\ell], [\ell]}x^{[L],[\ell]}
 \label{eq-e-fun-encoder}
 \end{equation}
 
@@ -82,7 +82,7 @@ q^{[D], [\ell]} = n^{[D], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-x^{[L],[\ell]} = prior
+x^{[L],[\ell]} = \;\;\text{prior}
 \label{eq-x-fun-encoder}
 \end{equation}
 

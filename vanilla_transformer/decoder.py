@@ -153,7 +153,8 @@ nodeR=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="Lavender"
+    color="Lavender",
+    post_eq_comment="prior"
 )
 nodeq=Node(
     name="q",
@@ -163,7 +164,8 @@ nodeq=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="Dandelion"
+    color="Dandelion",
+    post_eq_comment="prior, obtained from encoder."
 )
 nodek=Node(
     name="k",
@@ -173,7 +175,8 @@ nodek=Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="Dandelion"
+    color="Dandelion",
+    post_eq_comment="prior, obtained from encoder."
 )
 
 nodes = [

@@ -49,7 +49,7 @@ nodeF = Node(
     tile_ch='F',
     parent_names=["N"],
     slice_str="[D], [\ell]",
-    fun_name="feed_forwrd_nn",
+    fun_name="feed_forward_nn",
     fun_args_str=None,
     params_str=None,
     color="SkyBlue"
@@ -116,7 +116,7 @@ nodep = Node(
     parent_names=["x"],
     slice_str="[d], [\ell]",
     fun_name=None,
-    fun_args_str='M^{[\ell], [\ell]}"x"',
+    fun_args_str='E^{[\ell], [\ell]}"x"',
     params_str=None,
     color="gray"
 )
@@ -128,8 +128,9 @@ nodeR = Node(
     slice_str="[L],[\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Lavender"
+    params_str=None,
+    color="Lavender",
+    post_eq_comment="prior"
 )
 
 

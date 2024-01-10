@@ -38,7 +38,7 @@ B^{[\ell], [\ell]} = (Q^{[d],[\ell]})^T K^{[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[d],[\ell]} = prior
+K^{[d],[\ell]} = \;\;\text{prior}
 \label{eq-K-fun-scaled-dot-prod-att}
 \end{equation}
 
@@ -48,12 +48,12 @@ M^{[\ell], [\ell]} = {\rm mask}(S^{[\ell],[\ell]})
 \end{equation}
 
 \begin{equation}\color{blue}
-P^{[\ell], [\ell]} = {\rm softmax}(M^{[\ell], [\ell]})\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
+P^{[\ell], [\ell]} = {\rm softmax}(M^{[\ell], [\ell]})\;\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
 \label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[d],[\ell]} = prior
+Q^{[d],[\ell]} = \;\;\text{prior}
 \label{eq-Q-fun-scaled-dot-prod-att}
 \end{equation}
 
@@ -63,7 +63,7 @@ S^{[\ell],[\ell]} = \frac{B^{[\ell], [\ell]}}{\sqrt{d}}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[d],[\ell]} = prior
+V^{[d],[\ell]} = \;\;\text{prior}
 \label{eq-V-fun-scaled-dot-prod-att}
 \end{equation}
 

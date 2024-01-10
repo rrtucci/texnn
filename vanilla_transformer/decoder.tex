@@ -93,7 +93,7 @@ j^{[D], [\ell]} = {\rm normalize}(o^{[D],[\ell]} + a^{[D], [\ell]})
 \end{equation}
 
 \begin{equation}\color{blue}
-k^{[D], [\ell]} = 
+k^{[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
 \label{eq-k-fun-decoder}
 \end{equation}
 
@@ -103,7 +103,7 @@ o^{[D],[\ell]} = {\rm multi\_head\_attention}(q^{[D], [\ell]},k^{[D], [\ell]},v^
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[D], [\ell]} = 
+q^{[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
 \label{eq-q-fun-decoder}
 \end{equation}
 
@@ -113,7 +113,7 @@ v^{[D], [\ell]} = a^{[D], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-x^{[L],[\ell]} = 
+x^{[L],[\ell]} = \;\;\text{prior}
 \label{eq-x-fun-decoder}
 \end{equation}
 

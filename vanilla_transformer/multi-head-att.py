@@ -16,8 +16,9 @@ nodeQ = Node(
     slice_str=r"[D], [\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Dandelion"
+    params_str=None,
+    color="Dandelion",
+    post_eq_comment="prior"
 )
 
 nodeK = Node(
@@ -27,8 +28,9 @@ nodeK = Node(
     slice_str=r"[D], [\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Dandelion"
+    params_str=None,
+    color="Dandelion",
+    post_eq_comment="prior"
 )
 
 nodeV = Node(
@@ -38,8 +40,9 @@ nodeV = Node(
     slice_str=r"[D], [\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Dandelion"
+    params_str=None,
+    color="Dandelion",
+    post_eq_comment="prior"
 )
 
 node1 = Node(

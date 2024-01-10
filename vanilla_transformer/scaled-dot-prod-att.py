@@ -16,8 +16,9 @@ Qnode = Node(
     slice_str=r"[d],[\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Orchid"
+    params_str=None,
+    color="Orchid",
+    post_eq_comment="prior"
 )
 Knode = Node(
     name="K",
@@ -26,8 +27,9 @@ Knode = Node(
     slice_str=r"[d],[\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Orchid"
+    params_str=None,
+    color="Orchid",
+    post_eq_comment="prior"
 )
 Vnode = Node(
     name="V",
@@ -36,8 +38,9 @@ Vnode = Node(
     slice_str=r"[d],[\ell]",
     fun_name=None,
     fun_args_str=None,
-    params_str="prior",
-    color="Orchid"
+    params_str=None,
+    color="Orchid",
+    post_eq_comment="prior"
 )
 Bnode = Node(
     name="B",
