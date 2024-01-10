@@ -1,5 +1,5 @@
 texnn (pronounced like "Texan") is a Python script that outputs LaTex (tex)
-strings for visualizing a Neural Net (nn) as a causal DAG (Bayesian Network).
+strings for drawing a Neural Net (nn) as a causal DAG (Bayesian Network).
 
 texnn is capable of reproducing with ease most of the xy-pic generated bnets 
 (Bayesian Networks) displayed in my book [Bayesuvius](https://github.com/rrtucci/Bayesuvius).
