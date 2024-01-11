@@ -48,7 +48,13 @@ CD = FancyArrow(
     style_name="photon"
 )
 
-fancy_arrows = [AB, BD, CD]
+AC = FancyArrow(
+    parent_name="A",
+    child_name="C",
+    style_name="double"
+)
+
+fancy_arrows = [AB, BD, CD, AC]
 
 print("\nmosaic:", mosaic)
 name = "expert-archer"
