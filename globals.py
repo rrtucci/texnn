@@ -37,4 +37,14 @@ NODE_STYLE_NAME_TO_XY_STR={
     "dashed-oval": "*++[o][F--*:yellow]"
 }
 
+ARROW_STYLE_TO_XY_STR={
+    "dashed": "@{-->}",
+    "dotted": "@{.>}",
+    "photon": "@{~>}",
+    "undirected": "@{-}",
+    "double": "@{=>}",
+    "dotted_double": "@{:>}"
+}
+
+
 

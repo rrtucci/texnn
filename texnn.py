@@ -30,6 +30,13 @@ import numpy as np
 from globals import *
 
 
+def none_check(x):
+    if x:
+        return x
+    else:
+        return ""
+
+
 class Node:
     """
     This class just stores a bunch of strings with info about a node.
@@ -145,6 +152,131 @@ class Node:
             return node_name
         else:
             return node_name + "^{" + node.slice_str + "}"
+
+
+class FancyArrow:
+    """
+    This class is for giving fancy, non-default  properties to an arrow.
+
+    Default arrows are straight, black and not dashed. Occasionally,
+    you want an arrow to be curved, red, dashed, or whatever. This class
+    allows you to define such arrows.
+
+    Attributes
+    ----------
+    child_name: str
+        name of arrow's child
+    color: str | None
+        arrow color
+    curvature: str | None
+        arrow curvature, ...-3,-2,-1,0, 1,2,3,...
+    displacement: int | None
+        how much the arrow is displaced sideways (perpendicularly to its
+        direction)
+    parent_name: str
+        name of arrow's parent
+    style_name: str | None
+        arrow style
+    subscript: str | None
+        arrow subscript, appears midway between endings
+    superscript: str | None
+        arrow superscript, appears midway between endings
+
+    """
+
+    def __init__(self,
+                 parent_name,
+                 child_name,
+                 color=None,
+                 style_name=None,
+                 curvature=None,
+                 displacement=None,
+                 superscript=None,
+                 subscript=None):
+        """
+
+        Parameters
+        ----------
+        parent_name: str
+        child_name: str
+        color: str | None
+        style_name: str | None
+        curvature: int | None
+        displacement: int | None
+        superscript: str | None
+        subscript: str | None
+
+        """
+        self.parent_name = parent_name
+        self.child_name = child_name
+        self.color = color
+        self.style_name = style_name
+        self.curvature = curvature
+        self.displacement = displacement
+        self.subscript = subscript
+        self.superscript = superscript
+
+    def recognize_endings(self, parent_name, child_name):
+        """
+        This method returns True iff self recognizes the inputs as its
+        correct endings.
+
+        Parameters
+        ----------
+        parent_name: str
+        child_name: str
+
+        Returns
+        -------
+        bool
+
+        """
+        if parent_name == self.parent_name and \
+                child_name == self.child_name:
+            return True
+        else:
+            return False
+
+    def get_xy_str(self, direction):
+        """
+        This method returns an xy string which incorporates all the fancy
+        arrow attributes. For example,
+
+        r"\ar@[red]@{-->}@<-2ex>[luu]^{superscript}"
+
+        Parameters
+        ----------
+        direction: str
+            a string defining the direction of the arrow. for example,
+            "ruu", "rr", "lld", etc.
+
+        Returns
+        -------
+        str
+
+        """
+
+        str0 = r"\ar"
+        if self.color:
+            str0 += "@[" + self.color + "]"
+        if self.style_name:
+            str0 += ARROW_STYLE_TO_XY_STR[self.style_name]
+        if self.curvature:
+            # @/^1pc/ or @/_1pc/
+            curv_str = "^" + str(self.curvature) \
+                if self.curvature < 0 else "_" + str(self.curvature)
+            str0 += "@/" + curv_str + "pc/"
+        if self.displacement:
+            # @<+2ex> or @<-2ex>
+            disp_str = str(self.displacement) \
+                if self.displacement < 0 else "+" + str(self.displacement)
+            str0 += "@<" + disp_str + "ex>"
+        str0 += "[" + direction + "]"
+        if self.superscript:
+            str0 += "^{" + self.superscript + "}"
+        if self.subscript:
+            str0 += "_{" + self.subscript + "}"
+        return str0
 
 
 class DAG:
@@ -330,7 +462,10 @@ class DAG:
                        fig_footer=None,
                        fig_caption=None,
                        add_superscripts=True,
-                       underline=True):
+                       underline=True,
+                       fancy_arrows=None,
+                       row_separation=None,
+                       column_separation=None):
         """
         This method returns a LaTex string for drawing a bnet that 
         represents a neural net.
@@ -342,23 +477,34 @@ class DAG:
         fig_caption: str | None
         add_superscripts: bool
         underline: bool
+        fancy_arrows: list[FancyArrow] | None
+        row_separation: int | None
+        column_separation: int | None
 
         Returns
         -------
+        str
 
         """
-        if not fig_header:
-            fig_header = ""
-        if not fig_footer:
-            fig_footer = ""
-        if not fig_caption:
-            fig_caption = ""
+        fig_header = none_check(fig_header)
+        fig_footer = none_check(fig_footer)
+        fig_caption = none_check(fig_caption)
+
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
         # print("llmg", self.mosaic)
         str0 = r"\begin{figure}[h!]\centering" + "\n"
         str0 += fig_header
-        str0 += r"$$\xymatrix{" + "\n"
+        separation_str = ""
+        # \xymatrix@C=1pc@R=1pc{
+        if row_separation:
+            assert row_separation > 0
+            separation_str += "@R=" + str(row_separation) + "pc"
+        if column_separation:
+            assert column_separation > 0
+            separation_str += "@C=" + str(column_separation) + "pc"
+
+        str0 += r"$$\xymatrix" + separation_str + "{\n"
         for row in range(len0):
             for col in range(len1):
                 if col != 0:
@@ -382,6 +528,15 @@ class DAG:
                     underline)
                 str0 += long_name + "}"
                 for child in self.parent_to_children[parent]:
+                    is_fancy_arrow = False
+                    which_arrow = None
+                    if fancy_arrows:
+                        for fancy_arrow in fancy_arrows:
+                            if fancy_arrow.recognize_endings(parent.name,
+                                                             child.name):
+                                is_fancy_arrow = True
+                                which_arrow = fancy_arrow
+                                break
                     child_row, child_col = self.node_to_tile_loc[child]
                     delta0 = child_row - row
                     delta1 = child_col - col
@@ -394,7 +549,10 @@ class DAG:
                         direction += "r" * delta1
                     elif delta1 < 0:
                         direction += "l" * (-delta1)
-                    str0 += r"\ar[" + direction + "]"
+                    if not is_fancy_arrow:
+                        str0 += r"\ar[" + direction + "]"
+                    else:
+                        str0 += which_arrow.get_xy_str(direction)
             str0 += "\n" + r"\\" + "\n"
         str0 = str0.strip()[:-2] + r"}$$" + "\n"
         str0 += fig_footer
@@ -582,21 +740,26 @@ class DAG:
                        header=HEADER,
                        footer=FOOTER,
                        eqs_in_blue=True,
-                       conditional_prob=False):
+                       conditional_prob=False,
+                       fancy_arrows=None,
+                       row_separation=None,
+                       column_separation=None):
         """
         This method writes a .tex file with the figure and the equations.
 
         Parameters
         ----------
-        fig_header: str
-        fig_footer: str
-        fig_caption: str
+        fig_header: str | None
+        fig_footer: str | None
+        fig_caption: str | None
         add_superscripts: bool
         underline: bool
         header: str
         footer: str
         eqs_in_blue: bool
         conditional_prob: bool
+        row_separation: int | None
+        column_separation: int |None
 
         Returns
         -------
@@ -610,7 +773,10 @@ class DAG:
             fig_footer=fig_footer,
             fig_caption=fig_caption,
             add_superscripts=add_superscripts,
-            underline=underline)
+            underline=underline,
+            fancy_arrows=fancy_arrows,
+            row_separation=row_separation,
+            column_separation=column_separation)
         str0 += self.get_equations_str(
             add_superscripts=add_superscripts,
             underline=False,
