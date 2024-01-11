@@ -18,6 +18,8 @@ Gallery:
 
 * [Asia](https://github.com/rrtucci/texnn/blob/master/asia/asia.pdf)
 
+* [Expert Archer](https://github.com/rrtucci/texnn/blob/master/expert_archer/expert-archer.pdf)
+
 * Vanilla Transformer
   * [Scaled dot product attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/scaled-dot-prod-att.pdf)
   * [Multi-head Attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/multi-head-att.pdf)
