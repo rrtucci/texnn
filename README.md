@@ -10,7 +10,11 @@ for my free, open source book Bayesuvius. But I soon realized that it could
 be easily converted into a general tool that is independent of the transformer 
 topic and of Bayesuvius.
 
-texnn uses the LaTex package xy-pic for drawing.
+texnn uses the LaTex package xy-pic for drawing. 
+In broad terms, texnn can 
+be described as a 
+Python 
+wrapper for the LaTeX package xy-pic.
 
 Gallery:
 
