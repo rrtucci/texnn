@@ -31,7 +31,7 @@ import numpy as np
 from globals import *
 
 
-def none_check(x):
+def replace_none(x):
     if x:
         return x
     else:
@@ -116,7 +116,7 @@ class Node:
 
         def rm_str(str0):
             if str0:
-                return r"{\rm " + str0.replace("_", "\_") + "}"
+                return r"\text{" + str0.replace("_", "\_") + "}"
             else:
                 return ""
 
@@ -280,6 +280,105 @@ class FancyArrow:
         return str0
 
 
+class Plate:
+    """
+    This method defines a plate, i.e., a rectangle in the DAG drawing that
+    encloses several nodes, and indicates that the enclosed nodes should be
+    repeated `num_layers` times.
+
+    Attributes
+    ----------
+    first_and_last_row: tuple(int)
+        0-based (>=0) ints. For example, "(3,4)"
+    first_and_last_col: tuple(int)
+        0-based (>=0) ints. For example, "(3,4)"
+    margin: float
+    num_layers: int
+    style_name: str
+
+    """
+
+    def __init__(self,
+                 first_and_last_row,
+                 first_and_last_col,
+                 num_layers=2,
+                 margin=1.0,
+                 style_name="shaded"):
+        """
+        Constructor
+
+        Parameters
+        ----------
+        first_and_last_row: tuple(int)
+        first_and_last_col: tuple(int)
+        num_layers: int
+        margin: float
+        style_name: str
+        """
+        self.first_and_last_row = first_and_last_row
+        self.first_and_last_col = first_and_last_col
+        self.num_layers = num_layers
+        self.margin = margin
+        self.style_name = style_name
+
+    def get_xy_str(self):
+        """
+        This method returns an xy string which incorporates all the plate
+        attributes. For example,
+
+        rf'\POS"{r1},{c2}"."{r3},{c2}"."{r1},{c4}"."{r3},{c4}"!C*+<.7em>\frm{
+        --}'
+
+        Returns
+        -------
+        str
+
+        """
+        str0 = r"\POS"
+        first_row, last_row = self.first_and_last_row
+        assert first_row <= last_row
+        first_col, last_col = self.first_and_last_col
+        assert first_col <= last_col
+        # row and col are zero based everywhere except here,
+        # for r1, c2, r3, c4
+        r1, c2, r3, c4 = \
+            first_row + 1, first_col + 1, last_row + 1, last_col + 1
+        str0 += f'"{r1},{c2}".'
+        str0 += f'"{r3},{c2}".'
+        str0 += f'"{r1},{c4}".'
+        str0 += f'"{r3},{c4}"'
+        if self.margin:
+            str0 += f"!C*+<{self.margin}em>"
+        str0 += r"\frm{"
+        xy_str = PLATE_STYLE_TO_XY_STR[self.style_name]
+        str0 += xy_str + "}"
+        return str0
+
+    def get_owned_nodes(self, node_to_tile_loc):
+        """
+        This method returns a list of all the nodes that are contained
+        within the plate.
+
+        Parameters
+        ----------
+        node_to_tile_loc: dict[Node, tuple[int]]
+
+        Returns
+        -------
+        list[Node]
+
+        """
+        owned_nodes = []
+        for node, tile_loc in node_to_tile_loc.items():
+            row, col = tile_loc
+            first_row, last_row = self.first_and_last_row
+            first_col, last_col = self.first_and_last_col
+            if first_row <= row <= last_row and \
+                    first_col <= col <= last_col:
+                owned_nodes.append(node)
+        return owned_nodes
+
+
 class DAG:
     """
     This class has methods for drawing a NN (via xy-pic) and writing its
@@ -303,11 +402,13 @@ class DAG:
     parent_to_children: dict[Node, list[Node]]
         A dictionary mapping every node to a list of its children. Leaf
         nodes have empty list.
+    plates: list[Plate] | None
+        A list of Plates
 
     """
     empty_tile = "_"
 
-    def __init__(self, nodes, mosaic, name):
+    def __init__(self, nodes, mosaic, name, plates=None):
         """
         
         Parameters
@@ -315,8 +416,10 @@ class DAG:
         nodes: list[Node]
         mosaic: list[str]
         name: str
+        plates: list[Plate] | None
         """
         self.nodes = nodes
+        self.plates = plates
         tiles = [node.tile_ch for node in nodes]
         assert len(tiles) == len(set(tiles)), \
             "some tile character is repeated."
@@ -331,79 +434,70 @@ class DAG:
             assert len(self.mosaic[row]) == len1, \
                 f"Tile rows not all of same length.\n{self.mosaic}"
         self.name = name
-        self.node_to_tile_loc = None
+        self.node_to_tile_loc = self.get_node_to_tile_loc()
         self.parent_to_children = None
         self.child_to_parents = None
-        self.set_node_tile_locs()
         self.set_parentage()
+        if plates:
+            for plate in plates:
+                if plate.num_layers == 1:
+                    continue
+                owned_nodes = plate.get_owned_nodes(self.node_to_tile_loc)
+                str0 = "[" + str(plate.num_layers) + "]"
+                for node in owned_nodes:
+                    if node.slice_str:
+                        node.slice_str = str0 + "," + node.slice_str
+                    else:
+                        node.slice_str = str0
 
-    def get_node_from_name(self, name):
+    def get_name_to_node(self):
         """
-        This method returns the unique Node with name `name`.
-        
-        Parameters
-        ----------
-        name: str
+        This method returns a name to node dictionary
 
         Returns
         -------
-        Node
+        dict[str, Node]
 
         """
-        node = None
-        for node0 in self.nodes:
-            if node0.name == name:
-                node = node0
-                break
-        if node:
-            return node
-        else:
-            assert False, f"'{name}' is not in: " + \
-                          str([node0.name for node0 in self.nodes])
+        name_to_node = {}
+        for node in self.nodes:
+            name_to_node[node.name] = node
+        return name_to_node
 
-    def get_node_from_tile_ch(self, tile_ch):
+    def get_tile_ch_to_node(self):
         """
-        This method returns the unique Node with tile_ch `tile_ch`.
-
-        Parameters
-        ----------
-        tile_ch: str
+        This method returns a tile_ch_to_node dictionary
 
         Returns
         -------
-        Node
+        dict[str, Node]
 
         """
-        node = None
-        for node0 in self.nodes:
-            if node0.tile_ch == tile_ch:
-                node = node0
-                break
-        if node:
-            return node
-        else:
-            assert False, f"'{tile_ch}' is not in: " + \
-                          str([node0.tile_ch for node0 in self.nodes])
+        tile_ch_to_node = {}
+        for node in self.nodes:
+            tile_ch_to_node[node.tile_ch] = node
+        return tile_ch_to_node
 
-    def set_node_tile_locs(self):
+    def get_node_to_tile_loc(self):
         """
-        This method fills the dictionary `self.node_to_tile_loc`
+        This method returns a node_to_tile_loc dictionary
         
         Returns
         -------
-        None
+        dict[Node, tuple[int]]
 
         """
+        tile_ch_to_node = self.get_tile_ch_to_node()
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
-        self.node_to_tile_loc = {}
+        node_to_tile_loc = {}
         for row in range(len0):
             for col in range(len1):
                 tile_ch = self.mosaic[row][col]
-
                 if tile_ch != DAG.empty_tile:
-                    node = self.get_node_from_tile_ch(tile_ch)
-                    self.node_to_tile_loc[node] = (row, col)
+                    node = tile_ch_to_node[tile_ch]
+                    node_to_tile_loc[node] = (row, col)
+        return node_to_tile_loc
 
     def set_parentage(self):
         """
@@ -416,9 +510,10 @@ class DAG:
 
         """
         self.child_to_parents = {}
+        name_to_node = self.get_name_to_node()
         for child in self.nodes:
             self.child_to_parents[child] = [
-                self.get_node_from_name(parent_name) for
+                name_to_node[parent_name] for
                 parent_name in child.parent_names]
         self.parent_to_children = {}
         for parent in self.nodes:
@@ -487,9 +582,9 @@ class DAG:
         str
 
         """
-        fig_header = none_check(fig_header)
-        fig_footer = none_check(fig_footer)
-        fig_caption = none_check(fig_caption)
+        fig_header = replace_none(fig_header)
+        fig_footer = replace_none(fig_footer)
+        fig_caption = replace_none(fig_caption)
 
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
@@ -506,6 +601,7 @@ class DAG:
             separation_str += "@C=" + str(column_separation) + "pc"
 
         str0 += r"$$\xymatrix" + separation_str + "{\n"
+        tile_ch_to_node = self.get_tile_ch_to_node()
         for row in range(len0):
             for col in range(len1):
                 if col != 0:
@@ -513,7 +609,7 @@ class DAG:
                 parent_tile_ch = self.mosaic[row][col]
                 if parent_tile_ch == DAG.empty_tile:
                     continue
-                parent = self.get_node_from_tile_ch(parent_tile_ch)
+                parent = tile_ch_to_node[parent_tile_ch]
                 style_name = parent.style_name
                 if parent.color and style_name == "plain":
                     style_name = "box"
@@ -555,7 +651,20 @@ class DAG:
                     else:
                         str0 += which_arrow.get_xy_str(direction)
             str0 += "\n" + r"\\" + "\n"
-        str0 = str0.strip()[:-2] + r"}$$" + "\n"
+        str0 = str0.strip()[:-2]
+        if self.plates:
+            for plate in self.plates:
+                str0 += plate.get_xy_str() + "\n"
+        str0 = str0.rstrip() + "}" + "\n"
+        if self.plates:
+            str0 += r"\xymatrix{" + "\n"
+            for plate in self.plates:
+                xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
+                str0 += "*+[F" + xy_str0 + "]{\;}&"
+                str0 += r"\text{" + str(plate.num_layers) + " layers}"
+                str0 += "\n" + r"\\"
+            str0 = str0[:-2] + "}\n"
+        str0 += "$$\n"
         str0 += fig_footer
         str0 += r"\caption{" + fig_caption + "}\n"
         str0 += r"\label{fig-texnn-for-" + self.name + "}\n"
@@ -650,7 +759,7 @@ class DAG:
             str0 += close_paren
             if node.post_eq_comment:
                 str0 += r"\;\;\text{" + node.post_eq_comment + "}"
-            str0 += "\n" + r"\label{eq-" + node.name + \
+            str0 += "\n" + r"\label{eq-" + node.tile_ch + \
                     "-fun-" + self.name + "}\n"
             str0 += r"\end{equation}" + "\n\n"
         str0 += r"\end{subequations}"
@@ -759,6 +868,7 @@ class DAG:
         footer: str
         eqs_in_blue: bool
         conditional_prob: bool
+        fancy_arrows: list[FancyArrow]
         row_separation: int | None
         column_separation: int |None
 

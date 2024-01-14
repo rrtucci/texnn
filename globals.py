@@ -46,5 +46,13 @@ ARROW_STYLE_TO_XY_STR={
     "dotted_double": "@{:>}"
 }
 
+PLATE_STYLE_TO_XY_STR={
+    "plain": "-",
+    "dashed": "--",
+    "dotted": ".",
+    "shaded": "-,",
+    "rounded": "-:<3pt>"
+}
+
 
 
