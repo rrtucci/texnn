@@ -284,7 +284,7 @@ class Plate:
     """
     This method defines a plate, i.e., a rectangle in the DAG drawing that
     encloses several nodes, and indicates that the enclosed nodes should be
-    repeated `num_layers` times.
+    repeated `num_layers_str` times.
 
     Attributes
     ----------
@@ -293,7 +293,7 @@ class Plate:
     first_and_last_col: tuple(int)
         0-based (>=0) ints. For example, "(3,4)"
     margin: float
-    num_layers: int
+    num_layers_str: str
     style_name: str
 
     """
@@ -301,7 +301,7 @@ class Plate:
     def __init__(self,
                  first_and_last_row,
                  first_and_last_col,
-                 num_layers=2,
+                 num_layers_str="2",
                  margin=1.0,
                  style_name="shaded"):
         """
@@ -311,13 +311,13 @@ class Plate:
         ----------
         first_and_last_row: tuple(int)
         first_and_last_col: tuple(int)
-        num_layers: int
+        num_layers_str: str
         margin: float
         style_name: str
         """
         self.first_and_last_row = first_and_last_row
         self.first_and_last_col = first_and_last_col
-        self.num_layers = num_layers
+        self.num_layers_str = num_layers_str
         self.margin = margin
         self.style_name = style_name
 
@@ -440,10 +440,11 @@ class DAG:
         self.set_parentage()
         if plates:
             for plate in plates:
-                if plate.num_layers == 1:
+                if plate.num_layers_str.isdigit() and \
+                        int(plate.num_layers_str) == 1:
                     continue
                 owned_nodes = plate.get_owned_nodes(self.node_to_tile_loc)
-                str0 = "[" + str(plate.num_layers) + "]"
+                str0 = "[" + plate.num_layers_str + "]"
                 for node in owned_nodes:
                     if node.slice_str:
                         node.slice_str = str0 + "," + node.slice_str
@@ -653,18 +654,17 @@ class DAG:
             str0 += "\n" + r"\\" + "\n"
         str0 = str0.strip()[:-2]
         if self.plates:
+            str0 += r"\save" + "\n"
             for plate in self.plates:
                 str0 += plate.get_xy_str() + "\n"
-        str0 = str0.rstrip() + "}" + "\n"
+        str0 += r"\restore" + "\n"
         if self.plates:
-            str0 += r"\xymatrix{" + "\n"
             for plate in self.plates:
+                str0 += r"\\" + "\n"
                 xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
-                str0 += "*+[F" + xy_str0 + "]{\;}&"
-                str0 += r"\text{" + str(plate.num_layers) + " layers}"
-                str0 += "\n" + r"\\"
-            str0 = str0[:-2] + "}\n"
-        str0 += "$$\n"
+                str0 += "*+[F" + xy_str0 + "]{\;\;}&"
+                str0 += r"\text{$" + plate.num_layers_str + "$ layers}\n"
+        str0 += "}$$\n"
         str0 += fig_footer
         str0 += r"\caption{" + fig_caption + "}\n"
         str0 += r"\label{fig-texnn-for-" + self.name + "}\n"

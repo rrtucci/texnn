@@ -1,6 +1,5 @@
 from texnn import *
 
-
 mosaic = [
     "qk__",
     "n___",
@@ -116,7 +115,7 @@ nodep = Node(
     parent_names=["x"],
     slice_str="[d], [\ell]",
     fun_name=None,
-    fun_args_str='E^{[\ell], [\ell]}"x"',
+    fun_args_str='E^{[\Lambda],[d], [L]}"x"',
     params_str=None,
     color="gray"
 )
@@ -133,7 +132,6 @@ nodeR = Node(
     post_eq_comment="prior"
 )
 
-
 nodes = [
     nodeq,
     nodek,
@@ -146,17 +144,25 @@ nodes = [
     nodeR
 ]
 
+plate0 = Plate(
+    first_and_last_row=(0,6),
+    first_and_last_col=(0,3),
+    num_layers_str= r"\Lambda",
+    margin= 4.0
+)
+
+plates = [plate0]
 
 name = "encoder"
-dag = DAG(nodes, mosaic, name)
-fig_header =\
+dag = DAG(nodes, mosaic, name, plates=plates)
+fig_header = \
 r"""\begin{minipage}{.5\linewidth}
 \includegraphics[width=2in]{encoder.jpg}
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 """
 
-fig_footer=\
+fig_footer = \
 """\end{minipage}
 """
 dag.write_tex_file(fig_header,

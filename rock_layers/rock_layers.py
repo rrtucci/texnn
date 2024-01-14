@@ -11,14 +11,14 @@ plateQKV = Plate(
     first_and_last_row=(0, 2),
     first_and_last_col=(2, 2),
     style_name="dashed",
-    num_layers=10
+    num_layers_str="10"
 )
 
 plateQKVA = Plate(
     first_and_last_row=(0, 2),
     first_and_last_col=(2, 3),
     margin=2.0,
-    num_layers=20
+    num_layers_str="20"
 )
 
 plates = [plateQKV, plateQKVA]

@@ -8,21 +8,26 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-*+[F*:Dandelion]{\underline{q}^{[D], [\ell]}}&*+[F*:Dandelion]{\underline{k}^{[D], [\ell]}}&&
+*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}&&
 \\
-*+[F*:yellow]{\underline{n}^{[D], [\ell]}}\ar[ur]\ar[u]&&&
+*+[F*:yellow]{\underline{n}^{[\Lambda],[D], [\ell]}}\ar[ur]\ar[u]&&&
 \\
-&*+[F*:SkyBlue]{\underline{F}^{[D], [\ell]}}\ar[ul]&&
+&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[D], [\ell]}}\ar[ul]&&
 \\
-*+[F*:yellow]{\underline{N}^{[D], [\ell]}}\ar[ur]\ar[uu]&&&
+*+[F*:yellow]{\underline{N}^{[\Lambda],[D], [\ell]}}\ar[ur]\ar[uu]&&&
 \\
-&&*+[F*:Dandelion]{\underline{O}^{[D], [\ell]}}\ar[ull]&
+&&*+[F*:Dandelion]{\underline{O}^{[\Lambda],[D], [\ell]}}\ar[ull]&
 \\
-&*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D],[\ell]}}\ar[ul]
+&*+[F*:Dandelion]{\underline{Q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[\Lambda],[D],[\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{e}^{[d], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
+*+[F*:gray]{\underline{e}^{[\Lambda],[d], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
 \\
 *+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
+\save
+\POS"1,1"."7,1"."1,4"."7,4"!C*+<4.0em>\frm{-,}
+\restore
+\\
+*+[F-,]{\;\;}&\text{$\Lambda$ layers}
 }$$
 \end{minipage}
 \caption{Encoder.}
@@ -32,58 +37,58 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-F^{[D], [\ell]} = {\rm feed\_forward\_nn}(N^{[D], [\ell]})
+F^{[\Lambda],[D], [\ell]} = \text{feed\_forward\_nn}(N^{[\Lambda],[D], [\ell]})
 \label{eq-F-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[D], [\ell]} = W_\rvk^{[D],[d]}e^{[d], [\ell]}
+K^{[\Lambda],[D], [\ell]} = W_\rvk^{[D],[d]}e^{[\Lambda],[d], [\ell]}
 \label{eq-K-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[D], [\ell]} = {\rm normalize}(e^{[d], [\ell]} + O^{[D], [\ell]})
+N^{[\Lambda],[D], [\ell]} = \text{normalize}(e^{[\Lambda],[d], [\ell]} + O^{[\Lambda],[D], [\ell]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[D], [\ell]} = {\rm multi\_headed\_attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D],[\ell]})
+O^{[\Lambda],[D], [\ell]} = \text{multi\_headed\_attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D],[\ell]})
 \label{eq-O-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[D], [\ell]} = W_\rvq^{[D],[d]}e^{[d], [\ell]}
+Q^{[\Lambda],[D], [\ell]} = W_\rvq^{[D],[d]}e^{[\Lambda],[d], [\ell]}
 \label{eq-Q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[D],[\ell]} = W_\rvv^{[D],[d]}e^{[d], [\ell]}
+V^{[\Lambda],[D],[\ell]} = W_\rvv^{[D],[d]}e^{[\Lambda],[d], [\ell]}
 \label{eq-V-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[d], [\ell]} = E^{[\ell], [\ell]}x^{[L],[\ell]}
-\label{eq-e-fun-encoder}
+e^{[\Lambda],[d], [\ell]} = E^{[\Lambda],[d], [L]}x^{[L],[\ell]}
+\label{eq-p-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-k^{[D], [\ell]} = n^{[D], [\ell]}
+k^{[\Lambda],[D], [\ell]} = n^{[\Lambda],[D], [\ell]}
 \label{eq-k-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-n^{[D], [\ell]} = {\rm normalize}(N^{[D], [\ell]} + F^{[D], [\ell]})
+n^{[\Lambda],[D], [\ell]} = \text{normalize}(N^{[\Lambda],[D], [\ell]} + F^{[\Lambda],[D], [\ell]})
 \label{eq-n-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[D], [\ell]} = n^{[D], [\ell]}
+q^{[\Lambda],[D], [\ell]} = n^{[\Lambda],[D], [\ell]}
 \label{eq-q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
 x^{[L],[\ell]} = \;\;\text{prior}
-\label{eq-x-fun-encoder}
+\label{eq-R-fun-encoder}
 \end{equation}
 
 \end{subequations}

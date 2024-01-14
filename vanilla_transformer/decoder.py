@@ -14,7 +14,7 @@ mosaic = [
     "___R"
 ]
 
-nodeG=Node(
+nodeG = Node(
     name="P",
     tile_ch='G',
     parent_names=["I"],
@@ -25,17 +25,17 @@ nodeG=Node(
     color="SpringGreen",
     post_eq_comment=r"$(\sum_{\alp\in[\ell]}P^{[L], \alp}=1)$"
 )
-nodeI=Node(
+nodeI = Node(
     name="I",
     tile_ch='I',
     parent_names=["Y"],
     slice_str="[L],[\ell]",
     fun_name=None,
-    fun_args_str='W^{[L], [D]}"Y"',
+    fun_args_str='W^{[L],[\Lambda], [D]}"Y"',
     params_str=None,
     color="Orchid"
 )
-nodeY=Node(
+nodeY = Node(
     name="Y",
     tile_ch='Y',
     parent_names=["F", "j"],
@@ -45,7 +45,7 @@ nodeY=Node(
     params_str=None,
     color="yellow"
 )
-nodeB= Node(
+nodeB = Node(
     name="F",
     tile_ch='B',
     parent_names=["j"],
@@ -55,7 +55,7 @@ nodeB= Node(
     params_str=None,
     color="SkyBlue"
 )
-nodey=Node(
+nodey = Node(
     name="j",
     tile_ch='j',
     parent_names=["o", "a"],
@@ -65,7 +65,7 @@ nodey=Node(
     params_str=None,
     color="yellow"
 )
-nodeO=Node(
+nodeO = Node(
     name="o",
     tile_ch='O',
     parent_names=["q", "k", "v"],
@@ -75,7 +75,7 @@ nodeO=Node(
     params_str=None,
     color="Dandelion"
 )
-nodea=Node(
+nodea = Node(
     name="a",
     tile_ch='a',
     parent_names=["O", "e"],
@@ -85,7 +85,7 @@ nodea=Node(
     params_str=None,
     color="yellow"
 )
-nodev=Node(
+nodev = Node(
     name="v",
     tile_ch='v',
     parent_names=["a"],
@@ -96,7 +96,7 @@ nodev=Node(
     color="Dandelion"
 )
 
-nodeo=Node(
+nodeo = Node(
     name="O",
     tile_ch='o',
     parent_names=["Q", "K", "V"],
@@ -106,7 +106,7 @@ nodeo=Node(
     params_str=None,
     color="Dandelion"
 )
-nodeQ=Node(
+nodeQ = Node(
     name="Q",
     tile_ch='Q',
     parent_names=["e"],
@@ -116,7 +116,7 @@ nodeQ=Node(
     params_str=None,
     color="Dandelion"
 )
-nodeK=Node(
+nodeK = Node(
     name="K",
     tile_ch='K',
     parent_names=["e"],
@@ -126,7 +126,7 @@ nodeK=Node(
     params_str=None,
     color="Dandelion"
 )
-nodeV=Node(
+nodeV = Node(
     name="V",
     tile_ch='V',
     parent_names=["e"],
@@ -135,17 +135,17 @@ nodeV=Node(
     fun_args_str=r'W_\rvv^{[D],[d]}"e"',
     color="Dandelion"
 )
-nodep=Node(
+nodep = Node(
     name="e",
     tile_ch='p',
     parent_names=["x"],
     slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'E^{[d],[L]}"x"',
+    fun_args_str=r'E^{[\Lambda],[d],[L]}"x"',
     params_str=None,
     color="gray"
 )
-nodeR=Node(
+nodeR = Node(
     name="x",
     tile_ch='R',
     parent_names=[],
@@ -156,7 +156,7 @@ nodeR=Node(
     color="Lavender",
     post_eq_comment="prior"
 )
-nodeq=Node(
+nodeq = Node(
     name="q",
     tile_ch='q',
     parent_names=[],
@@ -167,7 +167,7 @@ nodeq=Node(
     color="Dandelion",
     post_eq_comment="prior, obtained from encoder."
 )
-nodek=Node(
+nodek = Node(
     name="k",
     tile_ch='k',
     parent_names=[],
@@ -192,16 +192,26 @@ nodes = [
     nodep,
     nodeR,
     nodeq, nodek]
+
+plate0 = Plate(
+    first_and_last_row=(2,9),
+    first_and_last_col=(0,3),
+    num_layers_str= r"\Lambda",
+    margin=3.0
+)
+
+plates = [plate0]
+
 name = "decoder"
-dag = DAG(nodes, mosaic, name)
-fig_header =\
+dag = DAG(nodes, mosaic, name, plates=plates)
+fig_header = \
 r"""\begin{minipage}{.5\linewidth}
 \includegraphics[width=2in]{decoder.jpg}
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 """
 
-fig_footer=\
+fig_footer = \
 """\end{minipage}
 """
 dag.write_tex_file(fig_header,
