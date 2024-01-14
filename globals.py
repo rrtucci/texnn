@@ -51,6 +51,7 @@ PLATE_STYLE_TO_XY_STR={
     "dashed": "--",
     "dotted": ".",
     "shaded": "-,",
+    "double": "=",
     "rounded": "-:<3pt>"
 }
 

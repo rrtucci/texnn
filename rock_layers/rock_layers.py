@@ -10,7 +10,7 @@ mosaic = [
 plateQKV = Plate(
     first_and_last_row=(0, 2),
     first_and_last_col=(2, 2),
-    style_name="dotted",
+    style_name="dashed",
     num_layers=10
 )
 
