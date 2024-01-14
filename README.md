@@ -24,6 +24,8 @@ Gallery:
 
 * [Expert Archer](https://github.com/rrtucci/texnn/blob/master/expert_archer/expert-archer.pdf)
 
+* [Rock Layers](https://github.com/rrtucci/texnn/blob/master/rock_layers/rock_layers.pdf)
+
 * Vanilla Transformer
   * [Scaled dot product attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/scaled-dot-prod-att.pdf)
   * [Multi-head Attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/multi-head-att.pdf)
