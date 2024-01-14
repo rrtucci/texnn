@@ -35,22 +35,22 @@ $$\xymatrix{
 
 \begin{equation}\color{blue}
 A^{[D],[\ell]} = [A_0^{[d],[\ell]}|A_1^{[d],[\ell]}|A_2^{[d],[\ell]}]
-\label{eq-A-fun-multi-head-att}
+\label{eq-C-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-A_0^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_0^{[d],[\ell]},K_0^{[d],[\ell]},V_0^{[d],[\ell]})
-\label{eq-A_0-fun-multi-head-att}
+A_0^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_0^{[d],[\ell]},K_0^{[d],[\ell]},V_0^{[d],[\ell]})
+\label{eq-X-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-A_1^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_1^{[d],[\ell]},K_1^{[d],[\ell]},V_1^{[d],[\ell]})
-\label{eq-A_1-fun-multi-head-att}
+A_1^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_1^{[d],[\ell]},K_1^{[d],[\ell]},V_1^{[d],[\ell]})
+\label{eq-Y-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-A_2^{[d],[\ell]} = {\rm scaled\_dot\_prod\_att}(Q_2^{[d],[\ell]},K_2^{[d],[\ell]},V_2^{[d],[\ell]})
-\label{eq-A_2-fun-multi-head-att}
+A_2^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_2^{[d],[\ell]},K_2^{[d],[\ell]},V_2^{[d],[\ell]})
+\label{eq-Z-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -59,23 +59,23 @@ K^{[D], [\ell]} = \;\;\text{prior}
 \end{equation}
 
 \begin{equation}\color{blue}
-K_0^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-K_0-fun-multi-head-att}
+K_0^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-4-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-K_1^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-K_1-fun-multi-head-att}
+K_1^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-5-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-K_2^{[d],[\ell]} = {\rm linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-K_2-fun-multi-head-att}
+K_2^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-6-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
 O^{[D],[\ell]} = W_\rvo^{[D],[D]}A^{[D],[\ell]}
-\label{eq-O-fun-multi-head-att}
+\label{eq-F-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -84,18 +84,18 @@ Q^{[D], [\ell]} = \;\;\text{prior}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q_0^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-Q_0-fun-multi-head-att}
+Q_0^{[d],[\ell]} = \text{linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-1-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q_1^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-Q_1-fun-multi-head-att}
+Q_1^{[d],[\ell]} = \text{linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-2-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q_2^{[d],[\ell]} = {\rm linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-Q_2-fun-multi-head-att}
+Q_2^{[d],[\ell]} = \text{linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-3-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -104,18 +104,18 @@ V^{[D], [\ell]} = \;\;\text{prior}
 \end{equation}
 
 \begin{equation}\color{blue}
-V_0^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-V_0-fun-multi-head-att}
+V_0^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-7-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-V_1^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-V_1-fun-multi-head-att}
+V_1^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-8-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-V_2^{[d],[\ell]} = {\rm linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-V_2-fun-multi-head-att}
+V_2^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
+\label{eq-9-fun-multi-head-att}
 \end{equation}
 
 \end{subequations}

@@ -58,11 +58,10 @@ fancy_arrows = [AB, BD, CD, AC]
 
 print("\nmosaic:", mosaic)
 name = "expert-archer"
-dag = DAG(nodes, mosaic, name)
+dag = DAG(name, mosaic, nodes, fancy_arrows=fancy_arrows)
 dag.write_tex_file(
     underline=True,
     fig_caption="Expert Archer.",
     conditional_prob=True,
-    fancy_arrows=fancy_arrows,
     column_separation=5,
     row_separation=5)

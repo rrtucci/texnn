@@ -51,10 +51,10 @@ print("rotated mosaic:", rotated_mosaic)
 
 str0 = ""
 str0 += HEADER
-dag = DAG(nodes, mosaic, "silly-bnet")
+dag = DAG("silly-bnet", mosaic, nodes)
 str0 += dag.get_figure_str(fig_caption="Silly bnet")
 str0 += dag.get_equations_str()
-dag = DAG(nodes, rotated_mosaic, "rotated-silly-bnet")
+dag = DAG("rotated-silly-bnet", rotated_mosaic, nodes)
 str0 += dag.get_figure_str(fig_caption="rotated silly bnet")
 str0 += FOOTER
 with open("silly-bnet.tex", "w") as f:

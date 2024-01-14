@@ -29,7 +29,7 @@ $$\xymatrix{
 
 \begin{equation}\color{blue}
 A^{[d], [\ell]} = V^{[d],[\ell]} P^{[\ell], [\ell]}
-\label{eq-A-fun-scaled-dot-prod-att}
+\label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -43,13 +43,13 @@ K^{[d],[\ell]} = \;\;\text{prior}
 \end{equation}
 
 \begin{equation}\color{blue}
-M^{[\ell], [\ell]} = {\rm mask}(S^{[\ell],[\ell]})
-\label{eq-M-fun-scaled-dot-prod-att}
+M^{[\ell], [\ell]} = \text{mask}(S^{[\ell],[\ell]})
+\label{eq-R-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-P^{[\ell], [\ell]} = {\rm softmax}(M^{[\ell], [\ell]})\;\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
-\label{eq-P-fun-scaled-dot-prod-att}
+P^{[\ell], [\ell]} = \text{softmax}(M^{[\ell], [\ell]})\;\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
+\label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -59,7 +59,7 @@ Q^{[d],[\ell]} = \;\;\text{prior}
 
 \begin{equation}\color{blue}
 S^{[\ell],[\ell]} = \frac{B^{[\ell], [\ell]}}{\sqrt{d}}
-\label{eq-S-fun-scaled-dot-prod-att}
+\label{eq-Y-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}

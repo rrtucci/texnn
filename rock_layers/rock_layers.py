@@ -64,7 +64,7 @@ nodes = [nodeQ, nodeK, nodeA, nodeV, nodeX, nodeY]
 
 print("\nmosaic:", mosaic)
 name = "rock_layers"
-dag = DAG(nodes, mosaic, name, plates)
+dag = DAG(name, mosaic, nodes, plates=plates)
 dag.write_tex_file(
     underline=True,
     fig_caption="Rock Layers.",

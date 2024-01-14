@@ -391,6 +391,8 @@ class DAG:
         nodes have empty list.
     empty_tile: str
         string for an empty tile, set to "_"
+    fancy_arrows: list[FancyArrow] | None
+        A list of FancyArrows
     mosaic: list[str]
         a list of strings of equal length which when stacked horizontally
         represent the bnet that we wish to draw, as a tile mosaic.
@@ -408,17 +410,24 @@ class DAG:
     """
     empty_tile = "_"
 
-    def __init__(self, nodes, mosaic, name, plates=None):
+    def __init__(self,
+                 name,
+                 mosaic,
+                 nodes,
+                 fancy_arrows=None,
+                 plates=None):
         """
         
         Parameters
         ----------
-        nodes: list[Node]
-        mosaic: list[str]
         name: str
+        mosaic: list[str]
+        nodes: list[Node]
+        fancy_arrows: list[FancyArrow] | None
         plates: list[Plate] | None
         """
         self.nodes = nodes
+        self.fancy_arrows = fancy_arrows
         self.plates = plates
         tiles = [node.tile_ch for node in nodes]
         assert len(tiles) == len(set(tiles)), \
@@ -560,7 +569,6 @@ class DAG:
                        fig_caption=None,
                        add_superscripts=True,
                        underline=True,
-                       fancy_arrows=None,
                        row_separation=None,
                        column_separation=None):
         """
@@ -574,9 +582,8 @@ class DAG:
         fig_caption: str | None
         add_superscripts: bool
         underline: bool
-        fancy_arrows: list[FancyArrow] | None
-        row_separation: int | None
-        column_separation: int | None
+        row_separation: float | None
+        column_separation: float | None
 
         Returns
         -------
@@ -628,8 +635,8 @@ class DAG:
                 for child in self.parent_to_children[parent]:
                     is_fancy_arrow = False
                     which_arrow = None
-                    if fancy_arrows:
-                        for fancy_arrow in fancy_arrows:
+                    if self.fancy_arrows:
+                        for fancy_arrow in self.fancy_arrows:
                             if fancy_arrow.recognize_endings(parent.name,
                                                              child.name):
                                 is_fancy_arrow = True
@@ -657,8 +664,7 @@ class DAG:
             str0 += r"\save" + "\n"
             for plate in self.plates:
                 str0 += plate.get_xy_str() + "\n"
-        str0 += r"\restore" + "\n"
-        if self.plates:
+            str0 += r"\restore" + "\n"
             for plate in self.plates:
                 str0 += r"\\" + "\n"
                 xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
@@ -851,7 +857,6 @@ class DAG:
                        footer=FOOTER,
                        eqs_in_blue=True,
                        conditional_prob=False,
-                       fancy_arrows=None,
                        row_separation=None,
                        column_separation=None):
         """
@@ -868,9 +873,8 @@ class DAG:
         footer: str
         eqs_in_blue: bool
         conditional_prob: bool
-        fancy_arrows: list[FancyArrow]
-        row_separation: int | None
-        column_separation: int |None
+        row_separation: float | None
+        column_separation: float |None
 
         Returns
         -------
@@ -885,7 +889,6 @@ class DAG:
             fig_caption=fig_caption,
             add_superscripts=add_superscripts,
             underline=underline,
-            fancy_arrows=fancy_arrows,
             row_separation=row_separation,
             column_separation=column_separation)
         str0 += self.get_equations_str(

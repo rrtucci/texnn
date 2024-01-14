@@ -197,13 +197,13 @@ plate0 = Plate(
     first_and_last_row=(2,9),
     first_and_last_col=(0,3),
     num_layers_str= r"\Lambda",
-    margin=3.0
+    margin=4.0
 )
 
 plates = [plate0]
 
 name = "decoder"
-dag = DAG(nodes, mosaic, name, plates=plates)
+dag = DAG(name, mosaic, nodes, plates=plates)
 fig_header = \
 r"""\begin{minipage}{.5\linewidth}
 \includegraphics[width=2in]{decoder.jpg}
@@ -217,4 +217,6 @@ fig_footer = \
 dag.write_tex_file(fig_header,
                    fig_footer,
                    fig_caption="Decoder.",
-                   header=BAY_HEADER)
+                   header=BAY_HEADER,
+                   column_separation=.2,
+                   row_separation=2.5)

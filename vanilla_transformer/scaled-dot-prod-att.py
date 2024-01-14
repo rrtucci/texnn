@@ -108,7 +108,7 @@ nodes = [
     Pnode
 ]
 name = "scaled-dot-prod-att"
-dag = DAG(nodes, mosaic, name)
+dag = DAG(name, mosaic, nodes)
 
 fig_header =\
 r"""\begin{minipage}{.5\linewidth}

@@ -154,7 +154,7 @@ plate0 = Plate(
 plates = [plate0]
 
 name = "encoder"
-dag = DAG(nodes, mosaic, name, plates=plates)
+dag = DAG(name, mosaic, nodes, plates=plates)
 fig_header = \
 r"""\begin{minipage}{.5\linewidth}
 \includegraphics[width=2in]{encoder.jpg}
@@ -168,4 +168,6 @@ fig_footer = \
 dag.write_tex_file(fig_header,
                    fig_footer,
                    fig_caption="Encoder.",
-                   header=BAY_HEADER)
+                   header=BAY_HEADER,
+                   column_separation=.1,
+                   row_separation=2.5)

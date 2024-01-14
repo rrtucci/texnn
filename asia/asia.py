@@ -98,7 +98,7 @@ nodes = [nodeV, nodeS, nodeT, nodeL,
 
 print("\nmosaic:", mosaic)
 name = "asia"
-dag = DAG(nodes, mosaic, name)
+dag = DAG(name, mosaic, nodes)
 dag.write_tex_file(
     underline=False,
     fig_caption="Asia Bnet.",

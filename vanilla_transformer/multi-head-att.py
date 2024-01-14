@@ -219,7 +219,7 @@ nodes = [
 
 
 name = "multi-head-att"
-dag = DAG(nodes, mosaic, name)
+dag = DAG(name, mosaic, nodes)
 header=\
 r"""\documentclass[12pt]{article}
 \input{bayesuvius.sty}
