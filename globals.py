@@ -1,4 +1,4 @@
-HEADER = \
+HEADER0 = \
 r"""\documentclass[12pt]{article}
 \usepackage[dvipsnames]{xcolor}
 \usepackage{graphicx}
@@ -10,7 +10,7 @@ r"""\documentclass[12pt]{article}
 
 """
 
-FOOTER = \
+FOOTER0 = \
 """
 
 
