@@ -205,10 +205,10 @@ plates = [plate0]
 name = "decoder"
 dag = DAG(name, mosaic, nodes, plates=plates)
 fig_header = \
-r"""\begin{minipage}{.5\linewidth}
+r"""\begin{minipage}{.4\linewidth}
 \includegraphics[width=2in]{decoder.jpg}
 \end{minipage}%blank lines between minispaces breaks this
-\begin{minipage}{.5\linewidth}
+\begin{minipage}{.6\linewidth}
 """
 
 fig_footer = \
