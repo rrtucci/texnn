@@ -1,12 +1,12 @@
 from texnn import *
 
 mosaic = [
-    "___P",
-    "_G__",
-    "_R__",
-    "_Y__",
-    "_B__",
-    "Q_KV",
+    "P___",
+    "__G_",
+    "__R_",
+    "__Y_",
+    "__B_",
+    "VK_Q",
 ]
 
 Qnode = Node(
@@ -48,7 +48,7 @@ Bnode = Node(
     parent_names=["Q", "K"],
     slice_str="[\ell], [\ell]",
     fun_name=None,
-    fun_args_str=r'("Q")^T "K"',
+    fun_args_str=r'("K")^T "Q"',
     params_str=None,
     color="Dandelion"
 )
@@ -83,7 +83,8 @@ Gnode = Node(
     fun_args_str=None,
     params_str=None,
     color="SpringGreen",
-    post_eq_comment=r"$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$"
+    post_eq_comment=r"$\left(\text{Note that }\sum_{\alp\in[\ell]} P^{\alp, "
+                    r"[\ell]}=1\right)$"
 )
 
 Pnode = Node(
@@ -94,7 +95,9 @@ Pnode = Node(
     fun_name=None,
     fun_args_str='"V" "P"',
     params_str=None,
-    color="Orchid"
+    color="Orchid",
+    post_eq_comment=r"$\left(\text{Note that }\sum_{\alp\in[\ell]} P^{\alp, "
+                    r"[\ell]}=1\right)$"
 )
 
 nodes = [

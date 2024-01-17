@@ -8,17 +8,17 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.5\linewidth}
 $$\xymatrix{
-&&&*+[F*:Orchid]{\underline{A}^{[d], [\ell]}}
+*+[F*:Orchid]{\underline{A}^{[d], [\ell]}}&&&
 \\
-&*+[F*:SpringGreen]{\underline{P}^{[\ell], [\ell]}}\ar[urr]&&
+&&*+[F*:SpringGreen]{\underline{P}^{[\ell], [\ell]}}\ar[ull]&
 \\
-&*+[F*:Lavender]{\underline{M}^{[\ell], [\ell]}}\ar[u]&&
+&&*+[F*:Lavender]{\underline{M}^{[\ell], [\ell]}}\ar[u]&
 \\
-&*+[F*:yellow]{\underline{S}^{[\ell],[\ell]}}\ar[u]&&
+&&*+[F*:yellow]{\underline{S}^{[\ell],[\ell]}}\ar[u]&
 \\
-&*+[F*:Dandelion]{\underline{B}^{[\ell], [\ell]}}\ar[u]&&
+&&*+[F*:Dandelion]{\underline{B}^{[\ell], [\ell]}}\ar[u]&
 \\
-*+[F*:Orchid]{\underline{Q}^{[d],[\ell]}}\ar[ur]&&*+[F*:Orchid]{\underline{K}^{[d],[\ell]}}\ar[ul]&*+[F*:Orchid]{\underline{V}^{[d],[\ell]}}\ar[uuuuu]
+*+[F*:Orchid]{\underline{V}^{[d],[\ell]}}\ar[uuuuu]&*+[F*:Orchid]{\underline{K}^{[d],[\ell]}}\ar[ur]&&*+[F*:Orchid]{\underline{Q}^{[d],[\ell]}}\ar[ul]
 }$$
 \end{minipage}
 \caption{Scaled Dot Product Attention.}
@@ -28,12 +28,12 @@ $$\xymatrix{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[d], [\ell]} = V^{[d],[\ell]} P^{[\ell], [\ell]}
+A^{[d], [\ell]} = V^{[d],[\ell]} P^{[\ell], [\ell]}\;\;\text{$\left(\text{Note that }\sum_{\alp\in[\ell]} P^{\alp, [\ell]}=1\right)$}
 \label{eq-P-fun-scaled-dot-prod-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-B^{[\ell], [\ell]} = (Q^{[d],[\ell]})^T K^{[d],[\ell]}
+B^{[\ell], [\ell]} = (K^{[d],[\ell]})^T Q^{[d],[\ell]}
 \label{eq-B-fun-scaled-dot-prod-att}
 \end{equation}
 
@@ -48,7 +48,7 @@ M^{[\ell], [\ell]} = \text{mask}(S^{[\ell],[\ell]})
 \end{equation}
 
 \begin{equation}\color{blue}
-P^{[\ell], [\ell]} = \text{softmax}(M^{[\ell], [\ell]})\;\;\text{$(\sum_{\alp\in[\ell]} P^{[\ell], \alp}=1)$}
+P^{[\ell], [\ell]} = \text{softmax}(M^{[\ell], [\ell]})\;\;\text{$\left(\text{Note that }\sum_{\alp\in[\ell]} P^{\alp, [\ell]}=1\right)$}
 \label{eq-G-fun-scaled-dot-prod-att}
 \end{equation}
 
