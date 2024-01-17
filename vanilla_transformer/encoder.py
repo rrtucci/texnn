@@ -12,7 +12,7 @@ mosaic = [
 ]
 
 nodeq = Node(
-    name="q",
+    name="v",
     tile_ch='q',
     parent_names=["n"],
     slice_str="[D], [\ell]",

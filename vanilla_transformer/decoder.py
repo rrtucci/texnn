@@ -68,7 +68,7 @@ nodey = Node(
 nodeO = Node(
     name="o",
     tile_ch='O',
-    parent_names=["q", "k", "v"],
+    parent_names=["v", "k", "q"],
     slice_str="[D],[\ell]",
     fun_name="multi_head_attention",
     fun_args_str=None,
@@ -86,7 +86,7 @@ nodea = Node(
     color="yellow"
 )
 nodev = Node(
-    name="v",
+    name="q",
     tile_ch='v',
     parent_names=["a"],
     slice_str="[D], [\ell]",
@@ -157,7 +157,7 @@ nodeR = Node(
     post_eq_comment="prior"
 )
 nodeq = Node(
-    name="q",
+    name="v",
     tile_ch='q',
     parent_names=[],
     slice_str="[D], [\ell]",

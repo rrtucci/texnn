@@ -20,7 +20,7 @@ $$\xymatrix@R=2.5pc@C=0.2pc{
 \\
 &*+[F*:Dandelion]{\underline{o}^{[\Lambda],[D],[\ell]}}\ar[urr]&&
 \\
-*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[\Lambda],[D], [\ell]}}\ar[uu]\ar[l]
+*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[\Lambda],[D], [\ell]}}\ar[uu]\ar[l]
 \\
 &*+[F*:Dandelion]{\underline{O}^{[\Lambda],[D],[\ell]}}\ar[urr]&&
 \\
@@ -103,18 +103,18 @@ k^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
 \end{equation}
 
 \begin{equation}\color{blue}
-o^{[\Lambda],[D],[\ell]} = \text{multi\_head\_attention}(q^{[\Lambda],[D], [\ell]},k^{[\Lambda],[D], [\ell]},v^{[\Lambda],[D], [\ell]})
+o^{[\Lambda],[D],[\ell]} = \text{multi\_head\_attention}(v^{[\Lambda],[D], [\ell]},k^{[\Lambda],[D], [\ell]},q^{[\Lambda],[D], [\ell]})
 \label{eq-O-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
-\label{eq-q-fun-decoder}
+q^{[\Lambda],[D], [\ell]} = a^{[\Lambda],[D], [\ell]}
+\label{eq-v-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-v^{[\Lambda],[D], [\ell]} = a^{[\Lambda],[D], [\ell]}
-\label{eq-v-fun-decoder}
+v^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
+\label{eq-q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
