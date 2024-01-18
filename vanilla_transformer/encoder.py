@@ -153,6 +153,7 @@ plate0 = Plate(
 
 plates = [plate0]
 
+print("\nmosaic:", mosaic)
 name = "encoder"
 dag = DAG(name, mosaic, nodes, plates=plates)
 fig_header = \

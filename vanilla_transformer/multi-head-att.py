@@ -5,44 +5,54 @@ mosaic = [
     "____C____",
     "_X__Y__Z_",
     "123456789",
-    "_Q__K__V_"
+    "_Q__K__V_",
+    "____e____"
 ]
 mosaic = DAG.rotate_mosaic(mosaic, "+270_degs")
+
+nodee = Node(
+    name="e",
+    tile_ch='e',
+    parent_names=[],
+    slice_str=r"[d], [\ell]",
+    fun_name=None,
+    fun_args_str=None,
+    params_str=None,
+    color="SpringGreen",
+    post_eq_comment="prior"
+)
 
 nodeQ = Node(
     name="Q",
     tile_ch='Q',
-    parent_names=[],
+    parent_names=["e"],
     slice_str=r"[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'W_\rvq^{[D],[d]}"e"',
     params_str=None,
-    color="Dandelion",
-    post_eq_comment="prior"
+    color="Dandelion"
 )
 
 nodeK = Node(
     name="K",
     tile_ch='K',
-    parent_names=[],
+    parent_names=["e"],
     slice_str=r"[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'W_\rvk^{[D],[d]}"e"',
     params_str=None,
-    color="Dandelion",
-    post_eq_comment="prior"
+    color="Dandelion"
 )
 
 nodeV = Node(
     name="V",
     tile_ch='V',
-    parent_names=[],
+    parent_names=["e"],
     slice_str=r"[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'W_\rvv^{[D],[d]}"e"',
     params_str=None,
-    color="Dandelion",
-    post_eq_comment="prior"
+    color="Dandelion"
 )
 
 node1 = Node(
@@ -209,7 +219,7 @@ nodeL = Node(
 )
 
 
-nodes = [
+nodes = [nodee,
     nodeQ, nodeK, nodeV,
     node1, node2, node3, node4, node5, node6, node7, node8, node9,
     nodeX, nodeY, nodeZ,
@@ -217,7 +227,7 @@ nodes = [
     nodeL
 ]
 
-
+print("\nmosaic:", mosaic)
 name = "multi-head-att"
 dag = DAG(name, mosaic, nodes)
 header=\
@@ -227,10 +237,10 @@ r"""\documentclass[12pt]{article}
 
 """
 fig_header =\
-r"""\begin{minipage}{.5\linewidth}
+r"""\begin{minipage}{.3\linewidth}
 \includegraphics[width=2in]{multi-head-att.png}
 \end{minipage}%blank lines between minispaces breaks this
-\begin{minipage}{.5\linewidth}
+\begin{minipage}{.7\linewidth}
 """
 
 fig_footer=\
@@ -239,4 +249,5 @@ fig_footer=\
 dag.write_tex_file(fig_header,
                    fig_footer,
                    fig_caption="Multi-head Attention.",
-                   header=header)
+                   header=header,
+                   column_separation=.7)

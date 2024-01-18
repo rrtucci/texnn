@@ -110,6 +110,8 @@ nodes = [
     Gnode,
     Pnode
 ]
+
+print("\nmosaic:", mosaic)
 name = "scaled-dot-prod-att"
 dag = DAG(name, mosaic, nodes)
 
