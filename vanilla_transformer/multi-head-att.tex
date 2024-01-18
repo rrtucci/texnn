@@ -3,38 +3,38 @@
 \begin{document}
 
 \begin{figure}[h!]\centering
-\begin{minipage}{.3\linewidth}
+\begin{minipage}{.35\linewidth}
 \includegraphics[width=2in]{multi-head-att.png}
 \end{minipage}%blank lines between minispaces breaks this
-\begin{minipage}{.7\linewidth}
+\begin{minipage}{.65\linewidth}
 $$\xymatrix@C=0.7pc{
-&&*+[F*:Orchid]{\underline{Q_0}^{[d],[\ell]}}\ar[dr]&&&
+&&*+[F*:Orchid]{\underline{Q_0}^{[d],[\ell]}}\ar[dddr]&&&
 \\
-&*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{Q_1}^{[d],[\ell]}}\ar[dddr]&*+[F*:Orchid]{\underline{A_0}^{[d],[\ell]}}\ar[dddr]&&
+&*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&&
 \\
-&&*+[F*:Orchid]{\underline{Q_2}^{[d],[\ell]}}\ar[dddddr]&&&
+&&*+[F*:Orchid]{\underline{Q_1}^{[d],[\ell]}}\ar[dddr]&&&
 \\
-&&*+[F*:Orchid]{\underline{K_0}^{[d],[\ell]}}\ar[uur]&&&
+&&*+[F*:Orchid]{\underline{K_0}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_0}^{[d],[\ell]}}\ar[dr]&&
 \\
-*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]\ar[uuur]\ar[dddr]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{K_1}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[\ell]}}\ar[r]&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[D],[\ell]}}
+*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]\ar[uuur]\ar[dddr]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[D],[\ell]}}
 \\
-&&*+[F*:Orchid]{\underline{K_2}^{[d],[\ell]}}\ar[ddr]&&&
+&&*+[F*:Orchid]{\underline{K_1}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[\ell]}}\ar[ur]&&
 \\
-&&*+[F*:Orchid]{\underline{V_0}^{[d],[\ell]}}\ar[uuuuur]&&&
+&&*+[F*:Orchid]{\underline{V_0}^{[d],[\ell]}}\ar[uuur]&&&
 \\
-&*+[F*:Dandelion]{\underline{V}^{[D], [\ell]}}\ar[ur]\ar[r]\ar[dr]&*+[F*:Orchid]{\underline{V_1}^{[d],[\ell]}}\ar[uuur]&*+[F*:Orchid]{\underline{A_2}^{[d],[\ell]}}\ar[uuur]&&
+&*+[F*:Dandelion]{\underline{V}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&&
 \\
-&&*+[F*:Orchid]{\underline{V_2}^{[d],[\ell]}}\ar[ur]&&&
+&&*+[F*:Orchid]{\underline{V_1}^{[d],[\ell]}}\ar[uuur]&&&
 }$$
 \end{minipage}
-\caption{Multi-head Attention.}
+\caption{Multi-head Attention with 2 heads.}
 \label{fig-texnn-for-multi-head-att}
 \end{figure}
 
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[D],[\ell]} = [A_0^{[d],[\ell]}|A_1^{[d],[\ell]}|A_2^{[d],[\ell]}]
+A^{[D],[\ell]} = [A_0^{[d],[\ell]}|A_1^{[d],[\ell]}]
 \label{eq-C-fun-multi-head-att}
 \end{equation}
 
@@ -46,11 +46,6 @@ A_0^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_0^{[d],[\ell]},K_0^{[d],[\ell
 \begin{equation}\color{blue}
 A_1^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_1^{[d],[\ell]},K_1^{[d],[\ell]},V_1^{[d],[\ell]})
 \label{eq-Y-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-A_2^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_2^{[d],[\ell]},K_2^{[d],[\ell]},V_2^{[d],[\ell]})
-\label{eq-Z-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -66,11 +61,6 @@ K_0^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project 
 \begin{equation}\color{blue}
 K_1^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
 \label{eq-5-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-K_2^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-6-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -94,11 +84,6 @@ Q_1^{[d],[\ell]} = \text{linear}(Q^{[D], [\ell]})\;\;\text{(split, then project 
 \end{equation}
 
 \begin{equation}\color{blue}
-Q_2^{[d],[\ell]} = \text{linear}(Q^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-3-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
 V^{[D], [\ell]} = W_\rvv^{[D],[d]}e^{[d], [\ell]}
 \label{eq-V-fun-multi-head-att}
 \end{equation}
@@ -111,11 +96,6 @@ V_0^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project 
 \begin{equation}\color{blue}
 V_1^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
 \label{eq-8-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-V_2^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
-\label{eq-9-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}

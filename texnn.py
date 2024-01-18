@@ -431,10 +431,10 @@ class DAG:
         self.plates = plates
         tiles = [node.tile_ch for node in nodes]
         assert len(tiles) == len(set(tiles)), \
-            "some tile character is repeated."
+            f"some tile character is repeated.{tiles}"
         node_names = [node.name for node in nodes]
         assert len(node_names) == len(set(node_names)), \
-            "some node name is repeated."
+            f"some node name is repeated.{node_names}"
         self.nodes.sort(key=lambda node: node.name)
         self.mosaic = mosaic
         len0 = len(self.mosaic)
