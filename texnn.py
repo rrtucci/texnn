@@ -55,11 +55,16 @@ class Node:
     fun_name: str | None
         the name of the function
     name: str
-        a name that identifies the node uniquely. We recommend that you input
-        all node names in double quotes and all tile_ch in single quotes.
-        That way, if you want to replace the name of a node from "A"
-        to "B", and the tile_ch='A', you can do a replace of "A"  without
-        changing the tile_ch.
+        a name that identifies the node uniquely.
+
+        LaTex commands are allowed in the node name, but backslashes must be
+        escaped with double backslash.
+
+        We recommend that you input all node names in double quotes and all
+        tile_ch in single quotes. That way, if you want to replace the name
+        of a node from "A" to "B", and the tile_ch='A', you can do a replace
+        of "A"  without changing the tile_ch.
+
     params_str: str | None
         a string containing parameter names and their values
     parent_names: list[str]
@@ -104,7 +109,6 @@ class Node:
         post_eq_comment: str | None
         full_right_side_of_eq: str | None
         """
-
         self.name = name
         self.style_name = style_name
         assert len(tile_ch) == 1, \
@@ -294,6 +298,8 @@ class Plate:
         0-based (>=0) ints. For example, "(3,4)"
     margin: float
     num_layers_str: str
+    only_one_layer: bool
+        True iff plate has only one layer
     style_name: str
 
     """
@@ -301,7 +307,7 @@ class Plate:
     def __init__(self,
                  first_and_last_row,
                  first_and_last_col,
-                 num_layers_str="2",
+                 num_layers_str="1",
                  margin=1.0,
                  style_name="shaded"):
         """
@@ -320,6 +326,11 @@ class Plate:
         self.num_layers_str = num_layers_str
         self.margin = margin
         self.style_name = style_name
+        if self.num_layers_str.isdigit() and \
+                int(self.num_layers_str) == 1:
+            self.only_one_layer = True
+        else:
+            self.only_one_layer = False
 
     def get_xy_str(self):
         """
@@ -429,19 +440,32 @@ class DAG:
         self.nodes = nodes
         self.fancy_arrows = fancy_arrows
         self.plates = plates
+
         tiles = [node.tile_ch for node in nodes]
         assert len(tiles) == len(set(tiles)), \
             f"some tile character is repeated.{tiles}"
+
         node_names = [node.name for node in nodes]
         assert len(node_names) == len(set(node_names)), \
             f"some node name is repeated.{node_names}"
         self.nodes.sort(key=lambda node: node.name)
+
+        if fancy_arrows:
+            for arrow in fancy_arrows:
+                assert arrow.parent_name in node_names,\
+                    "arrow parent name not found in node names. " \
+                    f"'{arrow.parent_name}'"
+                assert arrow.child_name in node_names, \
+                    "arrow child name not found in node names. "\
+                    f"'{arrow.child_name}'"
+
         self.mosaic = mosaic
         len0 = len(self.mosaic)
         len1 = len(self.mosaic[0])
         for row in range(len0):
             assert len(self.mosaic[row]) == len1, \
                 f"Tile rows not all of same length.\n{self.mosaic}"
+
         self.name = name
         self.node_to_tile_loc = self.get_node_to_tile_loc()
         self.parent_to_children = None
@@ -449,8 +473,7 @@ class DAG:
         self.set_parentage()
         if plates:
             for plate in plates:
-                if plate.num_layers_str.isdigit() and \
-                        int(plate.num_layers_str) == 1:
+                if plate.only_one_layer:
                     continue
                 owned_nodes = plate.get_owned_nodes(self.node_to_tile_loc)
                 str0 = "[" + plate.num_layers_str + "]"
@@ -666,10 +689,11 @@ class DAG:
                 str0 += plate.get_xy_str() + "\n"
             str0 += r"\restore" + "\n"
             for plate in self.plates:
-                str0 += r"\\" + "\n"
-                xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
-                str0 += "*+[F" + xy_str0 + "]{\;\;}&"
-                str0 += r"\text{$" + plate.num_layers_str + "$ layers}\n"
+                if not plate.only_one_layer:
+                    str0 += r"\\" + "\n"
+                    xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
+                    str0 += "*+[F" + xy_str0 + "]{\;\;}&"
+                    str0 += r"\text{$" + plate.num_layers_str + "$ layers}\n"
         str0 += "}$$\n"
         str0 += fig_footer
         str0 += r"\caption{" + fig_caption + "}\n"
@@ -844,7 +868,7 @@ class DAG:
         elif how == "+270_degs":
             new_tile_arr = np.rot90(np.rot90(np.rot90(tile_arr)))
         else:
-            assert False
+            assert False, "illegal rotation str"
         return DAG.get_mosaic_from_tile_array(new_tile_arr)
 
     def write_tex_file(self,

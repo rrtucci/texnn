@@ -12,17 +12,17 @@ $$\xymatrix@R=2.5pc@C=0.2pc{
 \\
 &&&*+[F*:Orchid]{\underline{I}^{[L],[\ell]}}\ar[u]
 \\
-&&&*+[F*:yellow]{\underline{Y}^{[\Lambda],[D], [\ell]}}\ar[u]
+&&&*+[F*:yellow]{\underline{Y}^{[\Lambda],[d], [\ell]}}\ar[u]
 \\
-&&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[D], [\ell]}}\ar[ur]&
+&&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[d], [\ell]}}\ar[ur]&
 \\
-&&&*+[F*:yellow]{\underline{j}^{[\Lambda],[D], [\ell]}}\ar[ul]\ar[uu]
+&&&*+[F*:yellow]{\underline{j}^{[\Lambda],[d], [\ell]}}\ar[ul]\ar[uu]
 \\
-&*+[F*:Dandelion]{\underline{o}^{[\Lambda],[D],[\ell]}}\ar[urr]&&
+&*+[F*:Dandelion]{\underline{o}^{[\Lambda],[d],[\ell]}}\ar[urr]&&
 \\
-*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[\Lambda],[D], [\ell]}}\ar[uu]\ar[l]
+*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[\Lambda],[d], [\ell]}}\ar[uu]\ar[l]
 \\
-&*+[F*:Dandelion]{\underline{O}^{[\Lambda],[D],[\ell]}}\ar[urr]&&
+&*+[F*:Dandelion]{\underline{O}^{[\Lambda],[d],[\ell]}}\ar[urr]&&
 \\
 *+[F*:Dandelion]{\underline{Q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[\Lambda],[D], [\ell]}}\ar[ul]&
 \\
@@ -43,12 +43,12 @@ $$\xymatrix@R=2.5pc@C=0.2pc{
 \begin{subequations}
 
 \begin{equation}\color{blue}
-F^{[\Lambda],[D], [\ell]} = \text{feed\_forward\_nn}(j^{[\Lambda],[D], [\ell]})
+F^{[\Lambda],[d], [\ell]} = \text{feed\_forward\_nn}(j^{[\Lambda],[d], [\ell]})
 \label{eq-B-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-I^{[L],[\ell]} = W^{[L],[\Lambda], [D]}Y^{[\Lambda],[D], [\ell]}
+I^{[L],[\ell]} = W^{[L],[\Lambda], [d]}Y^{[\Lambda],[d], [\ell]}
 \label{eq-I-fun-decoder}
 \end{equation}
 
@@ -58,7 +58,7 @@ K^{[\Lambda],[D], [\ell]} = W_\rvk^{[D],[d]}e^{[\Lambda],[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[\Lambda],[D],[\ell]} = \text{multi\_head\_attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
+O^{[\Lambda],[d],[\ell]} = \text{multi\_head\_attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
 \label{eq-o-fun-decoder}
 \end{equation}
 
@@ -78,12 +78,12 @@ V^{[\Lambda],[D], [\ell]} = W_\rvv^{[D],[d]}e^{[\Lambda],[d],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-Y^{[\Lambda],[D], [\ell]} = \text{normalize}(F^{[\Lambda],[D], [\ell]} + a^{[\Lambda],[D], [\ell]})
+Y^{[\Lambda],[d], [\ell]} = \text{normalize}(F^{[\Lambda],[d], [\ell]} + a^{[\Lambda],[d], [\ell]})
 \label{eq-Y-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-a^{[\Lambda],[D], [\ell]} = \text{normalize}(O^{[\Lambda],[D],[\ell]} + e^{[\Lambda],[d],[\ell]})
+a^{[\Lambda],[d], [\ell]} = \text{normalize}(O^{[\Lambda],[d],[\ell]} + e^{[\Lambda],[d],[\ell]})
 \label{eq-a-fun-decoder}
 \end{equation}
 
@@ -93,7 +93,7 @@ e^{[\Lambda],[d],[\ell]} = E^{[\Lambda],[d],[L]}x^{[L],[\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-j^{[\Lambda],[D], [\ell]} = \text{normalize}(o^{[\Lambda],[D],[\ell]} + a^{[\Lambda],[D], [\ell]})
+j^{[\Lambda],[d], [\ell]} = \text{normalize}(o^{[\Lambda],[d],[\ell]} + a^{[\Lambda],[d], [\ell]})
 \label{eq-j-fun-decoder}
 \end{equation}
 
@@ -103,12 +103,12 @@ k^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
 \end{equation}
 
 \begin{equation}\color{blue}
-o^{[\Lambda],[D],[\ell]} = \text{multi\_head\_attention}(v^{[\Lambda],[D], [\ell]},k^{[\Lambda],[D], [\ell]},q^{[\Lambda],[D], [\ell]})
+o^{[\Lambda],[d],[\ell]} = \text{multi\_head\_attention}(v^{[\Lambda],[D], [\ell]},k^{[\Lambda],[D], [\ell]},q^{[\Lambda],[D], [\ell]})
 \label{eq-O-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[\Lambda],[D], [\ell]} = a^{[\Lambda],[D], [\ell]}
+q^{[\Lambda],[D], [\ell]} = U_\rvq^{[D], [d]}a^{[\Lambda],[d], [\ell]}
 \label{eq-v-fun-decoder}
 \end{equation}
 

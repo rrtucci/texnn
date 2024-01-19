@@ -165,9 +165,9 @@ nodeL = Node(
     name="O",
     tile_ch='F',
     parent_names=["A"],
-    slice_str="[D],[\ell]",
+    slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'W_\rvo^{[D],[D]}"A"',
+    fun_args_str=r'W_\rvo^{[d],[D]}"A"',
     params_str=None,
     color="Dandelion"
 )
@@ -202,6 +202,8 @@ fig_footer=\
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Multi-head Attention with 2 heads.",
+                   fig_caption="Multi-head Attention with 2 heads."
+                               "Note that the input $\\rve$ and output "
+                               "$\\underline{O}$ have the same shape.",
                    header=header,
                    column_separation=.7)

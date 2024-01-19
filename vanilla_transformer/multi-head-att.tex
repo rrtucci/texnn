@@ -16,7 +16,7 @@ $$\xymatrix@C=0.7pc{
 \\
 &&*+[F*:Orchid]{\underline{K_0}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_0}^{[d],[\ell]}}\ar[dr]&&
 \\
-*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]\ar[uuur]\ar[dddr]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[D],[\ell]}}
+*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]\ar[uuur]\ar[dddr]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[d],[\ell]}}
 \\
 &&*+[F*:Orchid]{\underline{K_1}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[\ell]}}\ar[ur]&&
 \\
@@ -27,7 +27,7 @@ $$\xymatrix@C=0.7pc{
 &&*+[F*:Orchid]{\underline{V_1}^{[d],[\ell]}}\ar[uuur]&&&
 }$$
 \end{minipage}
-\caption{Multi-head Attention with 2 heads.}
+\caption{Multi-head Attention with 2 heads.Note that the input $\rve$ and output $\underline{O}$ have the same shape.}
 \label{fig-texnn-for-multi-head-att}
 \end{figure}
 
@@ -64,7 +64,7 @@ K_1^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project 
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[D],[\ell]} = W_\rvo^{[D],[D]}A^{[D],[\ell]}
+O^{[d],[\ell]} = W_\rvo^{[d],[D]}A^{[D],[\ell]}
 \label{eq-F-fun-multi-head-att}
 \end{equation}
 
