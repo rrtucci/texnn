@@ -50,7 +50,7 @@ Bnode = Node(
     fun_name=None,
     fun_args_str=r'("K")^T "Q"',
     params_str=None,
-    color="Dandelion"
+    color="Orchid"
 )
 Ynode = Node(
     name="S",

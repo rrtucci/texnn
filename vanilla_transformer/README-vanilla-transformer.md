@@ -14,6 +14,8 @@ This example is based on the following Refs. (all excellent, in their own way):
 
 5. [graphdeplearning](https://graphdeeplearning.github.io/post/transformers-are-gnns/)
 
+6. [Wikipedia article on transformers](https://en.wikipedia.org/wiki/Transformer_(machine_learning_model))
+
 It uses this figure from the "Attention is all you need" paper
 ![vanilla transformer](transformer.png)
 
