@@ -121,7 +121,7 @@ nodes = [
 ]
 
 plate0 = Plate(
-    first_and_last_row=(0,6),
+    first_and_last_row=(0,5),
     first_and_last_col=(0,3),
     num_layers_str= r"\Lambda",
     margin= 4.0
