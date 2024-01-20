@@ -8,9 +8,7 @@
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.6\linewidth}
 $$\xymatrix@R=2.5pc@C=0.1pc{
-*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}&&
-\\
-*+[F*:yellow]{\underline{n}^{[\Lambda],[d], [\ell]}}\ar[ur]\ar[u]&&&
+*+[F*:yellow]{\underline{n}^{[\Lambda],[d], [\ell]}}&&&
 \\
 &*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[d], [\ell]}}\ar[ul]&&
 \\
@@ -22,7 +20,7 @@ $$\xymatrix@R=2.5pc@C=0.1pc{
 \\
 *+[F*:gray]{\underline{e}^{[\Lambda],[d], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
 \\
-*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
+*+[F*:Lavender]{\underline{x}^{[\Lambda],[L],[\ell]}}\ar[u]&&&
 \save
 \POS"1,1"."7,1"."1,4"."7,4"!C*+<4.0em>\frm{-,}
 \restore
@@ -67,13 +65,8 @@ V^{[\Lambda],[D], [\ell]} = W_\rvv^{[D], [d]}e^{[\Lambda],[d], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[\Lambda],[d], [\ell]} = E^{[\Lambda],[d], [L]}x^{[L],[\ell]}
+e^{[\Lambda],[d], [\ell]} = E^{[\Lambda],[d], [L]}x^{[\Lambda],[L],[\ell]}
 \label{eq-p-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-k^{[\Lambda],[D], [\ell]} = U_\rvk^{[D],[d]}n^{[\Lambda],[d], [\ell]}
-\label{eq-k-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -82,12 +75,7 @@ n^{[\Lambda],[d], [\ell]} = \text{normalize}(N^{[\Lambda],[d], [\ell]} + F^{[\La
 \end{equation}
 
 \begin{equation}\color{blue}
-v^{[\Lambda],[D], [\ell]} = U_\rvv^{[D], [d]}n^{[\Lambda],[d], [\ell]}
-\label{eq-q-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-x^{[L],[\ell]} = \;\;\text{prior}
+x^{[\Lambda],[L],[\ell]} = \;\;\text{prior}
 \label{eq-R-fun-encoder}
 \end{equation}
 

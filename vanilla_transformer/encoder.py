@@ -1,7 +1,6 @@
 from texnn import *
 
 mosaic = [
-    "qk__",
     "n___",
     "_F__",
     "N___",
@@ -10,27 +9,6 @@ mosaic = [
     "p___",
     "R___"
 ]
-
-nodeq = Node(
-    name="v",
-    tile_ch='q',
-    parent_names=["n"],
-    slice_str="[D], [\ell]",
-    fun_name=None,
-    fun_args_str=r'U_\rvv^{[D], [d]}"n"',
-    params_str=None,
-    color="Dandelion"
-)
-nodek = Node(
-    name="k",
-    tile_ch='k',
-    parent_names=["n"],
-    slice_str="[D], [\ell]",
-    fun_name=None,
-    fun_args_str=r'U_\rvk^{[D],[d]}"n"',
-    params_str=None,
-    color="Dandelion"
-)
 
 noden = Node(
     name="n",
@@ -133,8 +111,6 @@ nodeR = Node(
 )
 
 nodes = [
-    nodeq,
-    nodek,
     noden,
     nodeF,
     nodeN,

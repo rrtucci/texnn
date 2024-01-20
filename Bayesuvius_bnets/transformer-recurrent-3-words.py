@@ -232,10 +232,32 @@ qx2 = FancyArrow(parent_name="q_2^t",
 fancy_arrows = [xq0, qx0, xq1, qx1, xq2, qx2,
                 xv0, xv1, xv2, xk0, xk1, xk2]
 
+plateX = Plate(first_and_last_row= (1,7),
+               first_and_last_col=(0,0),
+               style_name="dashed")
+
+plate0 = Plate(first_and_last_row= (0,2),
+               first_and_last_col=(1,2),
+               style_name="dashed",
+               margin=1.5)
+
+plate1 = Plate(first_and_last_row= (3,5),
+               first_and_last_col=(1,2),
+               style_name="dashed",
+               margin=1.5)
+
+plate2 = Plate(first_and_last_row= (6,8),
+               first_and_last_col=(1,2),
+               style_name="dashed",
+               margin=1.5)
+
+plates = [plateX, plate0, plate1, plate2]
+
 print("\nmosaic:", mosaic)
 name = "transformer-recurrent-3-words"
 dag = DAG(name, mosaic, nodes,
-          fancy_arrows=fancy_arrows)
+          fancy_arrows=fancy_arrows,
+          plates=plates)
 dag.write_tex_file(
     header=BAY_HEADER,
     fig_caption="Recurrent single-head attention for 3 words.",

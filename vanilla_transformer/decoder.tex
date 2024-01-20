@@ -16,11 +16,11 @@ $$\xymatrix@R=2.5pc@C=0.2pc{
 \\
 &&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[d], [\ell]}}\ar[ur]&
 \\
-&&&*+[F*:yellow]{\underline{j}^{[\Lambda],[d], [\ell]}}\ar[ul]\ar[uu]
+&*+[F*:Dandelion]{\underline{o}^{[\Lambda],[d],[\ell]}}\ar[rr]&&*+[F*:yellow]{\underline{j}^{[\Lambda],[d], [\ell]}}\ar[ul]\ar[uu]
 \\
-&*+[F*:Dandelion]{\underline{o}^{[\Lambda],[d],[\ell]}}\ar[urr]&&
+*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&
 \\
-*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&*+[F*:yellow]{\underline{a}^{[\Lambda],[d], [\ell]}}\ar[uu]\ar[l]
+*+[F*:yellow]{\underline{n}^{[\Lambda],[D], [\ell]}}\ar[ur]\ar[u]&&&*+[F*:yellow]{\underline{a}^{[\Lambda],[d], [\ell]}}\ar[uu]\ar[ul]
 \\
 &*+[F*:Dandelion]{\underline{O}^{[\Lambda],[d],[\ell]}}\ar[urr]&&
 \\
@@ -98,8 +98,13 @@ j^{[\Lambda],[d], [\ell]} = \text{normalize}(o^{[\Lambda],[d],[\ell]} + a^{[\Lam
 \end{equation}
 
 \begin{equation}\color{blue}
-k^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
+k^{[\Lambda],[D], [\ell]} = U_\rvk^{[D],[d]}n^{[\Lambda],[D], [\ell]}
 \label{eq-k-fun-decoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+n^{[\Lambda],[D], [\ell]} = \;\;\text{Prior comming from Encoder.}
+\label{eq-n-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -108,13 +113,13 @@ o^{[\Lambda],[d],[\ell]} = \text{multi\_head\_attention}(v^{[\Lambda],[D], [\ell
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[\Lambda],[D], [\ell]} = U_\rvq^{[D], [d]}a^{[\Lambda],[d], [\ell]}
-\label{eq-v-fun-decoder}
+q^{[\Lambda],[D], [\ell]} = U_\rvq^{[D],[d]}a^{[\Lambda],[d], [\ell]}
+\label{eq-q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-v^{[\Lambda],[D], [\ell]} = \;\;\text{prior, obtained from encoder.}
-\label{eq-q-fun-decoder}
+v^{[\Lambda],[D], [\ell]} = U_\rvv^{[D], [d]}n^{[\Lambda],[D], [\ell]}
+\label{eq-v-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}

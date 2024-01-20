@@ -5,9 +5,9 @@ mosaic = [
     "___I",
     "___Y",
     "__B_",
-    "___j",
-    "_O__",
-    "qkva",
+    "_O_j",
+    "vkq_",
+    "n__a",
     "_o__",
     "QKV_",
     "___p",
@@ -86,12 +86,12 @@ nodea = Node(
     color="yellow"
 )
 nodev = Node(
-    name="q",
+    name="v",
     tile_ch='v',
-    parent_names=["a"],
+    parent_names=["n"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=r'U_\rvq^{[D], [d]}"a"',
+    fun_args_str=r'U_\rvv^{[D], [d]}"n"',
     params_str=None,
     color="Dandelion"
 )
@@ -157,27 +157,38 @@ nodeR = Node(
     post_eq_comment="prior"
 )
 nodeq = Node(
-    name="v",
+    name="q",
     tile_ch='q',
-    parent_names=[],
+    parent_names=["a"],
     slice_str="[D], [\ell]",
     fun_name=None,
-    fun_args_str=None,
+    fun_args_str=r'U_\rvq^{[D],[d]}"a"',
     params_str=None,
-    color="Dandelion",
-    post_eq_comment="prior, obtained from encoder."
+    color="Dandelion"
 )
 nodek = Node(
     name="k",
     tile_ch='k',
+    parent_names=["n"],
+    slice_str="[D], [\ell]",
+    fun_name=None,
+    fun_args_str=r'U_\rvk^{[D],[d]}"n"',
+    params_str=None,
+    color="Dandelion"
+)
+
+noden = Node(
+    name="n",
+    tile_ch='n',
     parent_names=[],
     slice_str="[D], [\ell]",
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="Dandelion",
-    post_eq_comment="prior, obtained from encoder."
+    color="yellow",
+    post_eq_comment="Prior comming from Encoder."
 )
+
 
 nodes = [
     nodeG,
@@ -186,12 +197,12 @@ nodes = [
     nodeB,
     nodey,
     nodeO,
-    nodea, nodev,
+    nodea, nodeq,
     nodeo,
     nodeQ, nodeK, nodeV,
     nodep,
     nodeR,
-    nodeq, nodek]
+    nodek, nodev, noden]
 
 plate0 = Plate(
     first_and_last_row=(2,9),
