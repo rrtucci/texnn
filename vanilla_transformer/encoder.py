@@ -168,7 +168,7 @@ fig_footer = \
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Encoder of Vanilla Transform Net.",
+                   fig_caption="Encoder of Vanilla Transformer Net.",
                    header=BAY_HEADER,
                    column_separation=.1,
                    row_separation=2.5)
