@@ -127,5 +127,5 @@ fig_footer=\
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Scaled Dot Product Attention.",
+                   fig_caption="Single Head Attention. (Scaled Dot Product)",
                    header=BAY_HEADER)
