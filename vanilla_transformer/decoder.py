@@ -229,7 +229,7 @@ nk= FancyArrow(
     subscript="U_\\rvk")
 
 nq= FancyArrow(
-    parent_name="n",
+    parent_name="J",
     child_name="q",
     superscript="U_\\rvq")
 
