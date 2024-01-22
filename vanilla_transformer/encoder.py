@@ -167,9 +167,9 @@ fig_footer = \
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Encoder of Vanilla Transformer Net. The "
-                               "boxed part is repeated $\Lam$ times in "
-                               "a series connection.",
+                   fig_caption="Encoder of Vanilla Transformer Net. $\Lam$ "
+                               "copies of the boxed part are "
+                               "connected in series.",
                    header=BAY_HEADER,
                    column_separation=.1,
                    row_separation=3.5)
