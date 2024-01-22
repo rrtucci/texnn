@@ -130,9 +130,9 @@ node8 = Node(
 nodeX = Node(
     name="A_0",
     tile_ch='X',
-    parent_names=["Q_0", "K_0", "V_0"],
+    parent_names=["V_0", "K_0", "Q_0"],
     slice_str="[d],[\ell]",
-    fun_name="scaled_dot_prod_att",
+    fun_name="Attention",
     fun_args_str=None,
     params_str=None,
     color="Orchid"
@@ -142,9 +142,9 @@ nodeX = Node(
 nodeY = Node(
     name="A_1",
     tile_ch='Y',
-    parent_names=["Q_1", "K_1", "V_1"],
+    parent_names=["V_1", "K_1", "Q_1"],
     slice_str="[d],[\ell]",
-    fun_name="scaled_dot_prod_att",
+    fun_name="Attention",
     fun_args_str=None,
     params_str=None,
     color="Orchid"
@@ -158,7 +158,7 @@ nodeC = Node(
     fun_name=None,
     fun_args_str=r'["A_0"|"A_1"]',
     params_str=None,
-    color="yellow"
+    color="Dandelion"
 )
 
 nodeL = Node(
@@ -167,9 +167,9 @@ nodeL = Node(
     parent_names=["A"],
     slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'W_\rvo^{[d],[D]}"A"',
+    fun_args_str=r'W_\rva^{[d],[D]}"A"',
     params_str=None,
-    color="Dandelion"
+    color="SpringGreen"
 )
 
 
@@ -181,9 +181,31 @@ nodes = [nodee,
     nodeL
 ]
 
+ek= FancyArrow(
+    parent_name="e",
+    child_name="K",
+    superscript="W_\\rvk")
+
+eq= FancyArrow(
+    parent_name="e",
+    child_name="Q",
+    superscript="W_\\rvq")
+
+ev= FancyArrow(
+    parent_name="e",
+    child_name="V",
+    superscript="W_\\rvv")
+
+ao= FancyArrow(
+    parent_name="A",
+    child_name="O",
+    superscript="W_\\rva")
+
+fancy_arrows = [ek, eq, ev, ao]
+
 print("\nmosaic:", mosaic)
 name = "multi-head-att"
-dag = DAG(name, mosaic, nodes)
+dag = DAG(name, mosaic, nodes, fancy_arrows=fancy_arrows)
 header=\
 r"""\documentclass[12pt]{article}
 \input{bayesuvius.sty}
@@ -191,10 +213,10 @@ r"""\documentclass[12pt]{article}
 
 """
 fig_header =\
-r"""\begin{minipage}{.35\linewidth}
-\includegraphics[width=2in]{multi-head-att.png}
+r"""\begin{minipage}{.3\linewidth}
+\includegraphics[width=1.7in]{multi-head-att.png}
 \end{minipage}%blank lines between minispaces breaks this
-\begin{minipage}{.65\linewidth}
+\begin{minipage}{.7\linewidth}
 """
 
 fig_footer=\
@@ -203,7 +225,7 @@ fig_footer=\
 dag.write_tex_file(fig_header,
                    fig_footer,
                    fig_caption="Multi-head Attention with 2 heads."
-                               "Note that the input $\\rve$ and output "
-                               "$\\underline{O}$ have the same shape.",
+                                " Note that the orange nodes all have"
+                                " the same tensor shape.",
                    header=header,
-                   column_separation=.7)
+                   column_separation=1.3)

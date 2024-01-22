@@ -1,6 +1,7 @@
 from texnn import *
 
 mosaic = [
+    "_x__y__z_",
     "_X__Y__Z_",
     "123456789",
     "_A__B__C_"
@@ -144,7 +145,7 @@ node9 = Node(
 
 
 nodeX = Node(
-    name="e_0^{t+1}",
+    name="a_0^t",
     tile_ch='X',
     parent_names=["v_0^t", "q_0^t", "k_0^t",
                   "v_1^t", "k_1^t",
@@ -157,7 +158,7 @@ nodeX = Node(
 )
 
 nodeY = Node(
-    name="e_1^{t+1}",
+    name="a_1^t",
     tile_ch='Y',
     parent_names=["v_0^t", "k_0^t",
                   "v_1^t", "q_1^t", "k_1^t",
@@ -170,7 +171,7 @@ nodeY = Node(
 )
 
 nodeZ = Node(
-    name="e_2^{t+1}",
+    name="a_2^t",
     tile_ch='Z',
     parent_names=["v_0^t", "k_0^t",
                   "v_1^t", "k_1^t",
@@ -182,10 +183,44 @@ nodeZ = Node(
     color=None
 )
 
+nodex = Node(
+    name="e_0^{t+1}",
+    tile_ch='x',
+    parent_names=["a_0^t"],
+    slice_str=None,
+    fun_name=None,
+    fun_args_str=None,
+    params_str=None,
+    color=None
+)
+
+nodey = Node(
+    name="e_1^{t+1}",
+    tile_ch='y',
+    parent_names=["a_1^t"],
+    slice_str=None,
+    fun_name=None,
+    fun_args_str=None,
+    params_str=None,
+    color=None
+)
+
+nodez = Node(
+    name="e_2^{t+1}",
+    tile_ch='z',
+    parent_names=["a_2^t"],
+    slice_str=None,
+    fun_name=None,
+    fun_args_str=None,
+    params_str=None,
+    color=None
+)
+
 nodes = [
     nodeA, nodeB, nodeC,
     node1, node2, node3, node4, node5, node6, node7, node8, node9,
-    nodeX, nodeY, nodeZ
+    nodeX, nodeY, nodeZ,
+    nodex, nodey, nodez
 ]
 
 xv0 = FancyArrow(parent_name="e_0^t",
@@ -211,26 +246,41 @@ xq0 = FancyArrow(parent_name="e_0^t",
                  child_name="q_0^t",
                  color="red",
                  superscript=r"W_{\rvq}^t")
-qx0 = FancyArrow(parent_name="q_0^t",
-                 child_name="e_0^{t+1}",
+qc0 = FancyArrow(parent_name="q_0^t",
+                 child_name="a_0^t",
                  color="red")
 
 xq1 = FancyArrow(parent_name="e_1^t",
                  child_name="q_1^t",
                  color="red",
                  superscript=r"W_{\rvq}^t")
-qx1 = FancyArrow(parent_name="q_1^t",
-                 child_name="e_1^{t+1}",
+qc1 = FancyArrow(parent_name="q_1^t",
+                 child_name="a_1^t",
                  color="red")
 xq2 = FancyArrow(parent_name="e_2^t",
                  child_name="q_2^t",
                  color="red",
                  superscript=r"W_{\rvq}^t")
-qx2 = FancyArrow(parent_name="q_2^t",
-                 child_name="e_2^{t+1}",
+qc2 = FancyArrow(parent_name="q_2^t",
+                 child_name="a_2^t",
                  color="red")
-fancy_arrows = [xq0, qx0, xq1, qx1, xq2, qx2,
-                xv0, xv1, xv2, xk0, xk1, xk2]
+
+ce0 = FancyArrow(parent_name="a_0^t",
+                 child_name="e_0^{t+1}",
+                 superscript="1")
+
+ce1 = FancyArrow(parent_name="a_1^t",
+                 child_name="e_1^{t+1}",
+                 superscript="1")
+
+ce2 = FancyArrow(parent_name="a_2^t",
+                 child_name="e_2^{t+1}",
+                 superscript="1")
+
+
+fancy_arrows = [xq0, qc0, xq1, qc1, xq2, qc2,
+                xv0, xv1, xv2, xk0, xk1, xk2,
+                ce0, ce1, ce2]
 
 plateX = Plate(first_and_last_row= (1,7),
                first_and_last_col=(0,0),

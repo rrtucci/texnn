@@ -14,11 +14,11 @@ $$\xymatrix@R=2.5pc@C=0.1pc{
 \\
 *+[F*:yellow]{\underline{N}^{[\Lambda],[d], [\ell]}}\ar[ur]\ar[uu]&&&
 \\
-&&*+[F*:Dandelion]{\underline{O}^{[\Lambda],[d], [\ell]}}\ar[ull]&
+&&*+[F*:Dandelion]{\underline{A}^{[\Lambda],[D], [\ell]}}\ar[ull]_{W_\rva}&
 \\
 &*+[F*:Dandelion]{\underline{Q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[\Lambda],[D], [\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{e}^{[\Lambda],[d], [\ell]}}\ar[urr]\ar[uuu]\ar[ur]\ar[urrr]&&&
+*+[F*:gray]{\underline{e}^{[\Lambda],[d], [\ell]}}\ar[urr]^{W_\rvk}\ar[uuu]\ar[ur]^{W_\rvq}\ar[urrr]_{W_\rvv}&&&
 \\
 *+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
 \save
@@ -28,11 +28,16 @@ $$\xymatrix@R=2.5pc@C=0.1pc{
 *+[F-,]{\;\;}&\text{$\Lambda$ layers}
 }$$
 \end{minipage}
-\caption{Encoder.}
+\caption{Encoder of Vanilla Transform Net.}
 \label{fig-texnn-for-encoder}
 \end{figure}
 
 \begin{subequations}
+
+\begin{equation}\color{blue}
+A^{[\Lambda],[D], [\ell]} = \text{Attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
+\label{eq-O-fun-encoder}
+\end{equation}
 
 \begin{equation}\color{blue}
 F^{[\Lambda],[d], [\ell]} = \text{feed\_forward\_nn}(N^{[\Lambda],[d], [\ell]})
@@ -45,13 +50,8 @@ K^{[\Lambda],[D], [\ell]} = W_\rvk^{[D], [d]}e^{[\Lambda],[d], [\ell]}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[\Lambda],[d], [\ell]} = \text{normalize}(e^{[\Lambda],[d], [\ell]} + O^{[\Lambda],[d], [\ell]})
+N^{[\Lambda],[d], [\ell]} = \text{normalize}(e^{[\Lambda],[d], [\ell]} + W_\rva^{[d],[D]}A^{[\Lambda],[D], [\ell]})
 \label{eq-N-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-O^{[\Lambda],[d], [\ell]} = \text{multi\_headed\_attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
-\label{eq-O-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}

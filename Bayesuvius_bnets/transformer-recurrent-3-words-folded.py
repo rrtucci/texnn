@@ -1,6 +1,7 @@
 from texnn import *
 
 mosaic = [
+    "_x_",
     "_X_",
     "KQV",
     "_A_"
@@ -16,7 +17,7 @@ nodeA = Node(
     fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color=None,
+    color="SkyBlue",
     post_eq_comment="prior"
 )
 
@@ -28,7 +29,7 @@ nodeV = Node(
     fun_name=None,
     fun_args_str=r'W_\rvv^{[d], [d]} "(e^t)"',
     params_str=None,
-    color=None
+    color="Dandelion"
 )
 
 nodeQ = Node(
@@ -39,7 +40,7 @@ nodeQ = Node(
     fun_name=None,
     fun_args_str=r'W_\rvq^{[d], [d]} "(e^t)"',
     params_str=None,
-    color=None
+    color="Dandelion"
 )
 
 nodeK = Node(
@@ -50,23 +51,34 @@ nodeK = Node(
     fun_name=None,
     fun_args_str=r'W_\rvk^{[d], [d]} "(e^t)"',
     params_str=None,
-    color=None
+    color="Dandelion"
 )
 
 nodeX = Node(
-    name="(e^{t+1})",
+    name="(a^t)",
     tile_ch='X',
-    parent_names=["(v^t)", "(q^t)", "(k^t)"],
+    parent_names=["(v^t)", "(k^t)", "(q^t)"],
     slice_str="[d],[\\ell]",
     fun_name="Attention",
     fun_args_str=None,
     params_str=None,
-    color=None
+    color="Dandelion"
+)
+
+nodex = Node(
+    name="(e^{t+1})",
+    tile_ch='x',
+    parent_names=["(a^t)"],
+    slice_str="[d],[\\ell]",
+    fun_name=None,
+    fun_args_str=None,
+    params_str=None,
+    color="SkyBlue"
 )
 
 nodes = [nodeA,
          nodeV, nodeQ, nodeK,
-         nodeX
+         nodeX, nodex
          ]
 
 xk = FancyArrow(parent_name="(e^t)",
@@ -82,9 +94,14 @@ xq = FancyArrow(parent_name="(e^t)",
                   color="red",
                 superscript=r"W_\rvq^{[d], [d]}")
 qx = FancyArrow(parent_name="(q^t)",
-                  child_name="(e^{t+1})",
+                  child_name="(a^t)",
                   color="red")
-fancy_arrows = [xq, qx, xv, xk]
+
+ce = FancyArrow(parent_name="(a^t)",
+                  child_name="(e^{t+1})",
+                  superscript="1")
+
+fancy_arrows = [xq, qx, xv, xk, ce]
 
 print("\nmosaic:", mosaic)
 name = "transformer-recurrent-3-words-folded"

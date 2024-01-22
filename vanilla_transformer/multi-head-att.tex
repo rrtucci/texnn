@@ -3,11 +3,11 @@
 \begin{document}
 
 \begin{figure}[h!]\centering
-\begin{minipage}{.35\linewidth}
-\includegraphics[width=2in]{multi-head-att.png}
+\begin{minipage}{.3\linewidth}
+\includegraphics[width=1.7in]{multi-head-att.png}
 \end{minipage}%blank lines between minispaces breaks this
-\begin{minipage}{.65\linewidth}
-$$\xymatrix@C=0.7pc{
+\begin{minipage}{.7\linewidth}
+$$\xymatrix@C=1.3pc{
 &&*+[F*:Orchid]{\underline{Q_0}^{[d],[\ell]}}\ar[dddr]&&&
 \\
 &*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&&
@@ -16,7 +16,7 @@ $$\xymatrix@C=0.7pc{
 \\
 &&*+[F*:Orchid]{\underline{K_0}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_0}^{[d],[\ell]}}\ar[dr]&&
 \\
-*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]\ar[uuur]\ar[dddr]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&*+[F*:yellow]{\underline{A}^{[D],[\ell]}}\ar[r]&*+[F*:Dandelion]{\underline{O}^{[d],[\ell]}}
+*+[F*:SpringGreen]{\underline{e}^{[d], [\ell]}}\ar[r]^{W_\rvk}\ar[uuur]^{W_\rvq}\ar[dddr]^{W_\rvv}&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[ur]\ar[dr]&&&*+[F*:Dandelion]{\underline{A}^{[D],[\ell]}}\ar[r]^{W_\rva}&*+[F*:SpringGreen]{\underline{O}^{[d],[\ell]}}
 \\
 &&*+[F*:Orchid]{\underline{K_1}^{[d],[\ell]}}\ar[r]&*+[F*:Orchid]{\underline{A_1}^{[d],[\ell]}}\ar[ur]&&
 \\
@@ -27,7 +27,7 @@ $$\xymatrix@C=0.7pc{
 &&*+[F*:Orchid]{\underline{V_1}^{[d],[\ell]}}\ar[uuur]&&&
 }$$
 \end{minipage}
-\caption{Multi-head Attention with 2 heads.Note that the input $\rve$ and output $\underline{O}$ have the same shape.}
+\caption{Multi-head Attention with 2 heads. Note that the orange nodes all havethe same tensor shape.}
 \label{fig-texnn-for-multi-head-att}
 \end{figure}
 
@@ -39,12 +39,12 @@ A^{[D],[\ell]} = [A_0^{[d],[\ell]}|A_1^{[d],[\ell]}]
 \end{equation}
 
 \begin{equation}\color{blue}
-A_0^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_0^{[d],[\ell]},K_0^{[d],[\ell]},V_0^{[d],[\ell]})
+A_0^{[d],[\ell]} = \text{Attention}(V_0^{[d],[\ell]},K_0^{[d],[\ell]},Q_0^{[d],[\ell]})
 \label{eq-X-fun-multi-head-att}
 \end{equation}
 
 \begin{equation}\color{blue}
-A_1^{[d],[\ell]} = \text{scaled\_dot\_prod\_att}(Q_1^{[d],[\ell]},K_1^{[d],[\ell]},V_1^{[d],[\ell]})
+A_1^{[d],[\ell]} = \text{Attention}(V_1^{[d],[\ell]},K_1^{[d],[\ell]},Q_1^{[d],[\ell]})
 \label{eq-Y-fun-multi-head-att}
 \end{equation}
 
@@ -64,7 +64,7 @@ K_1^{[d],[\ell]} = \text{linear}(K^{[D], [\ell]})\;\;\text{(split, then project 
 \end{equation}
 
 \begin{equation}\color{blue}
-O^{[d],[\ell]} = W_\rvo^{[d],[D]}A^{[D],[\ell]}
+O^{[d],[\ell]} = W_\rva^{[d],[D]}A^{[D],[\ell]}
 \label{eq-F-fun-multi-head-att}
 \end{equation}
 

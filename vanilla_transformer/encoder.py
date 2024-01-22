@@ -35,20 +35,20 @@ nodeF = Node(
 nodeN = Node(
     name="N",
     tile_ch='N',
-    parent_names=["e", "O"],
+    parent_names=["e", "A"],
     slice_str="[d], [\ell]",
     fun_name="normalize",
-    fun_args_str='"e" + "O"',
+    fun_args_str=r'"e" + W_\rva^{[d],[D]}"A"',
     params_str=None,
     color="yellow"
 )
 
 nodeO = Node(
-    name="O",
+    name="A",
     tile_ch='O',
     parent_names=["Q", "K", "V"],
-    slice_str="[d], [\ell]",
-    fun_name="multi_headed_attention",
+    slice_str="[D], [\ell]",
+    fun_name="Attention",
     fun_args_str=None,
     params_str=None,
     color="Dandelion"
@@ -120,6 +120,28 @@ nodes = [
     nodeR
 ]
 
+ek= FancyArrow(
+    parent_name="e",
+    child_name="K",
+    superscript="W_\\rvk")
+
+eq= FancyArrow(
+    parent_name="e",
+    child_name="Q",
+    superscript="W_\\rvq")
+
+ev= FancyArrow(
+    parent_name="e",
+    child_name="V",
+    subscript="W_\\rvv")
+
+an= FancyArrow(
+    parent_name="A",
+    child_name="N",
+    subscript="W_\\rva")
+
+fancy_arrows = [ek, eq, ev, an]
+
 plate0 = Plate(
     first_and_last_row=(0,5),
     first_and_last_col=(0,3),
@@ -131,7 +153,9 @@ plates = [plate0]
 
 print("\nmosaic:", mosaic)
 name = "encoder"
-dag = DAG(name, mosaic, nodes, plates=plates)
+dag = DAG(name, mosaic, nodes,
+          fancy_arrows=fancy_arrows,
+          plates=plates)
 fig_header = \
 r"""\begin{minipage}{.4\linewidth}
 \includegraphics[width=2in]{encoder.jpg}
@@ -144,7 +168,7 @@ fig_footer = \
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Encoder.",
+                   fig_caption="Encoder of Vanilla Transform Net.",
                    header=BAY_HEADER,
                    column_separation=.1,
                    row_separation=2.5)
