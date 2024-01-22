@@ -31,7 +31,7 @@ nodeI = Node(
     parent_names=["Y"],
     slice_str="[L],[\ell]",
     fun_name=None,
-    fun_args_str='W^{[L],[\Lambda], [d]}"Y"',
+    fun_args_str='W^{[L], [d]}"Y"',
     params_str=None,
     color="Orchid"
 )
@@ -141,7 +141,7 @@ nodep = Node(
     parent_names=["x"],
     slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'E^{[\Lambda],[d],[L]}"x"',
+    fun_args_str=r'E^{[d],[L]}"x"',
     params_str=None,
     color="gray"
 )
@@ -247,10 +247,9 @@ fancy_arrows = [ek, eq, ev, aa,
                 nk, nq, nv, aj]
 
 plate0 = Plate(
-    first_and_last_row=(2,9),
+    first_and_last_row=(2,8),
     first_and_last_col=(0,3),
-    num_layers_str= r"\Lambda",
-    margin=4.0
+    margin=6.0
 )
 
 plates = [plate0]
@@ -272,7 +271,9 @@ fig_footer = \
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Decoder of Vanilla Transformer Net.",
+                   fig_caption="Decoder of Vanilla Transformer Net. The "
+                               "boxed part is repeated $\Lam$ times in a "
+                               "series connection.",
                    header=BAY_HEADER,
                    column_separation=.2,
-                   row_separation=2.5)
+                   row_separation=3.5)

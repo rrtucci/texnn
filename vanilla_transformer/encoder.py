@@ -93,7 +93,7 @@ nodep = Node(
     parent_names=["x"],
     slice_str="[d], [\ell]",
     fun_name=None,
-    fun_args_str='E^{[\Lambda],[d], [L]}"x"',
+    fun_args_str='E^{[d], [L]}"x"',
     params_str=None,
     color="gray"
 )
@@ -143,10 +143,9 @@ an= FancyArrow(
 fancy_arrows = [ek, eq, ev, an]
 
 plate0 = Plate(
-    first_and_last_row=(0,5),
+    first_and_last_row=(0,4),
     first_and_last_col=(0,3),
-    num_layers_str= r"\Lambda",
-    margin= 4.0
+    margin= 6.0
 )
 
 plates = [plate0]
@@ -168,7 +167,9 @@ fig_footer = \
 """
 dag.write_tex_file(fig_header,
                    fig_footer,
-                   fig_caption="Encoder of Vanilla Transformer Net.",
+                   fig_caption="Encoder of Vanilla Transformer Net. The "
+                               "boxed part is repeated $\Lam$ times in "
+                               "a series connection.",
                    header=BAY_HEADER,
                    column_separation=.1,
-                   row_separation=2.5)
+                   row_separation=3.5)

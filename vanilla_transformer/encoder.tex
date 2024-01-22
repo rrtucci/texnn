@@ -7,70 +7,68 @@
 \includegraphics[width=2in]{encoder.jpg}
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.6\linewidth}
-$$\xymatrix@R=2.5pc@C=0.1pc{
-*+[F*:yellow]{\underline{n}^{[\Lambda],[d], [\ell]}}&&&
+$$\xymatrix@R=3.5pc@C=0.1pc{
+*+[F*:yellow]{\underline{n}^{[d], [\ell]}}&&&
 \\
-&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[d], [\ell]}}\ar[ul]&&
+&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ul]&&
 \\
-*+[F*:yellow]{\underline{N}^{[\Lambda],[d], [\ell]}}\ar[ur]\ar[uu]&&&
+*+[F*:yellow]{\underline{N}^{[d], [\ell]}}\ar[ur]\ar[uu]&&&
 \\
-&&*+[F*:Dandelion]{\underline{A}^{[\Lambda],[D], [\ell]}}\ar[ull]_{W_\rva}&
+&&*+[F*:Dandelion]{\underline{A}^{[D], [\ell]}}\ar[ull]_{W_\rva}&
 \\
-&*+[F*:Dandelion]{\underline{Q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[\Lambda],[D], [\ell]}}\ar[ul]
+&*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D], [\ell]}}\ar[ul]
 \\
-*+[F*:gray]{\underline{e}^{[\Lambda],[d], [\ell]}}\ar[urr]^{W_\rvk}\ar[uuu]\ar[ur]^{W_\rvq}\ar[urrr]_{W_\rvv}&&&
+*+[F*:gray]{\underline{e}^{[d], [\ell]}}\ar[urr]^{W_\rvk}\ar[uuu]\ar[ur]^{W_\rvq}\ar[urrr]_{W_\rvv}&&&
 \\
 *+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
 \save
-\POS"1,1"."6,1"."1,4"."6,4"!C*+<4.0em>\frm{-,}
+\POS"1,1"."5,1"."1,4"."5,4"!C*+<6.0em>\frm{-,}
 \restore
-\\
-*+[F-,]{\;\;}&\text{$\Lambda$ layers}
 }$$
 \end{minipage}
-\caption{Encoder of Vanilla Transformer Net.}
+\caption{Encoder of Vanilla Transformer Net. The boxed part is repeated $\Lam$ times in a series connection.}
 \label{fig-texnn-for-encoder}
 \end{figure}
 
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[\Lambda],[D], [\ell]} = \text{Attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
+A^{[D], [\ell]} = \text{Attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D], [\ell]})
 \label{eq-O-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-F^{[\Lambda],[d], [\ell]} = \text{feed\_forward\_nn}(N^{[\Lambda],[d], [\ell]})
+F^{[d], [\ell]} = \text{feed\_forward\_nn}(N^{[d], [\ell]})
 \label{eq-F-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[\Lambda],[D], [\ell]} = W_\rvk^{[D], [d]}e^{[\Lambda],[d], [\ell]}
+K^{[D], [\ell]} = W_\rvk^{[D], [d]}e^{[d], [\ell]}
 \label{eq-K-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-N^{[\Lambda],[d], [\ell]} = \text{normalize}(e^{[\Lambda],[d], [\ell]} + W_\rva^{[d],[D]}A^{[\Lambda],[D], [\ell]})
+N^{[d], [\ell]} = \text{normalize}(e^{[d], [\ell]} + W_\rva^{[d],[D]}A^{[D], [\ell]})
 \label{eq-N-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[\Lambda],[D], [\ell]} = W_\rvq^{[D], [d]}e^{[\Lambda],[d], [\ell]}
+Q^{[D], [\ell]} = W_\rvq^{[D], [d]}e^{[d], [\ell]}
 \label{eq-Q-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[\Lambda],[D], [\ell]} = W_\rvv^{[D], [d]}e^{[\Lambda],[d], [\ell]}
+V^{[D], [\ell]} = W_\rvv^{[D], [d]}e^{[d], [\ell]}
 \label{eq-V-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[\Lambda],[d], [\ell]} = E^{[\Lambda],[d], [L]}x^{[L],[\ell]}
+e^{[d], [\ell]} = E^{[d], [L]}x^{[L],[\ell]}
 \label{eq-p-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-n^{[\Lambda],[d], [\ell]} = \text{normalize}(N^{[\Lambda],[d], [\ell]} + F^{[\Lambda],[d], [\ell]})
+n^{[d], [\ell]} = \text{normalize}(N^{[d], [\ell]} + F^{[d], [\ell]})
 \label{eq-n-fun-encoder}
 \end{equation}
 

@@ -7,63 +7,61 @@
 \includegraphics[width=2in]{decoder.jpg}
 \end{minipage}%blank lines between minispaces breaks this
 \begin{minipage}{.6\linewidth}
-$$\xymatrix@R=2.5pc@C=0.2pc{
+$$\xymatrix@R=3.5pc@C=0.2pc{
 &&&*+[F*:SpringGreen]{\underline{P}^{[L],[\ell]}}
 \\
 &&&*+[F*:Orchid]{\underline{I}^{[L],[\ell]}}\ar[u]
 \\
-&&&*+[F*:yellow]{\underline{Y}^{[\Lambda],[d], [\ell]}}\ar[u]
+&&&*+[F*:yellow]{\underline{Y}^{[d], [\ell]}}\ar[u]
 \\
-&&*+[F*:SkyBlue]{\underline{F}^{[\Lambda],[d], [\ell]}}\ar[ur]&
+&&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ur]&
 \\
-&*+[F*:Dandelion]{\underline{a}^{[\Lambda],[D],[\ell]}}\ar[rr]^{U_\rva}&&*+[F*:yellow]{\underline{j}^{[\Lambda],[d], [\ell]}}\ar[ul]\ar[uu]
+&*+[F*:Dandelion]{\underline{a}^{[D],[\ell]}}\ar[rr]^{U_\rva}&&*+[F*:yellow]{\underline{j}^{[d], [\ell]}}\ar[ul]\ar[uu]
 \\
-*+[F*:Dandelion]{\underline{v}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[\Lambda],[D], [\ell]}}\ar[ul]&
+*+[F*:Dandelion]{\underline{v}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[D], [\ell]}}\ar[ul]&
 \\
-*+[F*:yellow]{\underline{n}^{[\Lambda],[d], [\ell]}}\ar[ur]_{U_\rvk}\ar[u]^{U_\rvv}&&&*+[F*:yellow]{\underline{J}^{[\Lambda],[d], [\ell]}}\ar[uu]\ar[ul]^{U_\rvq}
+*+[F*:yellow]{\underline{n}^{[d], [\ell]}}\ar[ur]_{U_\rvk}\ar[u]^{U_\rvv}&&&*+[F*:yellow]{\underline{J}^{[d], [\ell]}}\ar[uu]\ar[ul]^{U_\rvq}
 \\
-&*+[F*:Dandelion]{\underline{A}^{[\Lambda],[D],[\ell]}}\ar[urr]^{W_\rva}&&
+&*+[F*:Dandelion]{\underline{A}^{[D],[\ell]}}\ar[urr]^{W_\rva}&&
 \\
-*+[F*:Dandelion]{\underline{Q}^{[\Lambda],[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[\Lambda],[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[\Lambda],[D], [\ell]}}\ar[ul]&
+*+[F*:Dandelion]{\underline{Q}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{V}^{[D], [\ell]}}\ar[ul]&
 \\
-&&&*+[F*:gray]{\underline{e}^{[\Lambda],[d],[\ell]}}\ar[uuu]\ar[ull]_{W_\rvk}\ar[ulll]^{W_\rvq}\ar[ul]_{W_\rvv}
+&&&*+[F*:gray]{\underline{e}^{[d],[\ell]}}\ar[uuu]\ar[ull]_{W_\rvk}\ar[ulll]^{W_\rvq}\ar[ul]_{W_\rvv}
 \\
 &&&*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]
 \save
-\POS"3,1"."10,1"."3,4"."10,4"!C*+<4.0em>\frm{-,}
+\POS"3,1"."9,1"."3,4"."9,4"!C*+<6.0em>\frm{-,}
 \restore
-\\
-*+[F-,]{\;\;}&\text{$\Lambda$ layers}
 }$$
 \end{minipage}
-\caption{Decoder of Vanilla Transformer Net.}
+\caption{Decoder of Vanilla Transformer Net. The boxed part is repeated $\Lam$ times in a series connection.}
 \label{fig-texnn-for-decoder}
 \end{figure}
 
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[\Lambda],[D],[\ell]} = \text{Attention}(Q^{[\Lambda],[D], [\ell]},K^{[\Lambda],[D], [\ell]},V^{[\Lambda],[D], [\ell]})
+A^{[D],[\ell]} = \text{Attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D], [\ell]})
 \label{eq-o-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-F^{[\Lambda],[d], [\ell]} = \text{feed\_forward\_nn}(j^{[\Lambda],[d], [\ell]})
+F^{[d], [\ell]} = \text{feed\_forward\_nn}(j^{[d], [\ell]})
 \label{eq-B-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-I^{[L],[\ell]} = W^{[L],[\Lambda], [d]}Y^{[\Lambda],[d], [\ell]}
+I^{[L],[\ell]} = W^{[L], [d]}Y^{[d], [\ell]}
 \label{eq-I-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-J^{[\Lambda],[d], [\ell]} = \text{normalize}(W_\rva^{[d], [D]}A^{[\Lambda],[D],[\ell]} + e^{[\Lambda],[d],[\ell]})
+J^{[d], [\ell]} = \text{normalize}(W_\rva^{[d], [D]}A^{[D],[\ell]} + e^{[d],[\ell]})
 \label{eq-a-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[\Lambda],[D], [\ell]} = W_\rvk^{[D],[d]}e^{[\Lambda],[d],[\ell]}
+K^{[D], [\ell]} = W_\rvk^{[D],[d]}e^{[d],[\ell]}
 \label{eq-K-fun-decoder}
 \end{equation}
 
@@ -73,52 +71,52 @@ P^{[L],[\ell]} = \text{softmax}(I^{[L],[\ell]})\;\;\text{$(\sum_{\alp\in[\ell]}P
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[\Lambda],[D], [\ell]} = W_\rvq^{[D],[d]}e^{[\Lambda],[d],[\ell]}
+Q^{[D], [\ell]} = W_\rvq^{[D],[d]}e^{[d],[\ell]}
 \label{eq-Q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[\Lambda],[D], [\ell]} = W_\rvv^{[D],[d]}e^{[\Lambda],[d],[\ell]}
+V^{[D], [\ell]} = W_\rvv^{[D],[d]}e^{[d],[\ell]}
 \label{eq-V-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-Y^{[\Lambda],[d], [\ell]} = \text{normalize}(F^{[\Lambda],[d], [\ell]} + J^{[\Lambda],[d], [\ell]})
+Y^{[d], [\ell]} = \text{normalize}(F^{[d], [\ell]} + J^{[d], [\ell]})
 \label{eq-Y-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-a^{[\Lambda],[D],[\ell]} = \text{Attention}(v^{[\Lambda],[D], [\ell]},k^{[\Lambda],[D], [\ell]},q^{[\Lambda],[D], [\ell]})
+a^{[D],[\ell]} = \text{Attention}(v^{[D], [\ell]},k^{[D], [\ell]},q^{[D], [\ell]})
 \label{eq-O-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[\Lambda],[d],[\ell]} = E^{[\Lambda],[d],[L]}x^{[L],[\ell]}
+e^{[d],[\ell]} = E^{[d],[L]}x^{[L],[\ell]}
 \label{eq-p-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-j^{[\Lambda],[d], [\ell]} = \text{normalize}(U_\rva^{[d],[D]}a^{[\Lambda],[D],[\ell]} + J^{[\Lambda],[d], [\ell]})
+j^{[d], [\ell]} = \text{normalize}(U_\rva^{[d],[D]}a^{[D],[\ell]} + J^{[d], [\ell]})
 \label{eq-j-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-k^{[\Lambda],[D], [\ell]} = U_\rvk^{[D],[d]}n^{[\Lambda],[d], [\ell]}
+k^{[D], [\ell]} = U_\rvk^{[D],[d]}n^{[d], [\ell]}
 \label{eq-k-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-n^{[\Lambda],[d], [\ell]} = \;\;\text{Prior coming from Encoder.}
+n^{[d], [\ell]} = \;\;\text{Prior coming from Encoder.}
 \label{eq-n-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-q^{[\Lambda],[D], [\ell]} = U_\rvq^{[D],[d]}J^{[\Lambda],[d], [\ell]}
+q^{[D], [\ell]} = U_\rvq^{[D],[d]}J^{[d], [\ell]}
 \label{eq-q-fun-decoder}
 \end{equation}
 
 \begin{equation}\color{blue}
-v^{[\Lambda],[D], [\ell]} = U_\rvv^{[D], [d]}n^{[\Lambda],[d], [\ell]}
+v^{[D], [\ell]} = U_\rvv^{[D], [d]}n^{[d], [\ell]}
 \label{eq-v-fun-decoder}
 \end{equation}
 
