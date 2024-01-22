@@ -276,4 +276,4 @@ dag.write_tex_file(fig_header,
                                "series connection.",
                    header=BAY_HEADER,
                    column_separation=.2,
-                   row_separation=3.5)
+                   row_separation=3)
