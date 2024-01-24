@@ -10,6 +10,7 @@ mosaic = [
     "n__a",
     "_o__",
     "QKV_",
+    "____",
     "___p",
     "___R"
 ]
@@ -249,7 +250,7 @@ fancy_arrows = [ek, eq, ev, aa,
 plate0 = Plate(
     first_and_last_row=(2,8),
     first_and_last_col=(0,3),
-    margin=6.0
+    margin=7.5
 )
 
 plates = [plate0]
@@ -276,4 +277,4 @@ dag.write_tex_file(fig_header,
                                "connected in series.",
                    header=BAY_HEADER,
                    column_separation=.2,
-                   row_separation=3)
+                   row_separation=2)

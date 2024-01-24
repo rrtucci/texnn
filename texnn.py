@@ -407,6 +407,8 @@ class DAG:
     mosaic: list[str]
         a list of strings of equal length which when stacked horizontally
         represent the bnet that we wish to draw, as a tile mosaic.
+    name_to_node: dict[str, Node]
+        a dictionary mapping node name to Node
     node_to_tile_loc: list[Node, tuple[int]]
         a dictionary mapping each node to its tile location, which is a
         tuple (row, col).
@@ -450,6 +452,8 @@ class DAG:
             f"some node name is repeated.{node_names}"
         self.nodes.sort(key=lambda node: node.name)
 
+        self.name_to_node = self.get_name_to_node()
+
         if fancy_arrows:
             for arrow in fancy_arrows:
                 assert arrow.parent_name in node_names,\
@@ -458,6 +462,10 @@ class DAG:
                 assert arrow.child_name in node_names, \
                     "arrow child name not found in node names. "\
                     f"'{arrow.child_name}'"
+                child = self.name_to_node[arrow.child_name]
+                assert arrow.parent_name in child.parent_names,\
+                    "trying make fancy an arrow that does not exist\n" \
+                    f"{arrow.parent_name}->{arrow.child_name}"
 
         self.mosaic = mosaic
         len0 = len(self.mosaic)
@@ -543,10 +551,9 @@ class DAG:
 
         """
         self.child_to_parents = {}
-        name_to_node = self.get_name_to_node()
         for child in self.nodes:
             self.child_to_parents[child] = [
-                name_to_node[parent_name] for
+                self.name_to_node[parent_name] for
                 parent_name in child.parent_names]
         self.parent_to_children = {}
         for parent in self.nodes:

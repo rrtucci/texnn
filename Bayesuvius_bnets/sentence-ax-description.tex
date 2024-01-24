@@ -1,0 +1,132 @@
+\documentclass[12pt]{article}
+\input{bayesuvius.sty}
+\begin{document}
+
+\begin{itemize}
+
+\item {\tt output = nn.Linear(na, nb)(input)}
+
+\beq
+x^{[na]}\rarrow y^{[nb]}=W^{[nb], [na]}x^{[na]}
+\eeq
+
+\item{\tt embedding = nn.Embedding(num\_embeddings=L, embedding\_dim=d)}
+
+\beq
+x^{[L], [\ell]}\rarrow
+y^{[d], [L], [\ell]}=
+[E^{[d], \beta}x^{\beta, [\ell]}]_{
+\beta\in[L]}
+\eeq
+
+\end{itemize}
+
+
+
+
+%        Assume:
+%        batch_size= 24, \ell_{ba}
+%        hidden_size= 768,  d
+%        NUM_ILABELS= 6, n_{il}
+%        ILABELLING_DIM= 30
+%        \Lam=2 iterative layers 
+%		D=5 number of depths.
+%
+%        Below we show the shape of the input and output tensors for each layer.
+%
+%        LINES for depth=0
+%        LINES for depth=1
+%        LINES for depth=2
+%        LINES for depth=3
+%        LINES for depth=4
+%
+%        where LINES=
+%        encoding_layer: [24, 84, 6]->[24, 105, 768]
+%        *****iterative layer 0: [24, 105, 768]->[24, 105, 768]
+%        dropout: [24, 105, 768]->[24, 105, 768]
+%        bunch of torch operations: [24, 105, 768]->[24, 84, 768]
+%        merge layer: [24, 84, 768]->[24, 84, 300]
+%        ilabelling_layer: [24, 84, 300]->[24, 84, 6]
+%        encoding_layer: [24, 84, 6]->[24, 105, 768]
+%        *****iterative layer 1:  [24, 105, 768]->[24, 105, 768]
+%        dropout: [24, 105, 768]->[24, 105, 768]
+%        bunch of torch operations: [24, 105, 768]->[24, 84, 768]
+%        merge layer: [24, 84, 768]->[24, 84, 300]
+%        ilabelling_layer: [24, 84, 300]->[24, 84, 6]
+
+$\ell_{pad}=84$, padding length, for this batch
+
+$\ell_{enc}=105$, encoded length, for this batch, $\ell_{enc}\geq \ell_{pad}$
+
+$n_{dep}=5$, number of copies of solid box connected in series, number of depths
+
+ $n_{att}=2$, number of copies of
+dashed box connected in series, number of iterative (attention) layers.
+
+
+$d=768$, hidden dimension
+
+
+$\ell_{ba}=24$, batch size
+
+$\ell_{pad}=84$, padding length
+
+$n_{il}=6$, number of ilabels
+
+$d_{il}=300$, ilabeling dimension
+
+passage through depth layer:
+
+ \beq
+ [\ell_{ba}],[\ell_{pad}],[n_{il} ]
+\rarrow \text{same}
+\eeq
+
+All prefixed by $[\ell_{ba}]$
+\begin{enumerate}
+\item passage through encoding layer
+
+ \beq
+ [\ell_{pad}],[n_{il} ]
+\rarrow [\ell_{enc}],[d]
+\eeq
+
+\item passage through attention layers
+
+
+\beq
+[\ell_{enc}],[d]
+\rarrow
+[\ell_{enc}],[d]
+\eeq
+
+\item processing
+
+\beq
+[\ell_{enc}],[d]
+\rarrow
+[\ell_{pad}],[d]
+\eeq
+
+
+\item merge (Linear)
+
+\beq
+[\ell_{pad}],[d]
+\rarrow
+[\ell_{pad}],[d_{il}]
+\eeq
+
+\item ilabelling (Linear)
+
+\beq
+[\ell_{pad}],[d_{il}]
+\rarrow
+[\ell_{pad}],[n_{il}]
+\eeq
+
+
+
+\end{enumerate}
+
+\end{document}
