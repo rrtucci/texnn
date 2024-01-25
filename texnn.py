@@ -450,7 +450,7 @@ class DAG:
         node_names = [node.name for node in nodes]
         assert len(node_names) == len(set(node_names)), \
             f"some node name is repeated.{node_names}"
-        self.nodes.sort(key=lambda node: node.name)
+        self.nodes.sort(key=lambda node: node.name.casefold())
 
         self.name_to_node = self.get_name_to_node()
 
