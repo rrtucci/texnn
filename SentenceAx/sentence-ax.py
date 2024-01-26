@@ -1,44 +1,30 @@
 from texnn import *
 
 mosaic = [
-    "_j_",
-    "EM_",
-    "S__",
-    "F__",
-    "_n_",
-    "_A_",
-    "VKQ",
-    "___",
-    "_B_",
-    "_e_",
-    "_X_"
+    "E_M_L",
+    "__S__",
+    "__n__",
+    "__A__",
+    "_VKQ_",
+    "_____",
+    "X_B__"
 ]
 
 nodeX= Node(
     name="X",
     tile_ch='X',
     parent_names=[],
-    slice_str="[6], [84]",
-    fun_name=None,
-    fun_args_str=None,
-    params_str=None,
-    color="SpringGreen",
-    post_eq_comment= "prior"
-)
-nodee= Node(
-    name="e",
-    tile_ch='e',
-    parent_names=["X"],
     slice_str="[768], [105]",
-    fun_name="Embedding",
-    fun_args_str=None,
+    fun_name=None,
+    fun_args_str="0",
     params_str=None,
-    color="pink"
+    color="SkyBlue"
 )
+
 nodeB= Node(
     name="B",
     tile_ch='B',
-    parent_names=["e"],
+    parent_names=[],
     slice_str="[768], [105]",
     fun_name="BERT",
     fun_args_str=None,
@@ -95,50 +81,19 @@ noden= Node(
     params_str=None,
     color="Orchid"
 )
-nodeF= Node(
-    name="F",
-    tile_ch='F',
-    parent_names=["n"],
-    slice_str="[768], [105]",
-    fun_name="feed_forward_nn",
-    fun_args_str=None,
-    params_str=None,
-    color="SkyBlue"
-)
-nodeE= Node(
-    name="E",
-    tile_ch='E',
-    parent_names=["S"],
-    slice_str="[768], [105]",
-    fun_name="Embedding",
-    fun_args_str=None,
-    params_str=None,
-    color="pink"
-)
 nodeS= Node(
     name="S",
     tile_ch='S',
-    parent_names=["F"],
-    slice_str="[6], [84]",
-    fun_name="ilabel",
-    fun_args_str=None,
-    params_str=None,
-    color="SpringGreen"
-)
-
-nodeM= Node(
-    name="M",
-    tile_ch='M',
-    parent_names=["E", "n"],
+    parent_names=["X","n" ],
     slice_str="[768], [105]",
     fun_name=None,
-    fun_args_str='"E" + "n"',
+    fun_args_str=r'"X" + "n"',
     params_str=None,
     color="Orchid"
 )
-nodej= Node(
-    name="j",
-    tile_ch='j',
+nodeL= Node(
+    name="L",
+    tile_ch='L',
     parent_names=["M"],
     slice_str="[6], [84]",
     fun_name="ilabel",
@@ -146,9 +101,30 @@ nodej= Node(
     params_str=None,
     color="SpringGreen"
 )
+nodeE= Node(
+    name="E",
+    tile_ch='E',
+    parent_names=["S"],
+    slice_str="[768], [105]",
+    fun_name=None,
+    fun_args_str='"X"',
+    params_str=None,
+    color="SkyBlue"
+)
 
-nodes = [nodej, nodeM, nodeF, nodeE, noden, nodeA,
-    nodeV, nodeK, nodeQ, nodeB, nodeX, nodeS, nodee]
+nodeM= Node(
+    name="M",
+    tile_ch='M',
+    parent_names=["S"],
+    slice_str="[768], [105]",
+    fun_name="merge",
+    fun_args_str=None,
+    params_str=None,
+    color="Orchid"
+)
+
+nodes = [nodeM, nodeL, noden, nodeS, nodeA,
+    nodeV, nodeK, nodeQ, nodeB, nodeX, nodeE]
 
 BV= FancyArrow(parent_name="B",
                child_name="V",
@@ -165,22 +141,37 @@ BK= FancyArrow(parent_name="B",
 
 An= FancyArrow(parent_name="A",
                child_name="n",
-               superscript="W_\\rva"
+               subscript="W_\\rva"
 )
 
-fancy_arrows = [BV, BQ, BK, An]
+XS= FancyArrow(parent_name="X",
+               child_name="S",
+               superscript="1",
+               curvature= -5
+)
+SE= FancyArrow(parent_name="S",
+               child_name="E",
+               subscript="1"
+)
+
+nS= FancyArrow(parent_name="n",
+               child_name="S",
+               subscript="1"
+)
+
+fancy_arrows = [BV, BQ, BK, An, XS, SE, nS]
 
 plateEx = Plate(
-    first_and_last_row=(1,6),
-    first_and_last_col=(0,2),
-    margin= 2.5
+    first_and_last_row=(0,4),
+    first_and_last_col=(0,3),
+    margin= 4.5
 )
 
 plateAtt = Plate(
-    first_and_last_row=(4,6),
-    first_and_last_col=(0,2),
+    first_and_last_row=(2,4),
+    first_and_last_col=(1,3),
     style_name="dashed",
-    margin= 1.5
+    margin= 3.5
 )
 
 plates= [plateEx, plateAtt]
@@ -197,6 +188,6 @@ dag.write_tex_file(
                 "$n_\\rvh=12$ is the number of heads. "
                 "2 copies of dashed box connected in "
                 "series. 5 copies of plain box connected in series.",
-    row_separation= 2,
-    column_separation=2
+    row_separation= 3.5,
+    column_separation=2.5
 )

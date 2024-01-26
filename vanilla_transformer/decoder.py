@@ -248,9 +248,9 @@ fancy_arrows = [ek, eq, ev, aa,
                 nk, nq, nv, aj]
 
 plate0 = Plate(
-    first_and_last_row=(2,8),
+    first_and_last_row=(3,8),
     first_and_last_col=(0,3),
-    margin=7.5
+    margin=9
 )
 
 plates = [plate0]

@@ -268,9 +268,8 @@ class FancyArrow:
             str0 += ARROW_STYLE_TO_XY_STR[self.style_name]
         if self.curvature:
             # @/^1pc/ or @/_1pc/
-            curv_str = "^" + str(self.curvature) \
-                if self.curvature < 0 else "_" + str(self.curvature)
-            str0 += "@/" + curv_str + "pc/"
+            haty = "^" if self.curvature < 0 else "_"
+            str0 += "@/" + haty + str(abs(self.curvature)) + "pc/"
         if self.displacement:
             # @<+2ex> or @<-2ex>
             disp_str = str(self.displacement) \
@@ -456,14 +455,14 @@ class DAG:
 
         if fancy_arrows:
             for arrow in fancy_arrows:
-                assert arrow.parent_name in node_names,\
+                assert arrow.parent_name in node_names, \
                     "arrow parent name not found in node names. " \
                     f"'{arrow.parent_name}'"
                 assert arrow.child_name in node_names, \
-                    "arrow child name not found in node names. "\
+                    "arrow child name not found in node names. " \
                     f"'{arrow.child_name}'"
                 child = self.name_to_node[arrow.child_name]
-                assert arrow.parent_name in child.parent_names,\
+                assert arrow.parent_name in child.parent_names, \
                     "trying make fancy an arrow that does not exist\n" \
                     f"{arrow.parent_name}->{arrow.child_name}"
 
