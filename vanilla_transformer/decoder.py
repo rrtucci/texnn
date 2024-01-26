@@ -32,7 +32,7 @@ nodeI = Node(
     parent_names=["Y"],
     slice_str="[L],[\ell]",
     fun_name=None,
-    fun_args_str='W^{[L], [d]}"Y"',
+    fun_args_str='W_{fin}^{[L], [d]}"Y"',
     params_str=None,
     color="Orchid"
 )
@@ -142,7 +142,7 @@ nodep = Node(
     parent_names=["x"],
     slice_str="[d],[\ell]",
     fun_name=None,
-    fun_args_str=r'E^{[d],[L]}"x"',
+    fun_args_str=r'\cale^{[d],[L]}"x"',
     params_str=None,
     color="gray"
 )
@@ -244,8 +244,41 @@ aj= FancyArrow(
     child_name="j",
     superscript="U_\\rva")
 
+eJ= FancyArrow(
+    parent_name="e",
+    child_name="J",
+    subscript="1")
+
+Jj= FancyArrow(
+    parent_name="J",
+    child_name="j",
+    subscript="1")
+
+jY= FancyArrow(
+    parent_name="j",
+    child_name="Y",
+    subscript="1")
+
+FY= FancyArrow(
+    parent_name="F",
+    child_name="Y",
+    subscript="1")
+
+xe= FancyArrow(
+    parent_name="x",
+    child_name="e",
+    subscript=r"\cale")
+
+YI= FancyArrow(
+    parent_name="Y",
+    child_name="I",
+    subscript="W_{fin}")
+
+
 fancy_arrows = [ek, eq, ev, aa,
-                nk, nq, nv, aj]
+                nk, nq, nv, aj,
+                eJ, Jj, jY, FY,
+                xe, YI]
 
 plate0 = Plate(
     first_and_last_row=(3,8),

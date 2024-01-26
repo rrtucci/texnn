@@ -10,9 +10,9 @@
 $$\xymatrix@R=2pc@C=0.1pc{
 *+[F*:yellow]{\underline{n}^{[d], [\ell]}}&&&
 \\
-&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ul]&&
+&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ul]_{1}&&
 \\
-*+[F*:yellow]{\underline{N}^{[d], [\ell]}}\ar[ur]\ar[uu]&&&
+*+[F*:yellow]{\underline{N}^{[d], [\ell]}}\ar[ur]\ar[uu]^{1}&&&
 \\
 &&*+[F*:Dandelion]{\underline{A}^{[D], [\ell]}}\ar[ull]_{W_\rva}&
 \\
@@ -20,9 +20,9 @@ $$\xymatrix@R=2pc@C=0.1pc{
 \\
 &&&
 \\
-*+[F*:gray]{\underline{e}^{[d], [\ell]}}\ar[uurr]^{W_\rvk}\ar[uuuu]\ar[uur]^{W_\rvq}\ar[uurrr]_{W_\rvv}&&&
+*+[F*:gray]{\underline{e}^{[d], [\ell]}}\ar[uurr]^{W_\rvk}\ar[uuuu]^{1}\ar[uur]^{W_\rvq}\ar[uurrr]_{W_\rvv}&&&
 \\
-*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]&&&
+*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]^{\cale}&&&
 \save
 \POS"1,1"."5,1"."1,4"."5,4"!C*+<7.0em>\frm{-,}
 \restore
@@ -40,6 +40,11 @@ A^{[D], [\ell]} = \text{Attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D], [\ell
 \end{equation}
 
 \begin{equation}\color{blue}
+e^{[d], [\ell]} = \cale^{[d], [L]}x^{[L],[\ell]}
+\label{eq-p-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
 F^{[d], [\ell]} = \text{feed\_forward\_nn}(N^{[d], [\ell]})
 \label{eq-F-fun-encoder}
 \end{equation}
@@ -47,6 +52,11 @@ F^{[d], [\ell]} = \text{feed\_forward\_nn}(N^{[d], [\ell]})
 \begin{equation}\color{blue}
 K^{[D], [\ell]} = W_\rvk^{[D], [d]}e^{[d], [\ell]}
 \label{eq-K-fun-encoder}
+\end{equation}
+
+\begin{equation}\color{blue}
+n^{[d], [\ell]} = \text{normalize}(N^{[d], [\ell]} + F^{[d], [\ell]})
+\label{eq-n-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}
@@ -62,16 +72,6 @@ Q^{[D], [\ell]} = W_\rvq^{[D], [d]}e^{[d], [\ell]}
 \begin{equation}\color{blue}
 V^{[D], [\ell]} = W_\rvv^{[D], [d]}e^{[d], [\ell]}
 \label{eq-V-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-e^{[d], [\ell]} = E^{[d], [L]}x^{[L],[\ell]}
-\label{eq-p-fun-encoder}
-\end{equation}
-
-\begin{equation}\color{blue}
-n^{[d], [\ell]} = \text{normalize}(N^{[d], [\ell]} + F^{[d], [\ell]})
-\label{eq-n-fun-encoder}
 \end{equation}
 
 \begin{equation}\color{blue}

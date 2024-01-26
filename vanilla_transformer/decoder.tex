@@ -12,15 +12,15 @@ $$\xymatrix@R=2pc@C=0.2pc{
 \\
 &&&*+[F*:Orchid]{\underline{I}^{[L],[\ell]}}\ar[u]
 \\
-&&&*+[F*:yellow]{\underline{Y}^{[d], [\ell]}}\ar[u]
+&&&*+[F*:yellow]{\underline{Y}^{[d], [\ell]}}\ar[u]_{W_{fin}}
 \\
-&&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ur]&
+&&*+[F*:SkyBlue]{\underline{F}^{[d], [\ell]}}\ar[ur]_{1}&
 \\
-&*+[F*:Dandelion]{\underline{a}^{[D],[\ell]}}\ar[rr]^{U_\rva}&&*+[F*:yellow]{\underline{j}^{[d], [\ell]}}\ar[ul]\ar[uu]
+&*+[F*:Dandelion]{\underline{a}^{[D],[\ell]}}\ar[rr]^{U_\rva}&&*+[F*:yellow]{\underline{j}^{[d], [\ell]}}\ar[ul]\ar[uu]_{1}
 \\
 *+[F*:Dandelion]{\underline{v}^{[D], [\ell]}}\ar[ur]&*+[F*:Dandelion]{\underline{k}^{[D], [\ell]}}\ar[u]&*+[F*:Dandelion]{\underline{q}^{[D], [\ell]}}\ar[ul]&
 \\
-*+[F*:yellow]{\underline{n}^{[d], [\ell]}}\ar[ur]_{U_\rvk}\ar[u]^{U_\rvv}&&&*+[F*:yellow]{\underline{J}^{[d], [\ell]}}\ar[uu]\ar[ul]^{U_\rvq}
+*+[F*:yellow]{\underline{n}^{[d], [\ell]}}\ar[ur]_{U_\rvk}\ar[u]^{U_\rvv}&&&*+[F*:yellow]{\underline{J}^{[d], [\ell]}}\ar[uu]_{1}\ar[ul]^{U_\rvq}
 \\
 &*+[F*:Dandelion]{\underline{A}^{[D],[\ell]}}\ar[urr]^{W_\rva}&&
 \\
@@ -28,9 +28,9 @@ $$\xymatrix@R=2pc@C=0.2pc{
 \\
 &&&
 \\
-&&&*+[F*:gray]{\underline{e}^{[d],[\ell]}}\ar[uuuu]\ar[uull]_{W_\rvk}\ar[uulll]^{W_\rvq}\ar[uul]_{W_\rvv}
+&&&*+[F*:gray]{\underline{e}^{[d],[\ell]}}\ar[uuuu]_{1}\ar[uull]_{W_\rvk}\ar[uulll]^{W_\rvq}\ar[uul]_{W_\rvv}
 \\
-&&&*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]
+&&&*+[F*:Lavender]{\underline{x}^{[L],[\ell]}}\ar[u]_{\cale}
 \save
 \POS"4,1"."9,1"."4,4"."9,4"!C*+<9em>\frm{-,}
 \restore
@@ -53,7 +53,7 @@ A^{[D],[\ell]} = \text{Attention}(Q^{[D], [\ell]},K^{[D], [\ell]},V^{[D], [\ell]
 \end{equation}
 
 \begin{equation}\color{blue}
-e^{[d],[\ell]} = E^{[d],[L]}x^{[L],[\ell]}
+e^{[d],[\ell]} = \cale^{[d],[L]}x^{[L],[\ell]}
 \label{eq-p-fun-decoder}
 \end{equation}
 
@@ -63,7 +63,7 @@ F^{[d], [\ell]} = \text{feed\_forward\_nn}(j^{[d], [\ell]})
 \end{equation}
 
 \begin{equation}\color{blue}
-I^{[L],[\ell]} = W^{[L], [d]}Y^{[d], [\ell]}
+I^{[L],[\ell]} = W_{fin}^{[L], [d]}Y^{[d], [\ell]}
 \label{eq-I-fun-decoder}
 \end{equation}
 
