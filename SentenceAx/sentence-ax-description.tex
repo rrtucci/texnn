@@ -2,28 +2,6 @@
 \input{bayesuvius.sty}
 \begin{document}
 
-\begin{itemize}
-
-\item {\tt output = nn.Linear(na, nb)(input)}
-
-\beq
-x^{[na]}\rarrow y^{[nb]}=W^{[nb], [na]}x^{[na]}
-\eeq
-
-\item{\tt embedding = nn.Embedding(num\_embeddings=L, embedding\_dim=d)}
-
-\beq
-x^{[L], [\ell]}\rarrow
-y^{[d], [L], [\ell]}=
-[E^{[d], \beta}x^{\beta, [\ell]}]_{
-\beta\in[L]}
-\eeq
-
-\end{itemize}
-
-
-
-
 %        Assume:
 %        batch_size= 24, \ell_{ba}
 %        hidden_size= 768,  d
@@ -54,6 +32,10 @@ y^{[d], [L], [\ell]}=
 %        merge layer: [24, 84, 768]->[24, 84, 300]
 %        ilabelling_layer: [24, 84, 300]->[24, 84, 6]
 
+
+
+Let
+
 $\ell_{pad}=84$, padding length, for this batch
 
 $\ell_{enc}=105$, encoded length, for this batch, $\ell_{enc}\geq \ell_{pad}$
@@ -64,69 +46,260 @@ $n_{dep}=5$, number of copies of solid box connected in series, number of depths
 dashed box connected in series, number of iterative (attention) layers.
 
 
-$d=768$, hidden dimension
+$d=768$, hidden dimension per head
+
+$n_\rvh$, number of heads (BERT base)
+
+$D=d n_\rvh$, hidden dimension
+for all heads
 
 
 $\ell_{ba}=24$, batch size
 
-$\ell_{pad}=84$, padding length
+$n_{ila}=6$, number of ilabels
 
-$n_{il}=6$, number of ilabels
+$d_{ila}=300$, ilabeling dimension
 
-$d_{il}=300$, ilabeling dimension
 
-passage through depth layer:
 
- \beq
- [\ell_{ba}],[\ell_{pad}],[n_{il} ]
-\rarrow \text{same}
+\begin{itemize}
+
+\item {\tt output = nn.Linear(na, nb)(input)}
+
+\beq
+x^{[na]}\rarrow t^{[nb]}=W^{[nb], [na]}x^{[na]}
 \eeq
 
-All prefixed by $[\ell_{ba}]$
+\item{\tt embedding = nn.Embedding(num\_embeddings=L, embedding\_dim=d)}
+
+\beq
+x^{[L], [\ell]}\rarrow
+t^{[d], [L], [\ell]}=
+[\cale^{[d], \beta}x^{\beta, [\ell]}]_{
+\beta\in[L]}
+\eeq
+
+\section{Total Loss $\call$}
+
+The Total Loss $\call$ is the sum of the
+Cross Entropy Loss ($\call_CE$) and 4 penalty losses ($\call_i$)
+
+\beq
+\call = \call_{CE} + 
+\sum_{i\in\{ POSC, HVC, HVE, EC\}} \lam_{i}\call_i
+\eeq
+
+The $\lam_i$ are hyper-parameters.
+
+\subsection{Cross Entropy Loss}
+{\bf Cross Entropy}  
+in Information Theory
+
+\beqa
+H^\s(P_{tar}, P_{in})
+&=&
+-\sum_{\gamma\in[n_\rvc]}P_{tar}(\gamma|\s) \ln P_{in}(\gamma|\s)
+\\
+&=&-\sum_{\gamma\in[n_\rvc]}P_{tar}(\gamma|\s) \ln 
+\left[\frac{P_{in}(\gamma|\s)}{P_{tar}(\gamma|\s)}
+P_{tar}(\gamma|\s)\right]
+\\
+&=&
+H^\s(P_{tar}) + D_{KL}^\s(P_{in}\parallel P_{tar})
+\eeqa
+
+\end{itemize}
+
+{\bf Cross Entropy Loss} in PyTorch
+
+Let
+
+$n_\rvs=$ total number of samples being considered,
+usually batch size.
+$\s\in [n_\rvs]$
+
+$n_\rvc=$ number of classes in classification. $\gamma\in[n_\rvc]$
+
+
+$x^{[n_\rvc], [n_\rvs]}=$ input  samples
+
+$t^{[n_\rvs]}=$ target samples
+
+\beqa
+P_{in}(\gamma|\s)&=&
+\frac{\exp(x^{\gamma, \s})}
+{\sum_{\gamma'\in[n_\rvc]}\exp(x^{\gamma', \s})}
+\\
+&=&
+{\rm softmax}(x^{[n_\rvc], \s})(\gamma|\s)
+\eeqa
+
+Suppose $W^\gamma:values(\rvt)\rarrow[0,1]$
+for all $\gamma\in[n_\rvc]$.
+
+\beq
+P_{tar}(\gamma|\s)=
+\frac{
+W^\gamma (t^{\s})\indi(t^{\s}\neq -100)}
+{\sum_{\gamma\in[n_\rvc]}numerator}
+\eeq
+
+-100 can be replaced by any other integer 
+in $values(\rvt)$ for which we want the loss to be zero (for example, an integer used for padding)
+
+
+
+
+\beq
+\call_{CE}^\s(t^{\s}, x^{[n_\rvc], \s})=
+H(P_{tar}(\cdot|\s), P_{in}(\cdot|\s))
+\eeq
+
+
+\beq
+\call_{CE} = \frac{1}{n_\rvs} \sum_{\s\in[n_\rvs]}\call_{CE}^\s
+\eeq
+
+For example, if $W^\gamma=1$, and $n_\rvc=2$,
+
+\beqa
+\call_{CE} &=& \frac{1}{n_\rvs}\sum_{\s}
+\left[
+P_{tar}(0|\s)\ln P_{in}(0|\s)
++
+P_{tar}(0|\s)\ln (1-P_{in}(0|\s))
+\right]
+\eeqa
+
+
+
+
+
+
+In SentenceAx
+
+$x^{[n_\rvc], [n_\rvs]}=$ {\tt ll\_loss\_input}
+
+$t^{[n_\rvs]}$ = {\tt l\_loss\_target}
+
+
+\subsection{Penalty Losses}
+
+Below, we will use the standard 
+notation for the positive part function (a.k.a. 
+the RELU function)
+
+\beqa
+(x)_+ &=&
+\left\{
+\begin{array}{ll}
+x& \text{ if } x\geq0
+\\
+0& \text{ if } x< 0
+\end{array}
+\right.
+\\
+&=& {\rm max}(0, x)
+\eeqa
+
+
+
+
+Let
+
+$\ell=$ number of words, length of sentence. $\alp \in [\ell]$
+
+$M=$ number of depths. $\mu\in[M]$
+
+$w^\alp=$ word at position $\alp$
+
+$POS^\alp\in\{N, V, JJ, RB\}$, Part Of Sentence of $w^\alp$.
+
+$\caln=\{ N, R, O, S\}$
+
+$\caln^c = \caln-\{N\}$
+
+Importance
+\beq
+IMP^\alp = \indi(POS^\alp \in \{R,O,N, S\})
+\eeq
+
+head verb
+\beq
+HV^\alp = \indi(w^\alp \text{ is head verb})
+\eeq
+
+We will
+derive from the data an empirical probability $P(\rvT^{\mu, \alp} =T )$ for a table element
+$\rvT^{\mu, \alp}\in \caln$, for all $\mu\in [M]$ and $\alp\in[\ell]$.
+
+
+
 \begin{enumerate}
-\item passage through encoding layer
 
- \beq
- [\ell_{pad}],[n_{il} ]
-\rarrow [\ell_{enc}],[d]
+\item {\bf Part of Speech Coverage (POSC)}
+
+\beq
+\call_{POSC}=\sum_{\alp\in\ell}IMP^{\alp}P_{POSC}(\alp)
 \eeq
 
-\item passage through attention layers
+\beq
+P_{POSC}(\alp)=
+1-{\rm max}_{\mu\in [M]}
+{\rm max}_{T\in \caln^c}P(\rvT^{\mu, \alp}=T)
+\eeq
+
+\item {\bf Head Verb Coverage (HVC)}
 
 
 \beq
-[\ell_{enc}],[d]
-\rarrow
-[\ell_{enc}],[d]
+\call_{HVC}=
+\sum_{\alp\in [\ell]}
+HV^\alp P_{HVC}^\alp
 \eeq
-
-\item processing
 
 \beq
-[\ell_{enc}],[d]
-\rarrow
-[\ell_{pad}],[d]
+P_{HVC}(\alp)=
+\left|
+1-\sum_{\mu\in [M]}P(\rvT^{\mu, \alp}=R)
+\right|
 \eeq
 
-
-\item merge (Linear)
+\item {\bf Head Verb Exclusivity (HVE)}
 
 \beq
-[\ell_{pad}],[d]
-\rarrow
-[\ell_{pad}],[d_{il}]
+\call_{HVE}=
+\sum_{\mu\in [M]}
+\left(
+\sum_{\alp\in [\ell]}
+HV^\alp P(\rvT^{\mu, \alp}=R)
+-1
+\right)_+
 \eeq
 
-\item ilabelling (Linear)
+\item {\bf Extraction Count (EC)}
 
 \beq
-[\ell_{pad}],[d_{il}]
-\rarrow
-[\ell_{pad}],[n_{il}]
+\call_{EC}=
+\left(
+\sum_{\alp\in[\ell]} HV^\alp
+-
+\sum_{\mu\in [M]}EC^\mu
+\right)_+
 \eeq
 
+\beq
+EC^\mu=
+{\rm max}_{\alp\in [\ell]}
+HV^\alp P(\rvT^{\mu, \alp}=R)
+\eeq
 
 
 \end{enumerate}
+
+
+
+
+
 
 \end{document}
