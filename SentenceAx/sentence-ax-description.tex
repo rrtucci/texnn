@@ -1,9 +1,12 @@
 \documentclass[12pt]{article}
 \input{bayesuvius.sty}
+
+\usepackage[T1]{fontenc}
+\usepackage{underscore}
 \begin{document}
 
 %        Assume:
-%        batch_size= 24, \ell_{ba}
+%        batch_size= 24, s_{ba}
 %        hidden_size= 768,  d
 %        NUM_ILABELS= 6, n_{il}
 %        ILABELLING_DIM= 30
@@ -33,70 +36,198 @@
 %        ilabelling_layer: [24, 84, 300]->[24, 84, 6]
 
 
+SentenceAx (at github repo Ref.\cite{sentence-ax-github}) is a complete re-write of the Openie6 software 
+(at github repo Ref.\cite{openie6-repo}).
+ The Openie6 software is described by its creators
+ in the paper Ref.\cite{openie6-paper},
+ which we will henceforth refer to as O6.
+ 
+ This chapter describes the technical
+ aspects of SentenceAx. Although this chapter
+ can be read without reading O6, we highly recommend to
+ our readers that they read O6 also. 
+ Some parts of this chapter are taken almost verbatim
+ from O6. Other parts try to fill-in gaps in the
+ explanations provided by O6 or to improve those explanations. Yet others parts describe tiny changes that we made to the Openie6 software, in an effort to improve its clarity. 
+ 
+ 
+ 
+ This chapter often uses different
+ notation from that in O6, because the author
+ is a compulsive notation changer. The fact that I
+ might use a different notation to say the same thing by no means should be
+ interpreted  as an affirmation that I believe I have improved the O6 theory in a non-trivial way. I haven't.
+ 
+ In this chapter, we 
+ will use the Numpy-like tensor notation
+ discussed in Section 
+ \ref{sec-numpy-tensors}. In particular, note that $[n] = [0:n] = \{0, 1,\ldots, n-1\}$ and that $T^{[n], [m]}$ is an $n\times m$ matrix.
 
-Let
+\section{Preliminary Conventions}
 
-$\ell_{pad}=84$, padding length, for this batch
+\subsection{Tensor Notation}
+Our tensor notation is discussed in Section 
+\ref{sec-numpy-tensors}.
+Here is a quick review
+of some of the more essential
+facts in that section on tensors.
+Below will often accompany 
+  an equation in tensor
+  component notation
+  with, in parenthesis, the equivalent matrix equation.
+ 
+ 
 
-$\ell_{enc}=105$, encoded length, for this batch, $\ell_{enc}\geq \ell_{pad}$
+\begin{itemize}
 
-$n_{dep}=5$, number of copies of solid box connected in series, number of depths
+\item{\bf reshaping}
 
- $n_{att}=2$, number of copies of
-dashed box connected in series, number of iterative (attention) layers.
+\beq
+T^{\nu, \delta}\rarrow T^{\Delta}
+\;\;
+\left(
+T^{[n_\rvh], [d]} \rarrow T^{[D]}
+\right)
+\eeq
+
+\beq
+T^{\Delta}\rarrow T^{\nu, \delta}
+\;\;
+\left(
+T^{[D]}\rarrow T^{[n_\rvh], [d]}
+\right)
+\eeq
+
+\item {\bf concatenation}
+\beq
+T^{[n]}= (T^0, T^1,\ldots, T^{n-1})= 
+(T^\nu)_{\nu\in[n]}
+\eeq
+
+\item {\bf Hadamard product (element-wise, entry-wise multiplication)}
+\beq
+T^{[n]}* S^{[n]}= (T^\nu S^\nu)_{\nu\in[n]}
+\eeq
 
 
-$d=768$, hidden dimension per head
+\item {\bf Matrix multiplication}
 
-$n_\rvh$, number of heads (BERT base)
+$T^{[n]}= T^{[n], [1]}$ is a column vector.
 
-$D=d n_\rvh$, hidden dimension
-for all heads
+\beq
+(T^{[n]})^T S^{[n]}=\text{scalar}
+\eeq
+
+\beq
+T^{[a],[b]}S^{[b], [c]}
+=\left[\sum_{\beta\in[b]} T^{\alp, \beta}
+S^{\beta, \gamma}\right]
+_{\alp_\in [a], \gamma \in [c]}
+\eeq
+Most treatments of tranets, including the
+O6 and PyTorch,  order the
+operations chronologically from
+left to right. So if $A$ occurs before $B$,
+they write $AB$.
+This is contrary 
+to what is done in Linear Algebra, where one 
+orders the operations chronologically from right to left, and one writes $BA$.
+We will adhere to the Linear Algebra
+convention, since it is so prevalent
+and is the overwhelming precedent.
+\end{itemize}
 
 
-$\ell_{ba}=24$, batch size
-
-$n_{ila}=6$, number of ilabels
-
-$d_{ila}=300$, ilabeling dimension
+\subsection{PyTorch conventions}
 
 
 
 \begin{itemize}
-
 \item {\tt output = nn.Linear(na, nb)(input)}
 
 \beq
-x^{[na]}\rarrow t^{[nb]}=W^{[nb], [na]}x^{[na]}
+x^{[na]}\rarrow y^{[nb]}=W^{[nb], [na]}x^{[na]}
 \eeq
 
-\item{\tt embedding = nn.Embedding(num\_embeddings=L, embedding\_dim=d)}
+\item{\tt embedding = nn.Embedding(num_embeddings=L, embedding_dim=d)}
+
+Let
+
+$L=$ {\tt num_embeddings}
+
+$d=$ {\tt embedding_dim}
+
+
+$\lam\in[L]$, $\alp\in[\ell]$,
+$\nu_1\in [n_1]$, $\nu_2\in[n_2]$ 
+
+$\ell = \nu_1 \nu_2$.
+
+Consider a matrices $X, E, Y$ such that
 
 \beq
-x^{[L], [\ell]}\rarrow
-t^{[d], [L], [\ell]}=
-[\cale^{[d], \beta}x^{\beta, [\ell]}]_{
-\beta\in[L]}
+Y^{\delta, \alp} = \sum_{\lam}E^{\delta, \lam}
+X^{\lam, \alp}
+\;\;\;
+\left(
+Y^{[d], [\ell]} = E^{[d], [L]} X^{[L], [\ell]}
+\right)
 \eeq
-
-\section{Total Loss $\call$}
-
-The Total Loss $\call$ is the sum of the
-Cross Entropy Loss ($\call_CE$) and 4 penalty losses ($\call_i$)
+Assume, furthermore, that 
+matrix $X$ has 1-hot columns
 
 \beq
-\call = \call_{CE} + 
-\sum_{i\in\{ POSC, HVC, HVE, EC\}} \lam_{i}\call_i
+X^{\lam, \alp}
+=
+\delta(\lam, \lam(\alp))
+\eeq
+where $\lam(): [\ell]\rarrow [L]$.
+
+Hence,
+
+\beq
+Y^{\delta, \alp} = E^{\delta, \lam(\alp)}
 \eeq
 
-The $\lam_i$ are hyper-parameters.
 
-\subsection{Cross Entropy Loss}
+\beq
+{\ul \lam}^{\alp} =\lam(\alp)
+\eeq
+
+\beq
+{\ul \lam}^\alp\rarrow Y^{\delta, \alp}=E^{\delta, \lam(\alp)}
+\;\;
+(
+{\ul \lam}^{[\ell]}
+\rarrow Y^{[d], [\ell]})
+\eeq
+
+Replace $\alp$ by 
+$(\nu_1, \nu_2)$.
+
+\beq
+{\ul \lam}^{\nu_1, \nu_2}\rarrow Y^{\delta, \nu_1, \nu_2}=E^{\delta, \lam(\nu_1, \nu_2)}
+\;\;
+(
+{\ul \lam}^{[n_1], [n_2]}
+\rarrow Y^{[d], [n_1], [n_2]})
+\eeq
+Actually, {\tt nn.Embedding()} orders the tensor
+indices of the output thus
+
+\beq
+{\ul \lam}^{[n_1], [n_2]}
+\rarrow Y^{[n_1], [n_2], [d]}
+\eeq
+so the $[d]$ is attached on the right side rather than the left one.
+
+\item{\bf Cross Entropy Loss}
+
 {\bf Cross Entropy}  
 in Information Theory
 
 \beqa
-H^\s(P_{tar}, P_{in})
+H(P_{tar}^\s, P_{in}^\s)
 &=&
 -\sum_{\gamma\in[n_\rvc]}P_{tar}(\gamma|\s) \ln P_{in}(\gamma|\s)
 \\
@@ -105,11 +236,8 @@ H^\s(P_{tar}, P_{in})
 P_{tar}(\gamma|\s)\right]
 \\
 &=&
-H^\s(P_{tar}) + D_{KL}^\s(P_{in}\parallel P_{tar})
+H(P_{tar}^\s) + D_{KL}(P_{in}^\s\parallel P_{tar}^\s)
 \eeqa
-
-\end{itemize}
-
 {\bf Cross Entropy Loss} in PyTorch
 
 Let
@@ -171,22 +299,67 @@ P_{tar}(0|\s)\ln (1-P_{in}(0|\s))
 \right]
 \eeqa
 
-
-
-
-
-
 In SentenceAx
 
-$x^{[n_\rvc], [n_\rvs]}=$ {\tt ll\_loss\_input}
+$x^{[n_\rvc], [n_\rvs]}=$ {\tt ll_loss_input}
 
-$t^{[n_\rvs]}$ = {\tt l\_loss\_target}
+$t^{[n_\rvs]}$ = {\tt l_loss_target}
+
+
+\end{itemize}
+
+\section{Bayesian Network for this model}
+
+Let
+
+$\ell_{pad}=84$, padding length, for this batch
+
+$\ell_{enc}=105$, encoded length, for this batch, $\ell_{enc}\geq \ell_{pad}$
+
+$n_{dep}=5$, number of copies of solid box connected in series, number of depths
+
+ $n_{att}=2$, number of copies of
+dashed box connected in series, number of iterative (attention) layers.
+
+
+$d=768$, hidden dimension per head
+
+$n_\rvh$, number of heads (BERT base)
+
+$D=d n_\rvh$, hidden dimension
+for all heads
+
+
+$s_{ba}=24$, batch size
+
+$n_{ila}=6$, number of ilabels
+
+$d_{ila}=300$, ilabeling dimension
+
+\section{Loss $\call$ for this model}
+
+The Loss $\call$ is the sum of the
+Cross Entropy Loss $\call_{CE}$ and 4 penalty losses $\call_i$ for $i\in PL$ where 
+$PL=\{ POSC, HVC, HVE, EC\}$.
+
+
+\beq
+\call = \call_{CE} + 
+\sum_{i\in PL} \lam_{i}\call_i
+\eeq
+
+The $\lam_i$ are hyper-parameters.
+
+Next we will define the CE loss and the 4 penalty losses.
+
+
+
 
 
 \subsection{Penalty Losses}
 
 Below, we will use the standard 
-notation for the positive part function (a.k.a. 
+notation for the positive-part function (a.k.a. 
 the RELU function)
 
 \beqa
@@ -201,7 +374,9 @@ x& \text{ if } x\geq0
 \\
 &=& {\rm max}(0, x)
 \eeqa
-
+Since loss is supposed to be bounded below
+ (usually loss is greater or equal to zero),
+ the positive-part function arises frequently  when defining a loss.
 
 
 
@@ -213,71 +388,131 @@ $M=$ number of depths. $\mu\in[M]$
 
 $w^\alp=$ word at position $\alp$
 
-$POS^\alp\in\{N, V, JJ, RB\}$, Part Of Sentence of $w^\alp$.
+$T_{pos}=\{N, V, JJ, RB\}$, POS tags, N=Noun, V=Verb, JJ=Adjective, RB=Adverb
 
-$\caln=\{ N, R, O, S\}$
+$T_{ex}=\{ N, R, O, S\}$\footnote{
+The Openie6 and SentenceAx software use 
+a different set for $T_{ex}$. In SentenceAx, we use for
+$T_{ex}$ the list {\tt BASE_EXTAGS} (defined globally 
+in the file {\tt sax_globals}.)
+In {\tt BASE_EXTAGS}, N becomes NONE (or 0)
+and R becomes REL (or 3).
+ 
+Also, 2 tranets are trained by Openie6 and SentenceAx,
+one for extraction (task=ex), and one for splitting (task=cc).
+For splitting, $T_{ex}$ is replaced by $T_{cc}$. In SentenceAx, we use for
+$T_{cc}$ the list {\tt BASE_CCTAGS}  (defined globally 
+in the file {\tt sax_globals}.)
+In {\tt BASE_CCTAGS}, N becomes NONE (or 0)
+and R becomes CC (or 3).}. extraction tags (extags),  S=Subject, R=Relation, O=Object, N=None
 
-$\caln^c = \caln-\{N\}$
 
-Importance
+$T_{ex}\backslash N = T_{ex}-\{N\}$
+
+
+$POS^\alp\in T_{pos}$, Part Of Sentence of $w^\alp$. 
+
+
+
+Importance indicator function. 
 \beq
-IMP^\alp = \indi(POS^\alp \in \{R,O,N, S\})
+IMP^\alp = \indi(POS^\alp \in T_{pos})
 \eeq
 
-head verb
+Head verb indicator function. A {\bf head verb} is any verb that isn't a {\bf light verb}
+(do, be, is, has, etc.).
+
 \beq
-HV^\alp = \indi(w^\alp \text{ is head verb})
+HV^\alp = \indi(w^\alp \text{ is a head verb})
 \eeq
 
 We will
-derive from the data an empirical probability $P(\rvT^{\mu, \alp} =T )$ for a table element
-$\rvT^{\mu, \alp}\in \caln$, for all $\mu\in [M]$ and $\alp\in[\ell]$.
+derive from the data an empirical probability $P(\rvt^{\mu, \alp} =t )$ for a table element
+$\rvt^{\mu, \alp}\in T_{ex}$, for all $\mu\in [M]$ and $\alp\in[\ell]$.
 
+O6 describes how the 4 penalty losses 
+deal with the following sentence, which we will refer to
+henceforth as the red-sent:
+
+\begin{quote}\color{red}
+Obama gained popularity after
+Oprah endorsed him for the presidency.
+\end{quote}
+
+For the red-sent, the head verbs are {\color{red} gained, endorsed}
+
+Two valid extractions from red-sent are:
+{\color{red}(Obama; gained; popularity)}
+and {\color{red}(Oprah; endorsed him for;
+ the presidency)}.
 
 
 \begin{enumerate}
 
 \item {\bf Part of Speech Coverage (POSC)}
 
+All words important words should be part of at least one extraction.
+
+In red-sent: the words {\color{red}Obama, gained, popularity,
+Oprah, endorsed, presidency} must be covered in
+the set of extractions.
+
 \beq
-\call_{POSC}=\sum_{\alp\in\ell}IMP^{\alp}P_{POSC}(\alp)
+\call_{POSC}=\sum_{\alp\in [\ell]}IMP^{\alp}P_{POSC}(\alp)
 \eeq
 
 \beq
 P_{POSC}(\alp)=
 1-{\rm max}_{\mu\in [M]}
-{\rm max}_{T\in \caln^c}P(\rvT^{\mu, \alp}=T)
+{\rm max}_{t\in T_{ex}\backslash N}P(\rvt^{\mu, \alp}=t)
 \eeq
 
 \item {\bf Head Verb Coverage (HVC)}
 
+Each head verb
+should be present in the relation (R) span of some
+(but not too many) extractions.\footnote{A span is a list of contiguous words.}
+
+In red-sent: {\color{red} (Obama;
+gained; popularity), (Obama; gained; presidency)} is not a comprehensive set of extractions.
 
 \beq
 \call_{HVC}=
 \sum_{\alp\in [\ell]}
-HV^\alp P_{HVC}^\alp
+HV^\alp P_{HVC}(\alp)
 \eeq
 
 \beq
 P_{HVC}(\alp)=
 \left|
-1-\sum_{\mu\in [M]}P(\rvT^{\mu, \alp}=R)
+1-\sum_{\mu\in [M]}P(\rvt^{\mu, \alp}=R)
 \right|
 \eeq
 
 \item {\bf Head Verb Exclusivity (HVE)}
+
+The relation (R) span
+of one extraction can contain at most one head
+verb.
+
+In red-sent: {\color{red}gained popularity after Oprah endorsed} is not a good relation as it contains two
+head verbs
 
 \beq
 \call_{HVE}=
 \sum_{\mu\in [M]}
 \left(
 \sum_{\alp\in [\ell]}
-HV^\alp P(\rvT^{\mu, \alp}=R)
+HV^\alp P(\rvt^{\mu, \alp}=R)
 -1
 \right)_+
 \eeq
 
 \item {\bf Extraction Count (EC)}
+
+The total number of extractions with head verbs in the relation (R) span
+must be no fewer than the number of head verbs
+in the sentence.
 
 \beq
 \call_{EC}=
@@ -291,7 +526,7 @@ HV^\alp P(\rvT^{\mu, \alp}=R)
 \beq
 EC^\mu=
 {\rm max}_{\alp\in [\ell]}
-HV^\alp P(\rvT^{\mu, \alp}=R)
+HV^\alp P(\rvt^{\mu, \alp}=R)
 \eeq
 
 
