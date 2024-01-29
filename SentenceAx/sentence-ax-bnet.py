@@ -177,7 +177,7 @@ plateAtt = Plate(
 plates= [plateEx, plateAtt]
 
 print("\nmosaic:", mosaic)
-name = "sentence-ax"
+name = "sentence-ax-bnet"
 dag = DAG(name, mosaic, nodes,
           fancy_arrows=fancy_arrows,
           plates=plates)

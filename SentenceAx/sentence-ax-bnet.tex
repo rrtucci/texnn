@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\input{bayesuvius.sty}
+\begin{document}
+
+\begin{figure}[h!]\centering
+$$\xymatrix@R=3.5pc@C=2.5pc{
+*+[F*:SkyBlue]{\underline{E}^{[768], [105]}}&&*+[F*:Orchid]{\underline{M}^{[768], [105]}}\ar[rr]&&*+[F*:SpringGreen]{\underline{L}^{[6], [84]}}
+\\
+&&*+[F*:Orchid]{\underline{S}^{[768], [105]}}\ar[ull]_{1}\ar[u]&&
+\\
+&&*+[F*:Orchid]{\underline{n}^{[768], [105]}}\ar[u]_{1}&&
+\\
+&&*+[F*:Dandelion]{\underline{A}^{[D], [105]}}\ar[u]_{W_\rva}&&
+\\
+&*+[F*:Dandelion]{\underline{V}^{[D], [105]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [105]}}\ar[u]&*+[F*:Dandelion]{\underline{Q}^{[D], [105]}}\ar[ul]&
+\\
+&&&&
+\\
+*+[F*:SkyBlue]{\underline{X}^{[768], [105]}}\ar@/^5pc/[uuuuurr]^{1}&&*+[F*:Orchid]{\underline{B}^{[768], [105]}}\ar[uu]^{W_\rvk}\ar[uur]_{W_\rvq}\ar[uul]^{W_\rvv}&&
+\save
+\POS"1,1"."5,1"."1,4"."5,4"!C*+<4.5em>\frm{-,}
+\POS"3,2"."5,2"."3,4"."5,4"!C*+<3.5em>\frm{--}
+\restore
+}$$
+\caption{Sentence Ax tranet. $D= d n_\rvh$ where $d=768$ is the hidden dimension per head, and $n_\rvh=12$ is the number of heads. 2 copies of dashed box connected in series. 5 copies of plain box connected in series.}
+\label{fig-texnn-for-sentence-ax-bnet}
+\end{figure}
+
+\begin{subequations}
+
+\begin{equation}\color{blue}
+A^{[D], [105]} = \text{Attention}(Q^{[D], [105]},K^{[D], [105]},V^{[D], [105]})
+\label{eq-A-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+B^{[768], [105]} = \text{BERT}()
+\label{eq-B-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+E^{[768], [105]} = X^{[768], [105]}
+\label{eq-E-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+K^{[D], [105]} = W_\rvk^{[D], [768]}B^{[768], [105]}
+\label{eq-K-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+L^{[6], [84]} = \text{ilabel}(M^{[768], [105]})
+\label{eq-L-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+M^{[768], [105]} = \text{merge}(S^{[768], [105]})
+\label{eq-M-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+n^{[768], [105]} = W_\rva^{[768], [D]}A^{[D], [105]}
+\label{eq-n-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+Q^{[D], [105]} = W_\rvq^{[D], [768]}B^{[768], [105]}
+\label{eq-Q-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+S^{[768], [105]} = X^{[768], [105]} + n^{[768], [105]}
+\label{eq-S-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+V^{[D], [105]} = W_\rvv^{[D], [768]}B^{[768], [105]}
+\label{eq-V-fun-sentence-ax-bnet}
+\end{equation}
+
+\begin{equation}\color{blue}
+X^{[768], [105]} = 0
+\label{eq-X-fun-sentence-ax-bnet}
+\end{equation}
+
+\end{subequations}
+
+
+\end{document}  
