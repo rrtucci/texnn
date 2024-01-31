@@ -1,6 +1,7 @@
 from texnn import *
 
 mosaic = [
+    "__",
     "AB",
     "CD"
 ]
@@ -56,9 +57,19 @@ AC = FancyArrow(
 
 fancy_arrows = [AB, BD, CD, AC]
 
+A_ = EndingArrow(
+    parent_name="A",
+    num_r= 1,
+    num_u= 1
+)
+
+ending_arrows = [A_]
+
 print("\nmosaic:", mosaic)
 name = "expert-archer"
-dag = DAG(name, mosaic, nodes, fancy_arrows=fancy_arrows)
+dag = DAG(name, mosaic, nodes,
+          fancy_arrows=fancy_arrows,
+          ending_arrows=ending_arrows)
 dag.write_tex_file(
     underline=True,
     fig_caption="Expert Archer.",

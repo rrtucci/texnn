@@ -290,6 +290,39 @@ class FancyArrow:
         return str0
 
 
+class EndingArrow:
+    """
+    This class is for drawing arrows that point from a named node to an 
+    empty tile in the mosaic.
+    
+    Attributes
+    ----------
+    num_r: int
+        how many r's (l's) in the arrow if the number is positive (resp., 
+        negative)
+    num_u: int
+        how many u's (d's) in the arrow if the number is positive (resp.,
+        negative)
+    parent_name: str
+    """
+
+    def __init__(self,
+                 parent_name,
+                 num_u,
+                 num_r):
+        """
+
+        Parameters
+        ----------
+        parent_name: str
+        num_u: int
+        num_r: int
+        """
+        self.parent_name = parent_name
+        self.num_u = num_u
+        self.num_r = num_r
+
+
 class Plate:
     """
     This method defines a plate, i.e., a rectangle in the DAG drawing that
@@ -408,11 +441,15 @@ class DAG:
         nodes have empty list.
     empty_tile: str
         string for an empty tile, set to "_"
+    ending_arrows: list[EndingArrow] | None
+        A list of EndingArrows
     fancy_arrows: list[FancyArrow] | None
         A list of FancyArrows
     mosaic: list[str]
         a list of strings of equal length which when stacked horizontally
         represent the bnet that we wish to draw, as a tile mosaic.
+    name: str
+        name of DAG
     name_to_node: dict[str, Node]
         a dictionary mapping node name to Node
     node_to_tile_loc: list[Node, tuple[int]]
@@ -434,6 +471,7 @@ class DAG:
                  mosaic,
                  nodes,
                  fancy_arrows=None,
+                 ending_arrows=None,
                  plates=None):
         """
         
@@ -443,10 +481,12 @@ class DAG:
         mosaic: list[str]
         nodes: list[Node]
         fancy_arrows: list[FancyArrow] | None
+        ending_arrows: list[EndingArrow] | None
         plates: list[Plate] | None
         """
         self.nodes = nodes
         self.fancy_arrows = fancy_arrows
+        self.ending_arrows = ending_arrows
         self.plates = plates
 
         tiles = [node.tile_ch for node in nodes]
@@ -668,6 +708,23 @@ class DAG:
                     add_superscripts,
                     underline)
                 str0 += long_name + "}"
+                if self.ending_arrows:
+                    for e_arrow in self.ending_arrows:
+                        print("asder", parent.name, e_arrow.parent_name)
+                        if parent.name == e_arrow.parent_name:
+                            print("asder", e_arrow.parent_name)
+                            u_str = ""
+                            if e_arrow.num_u > 0:
+                                u_str = "u" * e_arrow.num_u
+                            if e_arrow.num_u < 0:
+                                u_str = "d" * -e_arrow.num_u
+                            r_str = ""
+                            if e_arrow.num_r > 0:
+                                r_str = "r" * e_arrow.num_r
+                            if e_arrow.num_r < 0:
+                                r_str = "l" * -e_arrow.num_r
+                            direction = u_str + r_str
+                            str0 += r"\ar[" + direction + "]"
                 for child in self.parent_to_children[parent]:
                     is_fancy_arrow = False
                     which_arrow = None
@@ -826,7 +883,7 @@ class DAG:
         str
 
         """
-        str0= "\n\n" + r"\begin{tabular}{ll}" + "\n"
+        str0 = "\n\n" + r"\begin{tabular}{ll}" + "\n"
         is_empty = True
         for node in self.nodes:
             if not node.cc_name:
