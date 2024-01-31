@@ -1,46 +1,50 @@
 from texnn import *
 
+"""
+
+This draws the same bnet as sentence-ax-bnet.py, except that the tensor 
+shape superscripts are ordered in  the R2L convention, as in Linear Algebra.
+
+"""
+
 mosaic = [
-    "_S_ML",
-    "__Ea_",
-    "__G__",
-    "__n__",
-    "__A__",
-    "_VKQ_",
+    "_E___",
+    "L_MS_",
+    "___n_",
+    "___A_",
+    "__VKQ",
     "_____",
-    "_XB__"
+    "_X_B_"
 ]
 
 nodeX= Node(
     name="X",
     tile_ch='X',
     parent_names=[],
-    slice_str="[86], [768]",
+    slice_str="[768], [105]",
     fun_name=None,
     fun_args_str="0",
     params_str=None,
-    color="pink",
-    cc_name="lll_word_hidstate"
+    color="SkyBlue"
 )
 
 nodeB= Node(
     name="B",
     tile_ch='B',
     parent_names=[],
-    slice_str="[121], [768]",
+    slice_str="[768], [105]",
     fun_name="BERT",
     fun_args_str=None,
     params_str=None,
-    color="Orchid",
-    cc_name="lll_hidstate"
+    color="Orchid"
 )
 nodeQ= Node(
     name="Q",
     tile_ch='Q',
     parent_names=["B"],
-    slice_str="[121], [D]",
+    slice_str="[D], [105]",
     fun_name=None,
-    fun_args_str=r'"B"W_\rvq^{[768], [D]}',
+    fun_args_str=r'W_\rvq^{[D], [768]}"B"',
     params_str=None,
     color="Dandelion"
 )
@@ -48,9 +52,9 @@ nodeK= Node(
     name="K",
     tile_ch='K',
     parent_names=["B"],
-    slice_str="[121], [D]",
+    slice_str="[D], [105]",
     fun_name=None,
-    fun_args_str=r'"B"W_\rvk^{[768], [D]}',
+    fun_args_str=r'W_\rvk^{[D], [768]}"B"',
     params_str=None,
     color="Dandelion"
 )
@@ -58,9 +62,9 @@ nodeV= Node(
     name="V",
     tile_ch='V',
     parent_names=["B"],
-    slice_str="[121], [D]",
+    slice_str="[D], [105]",
     fun_name=None,
-    fun_args_str=r'"B"W_\rvv^{[768], [D]}',
+    fun_args_str=r'W_\rvv^{[D], [768]}"B"',
     params_str=None,
     color="Dandelion"
 )
@@ -68,7 +72,7 @@ nodeA= Node(
     name="A",
     tile_ch='A',
     parent_names=["Q", "K", "V"],
-    slice_str="[121], [D]",
+    slice_str="[D], [105]",
     fun_name="Attention",
     fun_args_str=None,
     params_str=None,
@@ -78,86 +82,56 @@ noden= Node(
     name="n",
     tile_ch='n',
     parent_names=["A"],
-    slice_str="[121], [768]",
+    slice_str="[768], [105]",
     fun_name=None,
-    fun_args_str=r'"A"W_\rva^{[D], [768]}',
+    fun_args_str=r'W_\rva^{[768], [D]}"A"',
     params_str=None,
-    color="Orchid",
-    cc_name="lll_hidstate"
+    color="pink"
 )
 nodeS= Node(
     name="S",
     tile_ch='S',
-    parent_names=["X","E" ],
-    slice_str="[86], [768]",
+    parent_names=["X","n" ],
+    slice_str="[768], [105]",
     fun_name=None,
-    fun_args_str=r'"X" + "E"',
+    fun_args_str=r'"X" + "n"',
     params_str=None,
-    color="pink",
-    cc_name="lll_word_hidstate"
+    color="pink"
 )
 nodeL= Node(
     name="L",
     tile_ch='L',
     parent_names=["M"],
-    slice_str="[86], [6]",
+    slice_str="[6], [105]",
     fun_name=None,
-    fun_args_str=r'"M"W_{il}^{[300],[6]}',
+    fun_args_str=r'W_{il}^{[6],[300]}"M"',
     params_str=None,
-    color="SpringGreen",
-    cc_name="lll_word_score"
+    color="SpringGreen"
 )
 nodeE= Node(
     name="E",
     tile_ch='E',
-    parent_names=["a"],
-    slice_str="[86], [768]",
-    fun_name="embedding",
+    parent_names=["L"],
+    slice_str="[768], [105]",
+    fun_name=None,
     fun_args_str=None,
     params_str=None,
-    color="pink",
-    cc_name="lll_pred_code"
+    color="SkyBlue"
 )
-
-nodea= Node(
-    name="a",
-    tile_ch='a',
-    parent_names=["G"],
-    slice_str="[86]",
-    fun_name="argmax",
-    fun_args_str=None,
-    params_str="dim=-1",
-    color="yellow",
-    cc_name="ll_greedy_ilabel"
-)
-
-nodeG= Node(
-    name="G",
-    tile_ch='G',
-    parent_names=["n"],
-    slice_str="[86], [768]",
-    fun_name="gather",
-    fun_args_str=None,
-    params_str=None,
-    color="pink",
-    cc_name="lll_word_hidstate"
-)
-
 
 nodeM= Node(
     name="M",
     tile_ch='M',
     parent_names=["S"],
-    slice_str="[86], [300]",
+    slice_str="[300], [105]",
     fun_name=None,
-    fun_args_str=r'"G"W_{me}^{[768], [300]}',
+    fun_args_str=r'W_{me}^{[300], [768]}"S"',
     params_str=None,
-    color="SkyBlue",
-    cc_name="lll_merge_hidstate"
+    color="pink"
 )
 
-nodes = [nodeG, nodeM, nodeL, noden, nodeS, nodeA,
-    nodeV, nodeK, nodeQ, nodeB, nodeX, nodeE, nodea]
+nodes = [nodeM, nodeL, noden, nodeS, nodeA,
+    nodeV, nodeK, nodeQ, nodeB, nodeX, nodeE]
 
 BV= FancyArrow(parent_name="B",
                child_name="V",
@@ -183,32 +157,31 @@ XS= FancyArrow(parent_name="X",
                curvature= -5
 )
 
-ES= FancyArrow(parent_name="E",
+nS= FancyArrow(parent_name="n",
                child_name="S",
-               superscript="1"
+               subscript="1"
 )
 
 SM= FancyArrow(parent_name="S",
                child_name="M",
-               subscript="W_{me}"
+               superscript="W_{me}"
 )
-
 ML= FancyArrow(parent_name="M",
                child_name="L",
-               subscript="W_{il}"
+               superscript="W_{il}"
 )
 
-fancy_arrows = [BV, BQ, BK, An, XS, ML, SM, ES]
+fancy_arrows = [BV, BQ, BK, An, XS, nS, SM, ML]
 
 plateEx = Plate(
-    first_and_last_row=(0,5),
-    first_and_last_col=(0,3),
+    first_and_last_row=(0,4),
+    first_and_last_col=(1,4),
     margin= 3.5
 )
 
 plateAtt = Plate(
-    first_and_last_row=(3,5),
-    first_and_last_col=(1,3),
+    first_and_last_row=(2,4),
+    first_and_last_col=(2,4),
     style_name="dashed",
     margin= 2.5
 )
@@ -234,6 +207,6 @@ dag.write_tex_file(
                 "$d=768$ is the hidden dimension per head, and "
                 "$n_\\rvh=12$ is the number of heads. "
                 ,
-    row_separation= 2.5,
+    row_separation= 3.5,
     column_separation=2.5
 )

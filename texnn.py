@@ -44,6 +44,8 @@ class Node:
     
     Attributes
     ----------
+    cc_name: str | None
+        name of variable in computer code
     color: str | None
         color of the node
     full_right_side_of_eq: str | None
@@ -91,7 +93,8 @@ class Node:
                  color=None,
                  style_name="plain",
                  post_eq_comment=None,
-                 full_right_side_of_eq=None):
+                 full_right_side_of_eq=None,
+                 cc_name=None):
         """
         Constructor
         
@@ -108,6 +111,7 @@ class Node:
         style_name: str | None
         post_eq_comment: str | None
         full_right_side_of_eq: str | None
+        cc_name: str | None
         """
         self.name = name
         self.style_name = style_name
@@ -117,6 +121,9 @@ class Node:
         self.parent_names = parent_names
         self.post_eq_comment = post_eq_comment
         self.full_right_side_of_eq = full_right_side_of_eq
+        self.cc_name = cc_name
+        if self.cc_name:
+            self.cc_name = self.cc_name.replace("_", "\_")
 
         def rm_str(str0):
             if str0:
@@ -753,18 +760,22 @@ class DAG:
         blue_str = r"\color{blue}" if eqs_in_blue else ""
         for node in self.nodes:
             str0 += r"\begin{equation}" + blue_str + "\n"
+            equal_str = " = "
+            if node.cc_name:
+                str0 += r"\begin{aligned}" + "\n"
+                equal_str = " &= "
             node_nameL = Node.get_long_name(node,
                                             add_superscripts,
                                             underline)
             if not conditional_prob:
-                str0 += node_nameL + " = "
+                str0 += node_nameL + equal_str
             else:
                 str0 += "P(" + node_nameL
                 if node.parent_names:
                     str0 += "|" + get_parent_str(node)
                 if node.params_str:
                     str0 += ";" + node.params_str
-                str0 += ")="
+                str0 += ")" + equal_str
             if node.full_right_side_of_eq:
                 str0 += node.full_right_side_of_eq + "\n"
                 str0 += r"\end{equation}" + "\n\n"
@@ -797,8 +808,39 @@ class DAG:
                 str0 += r"\;\;\text{" + node.post_eq_comment + "}"
             str0 += "\n" + r"\label{eq-" + node.tile_ch + \
                     "-fun-" + self.name + "}\n"
+            if node.cc_name:
+                str0 += r"\\ &:{\tt " + node.cc_name + "}\n"
+                str0 += r"\end{aligned}" + "\n"
             str0 += r"\end{equation}" + "\n\n"
         str0 += r"\end{subequations}"
+        return str0
+
+    def get_cc_legend_str(self):
+        """
+        This method returns a LaTex string for writing a table with two
+        columns. The first column gives node names. The second gives the
+        computer code name of the nodes.
+
+        Returns
+        -------
+        str
+
+        """
+        str0= "\n\n" + r"\begin{tabular}{ll}" + "\n"
+        is_empty = True
+        for node in self.nodes:
+            if not node.cc_name:
+                continue
+            is_empty = False
+            node_nameL = Node.get_long_name(node,
+                                            add_superscripts=True,
+                                            underline=True)
+            str0 += f"${node_nameL}$ :&" + r"{\tt " + node.cc_name
+            str0 += r"}\\" + "\n"
+        str0 = str0.rstrip()[:-2] + "\n"
+        str0 += r"\end{tabular}" + "\n\n"
+        if is_empty:
+            str0 = ""
         return str0
 
     @staticmethod
@@ -921,6 +963,9 @@ class DAG:
             underline=underline,
             row_separation=row_separation,
             column_separation=column_separation)
+        legend_str = self.get_cc_legend_str()
+        if legend_str:
+            str0 += legend_str
         str0 += self.get_equations_str(
             add_superscripts=add_superscripts,
             underline=False,

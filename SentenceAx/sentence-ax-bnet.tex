@@ -3,84 +3,137 @@
 \begin{document}
 
 \begin{figure}[h!]\centering
-$$\xymatrix@R=3.5pc@C=2.5pc{
-*+[F*:SkyBlue]{\underline{E}^{[768], [105]}}&&*+[F*:Orchid]{\underline{M}^{[768], [105]}}\ar[rr]&&*+[F*:SpringGreen]{\underline{L}^{[6], [84]}}
+$$\xymatrix@R=2.5pc@C=2.5pc{
+&*+[F*:pink]{\underline{S}^{[86], [768]}}\ar[rr]_{W_{me}}&&*+[F*:SkyBlue]{\underline{M}^{[86], [300]}}\ar[r]_{W_{il}}&*+[F*:SpringGreen]{\underline{L}^{[86], [6]}}
 \\
-&&*+[F*:Orchid]{\underline{S}^{[768], [105]}}\ar[ull]_{1}\ar[u]&&
+&&*+[F*:pink]{\underline{E}^{[86], [768]}}\ar[ul]^{1}&*+[F*:yellow]{\underline{a}^{[86]}}\ar[l]&
 \\
-&&*+[F*:Orchid]{\underline{n}^{[768], [105]}}\ar[u]_{1}&&
+&&*+[F*:pink]{\underline{G}^{[86], [768]}}\ar[ur]&&
 \\
-&&*+[F*:Dandelion]{\underline{A}^{[D], [105]}}\ar[u]_{W_\rva}&&
+&&*+[F*:Orchid]{\underline{n}^{[121], [768]}}\ar[u]&&
 \\
-&*+[F*:Dandelion]{\underline{V}^{[D], [105]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[D], [105]}}\ar[u]&*+[F*:Dandelion]{\underline{Q}^{[D], [105]}}\ar[ul]&
+&&*+[F*:Dandelion]{\underline{A}^{[121], [D]}}\ar[u]_{W_\rva}&&
+\\
+&*+[F*:Dandelion]{\underline{V}^{[121], [D]}}\ar[ur]&*+[F*:Dandelion]{\underline{K}^{[121], [D]}}\ar[u]&*+[F*:Dandelion]{\underline{Q}^{[121], [D]}}\ar[ul]&
 \\
 &&&&
 \\
-*+[F*:SkyBlue]{\underline{X}^{[768], [105]}}\ar@/^5pc/[uuuuurr]^{1}&&*+[F*:Orchid]{\underline{B}^{[768], [105]}}\ar[uu]^{W_\rvk}\ar[uur]_{W_\rvq}\ar[uul]^{W_\rvv}&&
+&*+[F*:pink]{\underline{X}^{[86], [768]}}\ar@/^5pc/[uuuuuuu]^{1}&*+[F*:Orchid]{\underline{B}^{[121], [768]}}\ar[uu]^{W_\rvk}\ar[uur]_{W_\rvq}\ar[uul]^{W_\rvv}&&
 \save
-\POS"1,1"."5,1"."1,4"."5,4"!C*+<4.5em>\frm{-,}
-\POS"3,2"."5,2"."3,4"."5,4"!C*+<3.5em>\frm{--}
+\POS"1,1"."6,1"."1,4"."6,4"!C*+<3.5em>\frm{-,}
+\POS"4,2"."6,2"."4,4"."6,4"!C*+<2.5em>\frm{--}
 \restore
 }$$
-\caption{Sentence Ax tranet. $D= d n_\rvh$ where $d=768$ is the hidden dimension per head, and $n_\rvh=12$ is the number of heads. 2 copies of dashed box connected in series. 5 copies of plain box connected in series.}
+\caption{SentenceAx Bayesian network. 2 copies of dashed box are connected in series. 5 copies of plain box are connected in series. We display the tensor shape superscripts in the Linear Algebra R2L order. (PyTorch uses a L2R order instead). All tensor shape superscripts have been simplified by omitting a $[s_{ba}]$, where $s_{ba}=24$ is the batch size. $D= d n_\rvh$ where $d=768$ is the hidden dimension per head, and $n_\rvh=12$ is the number of heads. }
 \label{fig-texnn-for-sentence-ax-bnet}
 \end{figure}
+
+\begin{tabular}{ll}
+$\underline{a}^{[86]}$ :&{\tt ll\_greedy\_ilabel}\\
+$\underline{B}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
+$\underline{E}^{[86], [768]}$ :&{\tt lll\_pred\_code}\\
+$\underline{G}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}\\
+$\underline{L}^{[86], [6]}$ :&{\tt lll\_word\_score}\\
+$\underline{M}^{[86], [300]}$ :&{\tt lll\_merge\_hidstate}\\
+$\underline{n}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
+$\underline{S}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}\\
+$\underline{X}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}
+\end{tabular}
+
+
 
 \begin{subequations}
 
 \begin{equation}\color{blue}
-A^{[D], [105]} = \text{Attention}(Q^{[D], [105]},K^{[D], [105]},V^{[D], [105]})
+A^{[121], [D]} = \text{Attention}(Q^{[121], [D]},K^{[121], [D]},V^{[121], [D]})
 \label{eq-A-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
-B^{[768], [105]} = \text{BERT}()
+\begin{aligned}
+a^{[86]} &= \text{argmax}(G^{[86], [768]};dim=-1)
+\label{eq-a-fun-sentence-ax-bnet}
+\\ &:{\tt ll\_greedy\_ilabel}
+\end{aligned}
+\end{equation}
+
+\begin{equation}\color{blue}
+\begin{aligned}
+B^{[121], [768]} &= \text{BERT}()
 \label{eq-B-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_hidstate}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-E^{[768], [105]} = X^{[768], [105]}
+\begin{aligned}
+E^{[86], [768]} &= \text{embedding}(a^{[86]})
 \label{eq-E-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_pred\_code}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[D], [105]} = W_\rvk^{[D], [768]}B^{[768], [105]}
+\begin{aligned}
+G^{[86], [768]} &= \text{gather}(n^{[121], [768]})
+\label{eq-G-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_word\_hidstate}
+\end{aligned}
+\end{equation}
+
+\begin{equation}\color{blue}
+K^{[121], [D]} = B^{[121], [768]}W_\rvk^{[768], [D]}
 \label{eq-K-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
-L^{[6], [84]} = \text{ilabel}(M^{[768], [105]})
+\begin{aligned}
+L^{[86], [6]} &= M^{[86], [300]}W_{il}^{[300],[6]}
 \label{eq-L-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_word\_score}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-M^{[768], [105]} = \text{merge}(S^{[768], [105]})
+\begin{aligned}
+M^{[86], [300]} &= G^{[86], [768]}W_{me}^{[768], [300]}
 \label{eq-M-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_merge\_hidstate}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-n^{[768], [105]} = W_\rva^{[768], [D]}A^{[D], [105]}
+\begin{aligned}
+n^{[121], [768]} &= A^{[121], [D]}W_\rva^{[D], [768]}
 \label{eq-n-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_hidstate}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[D], [105]} = W_\rvq^{[D], [768]}B^{[768], [105]}
+Q^{[121], [D]} = B^{[121], [768]}W_\rvq^{[768], [D]}
 \label{eq-Q-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
-S^{[768], [105]} = X^{[768], [105]} + n^{[768], [105]}
+\begin{aligned}
+S^{[86], [768]} &= X^{[86], [768]} + E^{[86], [768]}
 \label{eq-S-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_word\_hidstate}
+\end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[D], [105]} = W_\rvv^{[D], [768]}B^{[768], [105]}
+V^{[121], [D]} = B^{[121], [768]}W_\rvv^{[768], [D]}
 \label{eq-V-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
-X^{[768], [105]} = 0
+\begin{aligned}
+X^{[86], [768]} &= 0
 \label{eq-X-fun-sentence-ax-bnet}
+\\ &:{\tt lll\_word\_hidstate}
+\end{aligned}
 \end{equation}
 
 \end{subequations}
