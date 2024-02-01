@@ -1,32 +1,16 @@
 from texnn import *
 
 mosaic = [
-    "_____",
-    "_____",
-    "_____",
-    "LS___",
-    "__Ea_",
-    "__G__",
-    "__n__",
-    "__A__",
-    "_VKQ_",
-    "_____",
-    "__B__",
-    "_X___"
+    "____",
+    "S__L",
+    "_Ea_",
+    "_G__",
+    "_n__",
+    "_A__",
+    "VKQ_",
+    "____",
+    "_B__",
 ]
-
-nodeX= Node(
-    name="X",
-    tile_ch='X',
-    parent_names=[],
-    slice_str="[86], [768]",
-    fun_name=None,
-    fun_args_str='"S"',
-    params_str=None,
-    color="pink",
-    cc_name="lll_hidstate",
-    post_eq_comment= "( initially zero) "
-)
 
 nodeB= Node(
     name="B",
@@ -42,30 +26,30 @@ nodeB= Node(
 nodeQ= Node(
     name="Q",
     tile_ch='Q',
-    parent_names=["X", "B"],
+    parent_names=["B"],
     slice_str="[121], [D]",
     fun_name=None,
-    fun_args_str=r'("X" + "B")W_\rvq^{[768], [D]}',
+    fun_args_str=r'"B"W_\rvq^{[768], [D]}',
     params_str=None,
     color="Dandelion"
 )
 nodeK= Node(
     name="K",
     tile_ch='K',
-    parent_names=["X", "B"],
+    parent_names=["B"],
     slice_str="[121], [D]",
     fun_name=None,
-    fun_args_str=r'("X"+"B")W_\rvk^{[768], [D]}',
+    fun_args_str=r'"B"W_\rvk^{[768], [D]}',
     params_str=None,
     color="Dandelion"
 )
 nodeV= Node(
     name="V",
     tile_ch='V',
-    parent_names=["X", "B"],
+    parent_names=["B"],
     slice_str="[121], [D]",
     fun_name=None,
-    fun_args_str=r'("X" + "B")W_\rvv^{[768], [D]}',
+    fun_args_str=r'"B"W_\rvv^{[768], [D]}',
     params_str=None,
     color="Dandelion"
 )
@@ -93,10 +77,10 @@ noden= Node(
 nodeS= Node(
     name="S",
     tile_ch='S',
-    parent_names=["X","E" ],
+    parent_names=["E" ],
     slice_str="[86], [768]",
     fun_name=None,
-    fun_args_str=r'"X" + "E"',
+    fun_args_str=r'"E"',
     params_str=None,
     color="pink",
     cc_name="lll_word_hidstate"
@@ -162,7 +146,7 @@ nodeG= Node(
 # )
 
 nodes = [nodeG, nodeL, noden, nodeS, nodeA,
-    nodeV, nodeK, nodeQ, nodeB, nodeE, nodea, nodeX]
+    nodeV, nodeK, nodeQ, nodeB, nodeE, nodea]
 
 BV= FancyArrow(parent_name="B",
                child_name="V",
@@ -182,12 +166,6 @@ An= FancyArrow(parent_name="A",
                subscript="W_\\rva"
 )
 
-XS= FancyArrow(parent_name="X",
-               child_name="S",
-               superscript="1",
-               curvature=-6
-)
-
 ES= FancyArrow(parent_name="E",
                child_name="S",
                superscript="1"
@@ -203,7 +181,7 @@ SL= FancyArrow(parent_name="S",
 #                subscript="W_{il}"
 # )
 
-fancy_arrows = [BV, BQ, BK, An, XS, SL, ES]
+fancy_arrows = [BV, BQ, BK, An, SL, ES]
 
 S_ = EndingArrow(
     parent_name="S",
@@ -243,7 +221,7 @@ plateAtt = Plate(
 plates= [plateEx, plateAtt]
 
 print("\nmosaic:", mosaic)
-name = "sentence-ax-bnet"
+name = "sentence-ax-o6-bnet"
 dag = DAG(name, mosaic, nodes,
           fancy_arrows=fancy_arrows,
           ending_arrows= ending_arrows,

@@ -726,9 +726,7 @@ class DAG:
                 str0 += long_name + "}"
                 if self.ending_arrows:
                     for e_arrow in self.ending_arrows:
-                        print("asder", parent.name, e_arrow.parent_name)
                         if parent.name == e_arrow.parent_name:
-                            print("asder", e_arrow.parent_name)
                             u_str = ""
                             if e_arrow.num_u > 0:
                                 u_str = "u" * e_arrow.num_u

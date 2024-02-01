@@ -3,8 +3,14 @@
 \begin{document}
 
 \begin{figure}[h!]\centering
-$$\xymatrix@R=2.5pc@C=2.5pc{
-&*+[F*:pink]{\underline{S}^{[86], [768]}}\ar[rr]_{W_{me}}&&*+[F*:SkyBlue]{\underline{M}^{[86], [300]}}\ar[r]_{W_{il}}&*+[F*:SpringGreen]{\underline{L}^{[86], [6]}}
+$$\xymatrix@R=1.5pc@C=3.5pc{
+&&&&
+\\
+&&&&
+\\
+&&&&
+\\
+*+[F*:SkyBlue]{\underline{L}^{[86], [6]}}&*+[F*:pink]{\underline{S}^{[86], [768]}}\ar[uuu]\ar[uuul]\ar[uuur]\ar[uuurr]\ar[l]_{W_{il}}&&&
 \\
 &&*+[F*:pink]{\underline{E}^{[86], [768]}}\ar[ul]^{1}&*+[F*:yellow]{\underline{a}^{[86]}}\ar[l]&
 \\
@@ -18,10 +24,12 @@ $$\xymatrix@R=2.5pc@C=2.5pc{
 \\
 &&&&
 \\
-&*+[F*:pink]{\underline{X}^{[86], [768]}}\ar@/^5pc/[uuuuuuu]^{1}&*+[F*:Orchid]{\underline{B}^{[121], [768]}}\ar[uu]^{W_\rvk}\ar[uur]_{W_\rvq}\ar[uul]^{W_\rvv}&&
+&&*+[F*:Orchid]{\underline{B}^{[121], [768]}}\ar[uu]|-{W_\rvk}\ar[uur]|-{W_\rvq}\ar[uul]|-{W_\rvv}&&
+\\
+&*+[F*:pink]{\underline{X}^{[86], [768]}}\ar[uuur]\ar[uuurr]\ar@/^6pc/[uuuuuuuu]^{1}\ar[uuu]&&&
 \save
-\POS"1,1"."6,1"."1,4"."6,4"!C*+<3.5em>\frm{-,}
-\POS"4,2"."6,2"."4,4"."6,4"!C*+<2.5em>\frm{--}
+\POS"4,2"."9,2"."4,4"."9,4"!C*+<2em>\frm{-,}
+\POS"7,2"."9,2"."7,4"."9,4"!C*+<1.3em>\frm{--}
 \restore
 }$$
 \caption{SentenceAx Bayesian network. 2 copies of dashed box are connected in series. 5 copies of plain box are connected in series. We display the tensor shape superscripts in the Linear Algebra R2L order. (PyTorch uses a L2R order instead). All tensor shape superscripts have been simplified by omitting a $[s_{ba}]$, where $s_{ba}=24$ is the batch size. $D= d n_\rvh$ where $d=768$ is the hidden dimension per head, and $n_\rvh=12$ is the number of heads. }
@@ -34,10 +42,9 @@ $\underline{B}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
 $\underline{E}^{[86], [768]}$ :&{\tt lll\_pred\_code}\\
 $\underline{G}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}\\
 $\underline{L}^{[86], [6]}$ :&{\tt lll\_word\_score}\\
-$\underline{M}^{[86], [300]}$ :&{\tt lll\_merge\_hidstate}\\
 $\underline{n}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
 $\underline{S}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}\\
-$\underline{X}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}
+$\underline{X}^{[86], [768]}$ :&{\tt lll\_hidstate}
 \end{tabular}
 
 
@@ -82,23 +89,15 @@ G^{[86], [768]} &= \text{gather}(n^{[121], [768]})
 \end{equation}
 
 \begin{equation}\color{blue}
-K^{[121], [D]} = B^{[121], [768]}W_\rvk^{[768], [D]}
+K^{[121], [D]} = (X^{[86], [768]}+B^{[121], [768]})W_\rvk^{[768], [D]}
 \label{eq-K-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
-L^{[86], [6]} &= M^{[86], [300]}W_{il}^{[300],[6]}
+L^{[86], [6]} &= "M"W_{il}^{[300],[6]}
 \label{eq-L-fun-sentence-ax-bnet}
 \\ &:{\tt lll\_word\_score}
-\end{aligned}
-\end{equation}
-
-\begin{equation}\color{blue}
-\begin{aligned}
-M^{[86], [300]} &= G^{[86], [768]}W_{me}^{[768], [300]}
-\label{eq-M-fun-sentence-ax-bnet}
-\\ &:{\tt lll\_merge\_hidstate}
 \end{aligned}
 \end{equation}
 
@@ -111,7 +110,7 @@ n^{[121], [768]} &= A^{[121], [D]}W_\rva^{[D], [768]}
 \end{equation}
 
 \begin{equation}\color{blue}
-Q^{[121], [D]} = B^{[121], [768]}W_\rvq^{[768], [D]}
+Q^{[121], [D]} = (X^{[86], [768]} + B^{[121], [768]})W_\rvq^{[768], [D]}
 \label{eq-Q-fun-sentence-ax-bnet}
 \end{equation}
 
@@ -124,15 +123,15 @@ S^{[86], [768]} &= X^{[86], [768]} + E^{[86], [768]}
 \end{equation}
 
 \begin{equation}\color{blue}
-V^{[121], [D]} = B^{[121], [768]}W_\rvv^{[768], [D]}
+V^{[121], [D]} = (X^{[86], [768]} + B^{[121], [768]})W_\rvv^{[768], [D]}
 \label{eq-V-fun-sentence-ax-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
-X^{[86], [768]} &= 0
+X^{[86], [768]} &= S^{[86], [768]}\;\;\text{( initially zero) }
 \label{eq-X-fun-sentence-ax-bnet}
-\\ &:{\tt lll\_word\_hidstate}
+\\ &:{\tt lll\_hidstate}
 \end{aligned}
 \end{equation}
 
