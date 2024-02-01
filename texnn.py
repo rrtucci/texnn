@@ -193,6 +193,8 @@ class FancyArrow:
         arrow subscript, appears midway between endings
     superscript: str | None
         arrow superscript, appears midway between endings
+    inscript: str | None
+        symbol on top of arrow
 
     """
 
@@ -204,7 +206,8 @@ class FancyArrow:
                  curvature=None,
                  displacement=None,
                  superscript=None,
-                 subscript=None):
+                 subscript=None,
+                 inscript=None):
         """
 
         Parameters
@@ -217,6 +220,7 @@ class FancyArrow:
         displacement: int | None
         superscript: str | None
         subscript: str | None
+        inscript: str | None
 
         """
         self.parent_name = parent_name
@@ -227,6 +231,16 @@ class FancyArrow:
         self.displacement = displacement
         self.subscript = subscript
         self.superscript = superscript
+        self.inscript = inscript
+        num_annotations = 0
+        if superscript:
+            num_annotations += 1
+        if subscript:
+            num_annotations += 1
+        if inscript:
+            num_annotations += 1
+        assert num_annotations <=1, \
+            "number of fancy arrow annotations is >1"
 
     def recognize_endings(self, parent_name, child_name):
         """
@@ -287,6 +301,8 @@ class FancyArrow:
             str0 += "^{" + self.superscript + "}"
         if self.subscript:
             str0 += "_{" + self.subscript + "}"
+        if self.inscript:
+            str0 += "|-{" + self.inscript + "}"
         return str0
 
 

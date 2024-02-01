@@ -33,26 +33,28 @@ AB = FancyArrow(
     child_name="B",
     color="red",
     style_name="dashed",
-    curvature=1
+    curvature=1,
+    superscript="F"
 )
 
 BD = FancyArrow(
     parent_name="B",
     child_name="D",
-    subscript=r"\beta"
+    inscript=r"\beta"
 )
 
 CD = FancyArrow(
     parent_name="C",
     child_name="D",
     subscript=r"\mu",
-    style_name="photon"
+    style_name="photon",
 )
 
 AC = FancyArrow(
     parent_name="A",
     child_name="C",
-    style_name="double"
+    style_name="double",
+    subscript="500"
 )
 
 fancy_arrows = [AB, BD, CD, AC]
