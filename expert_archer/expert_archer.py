@@ -40,7 +40,7 @@ AB = FancyArrow(
 BD = FancyArrow(
     parent_name="B",
     child_name="D",
-    inscript=r"\beta"
+    inscript=r"(x,y)"
 )
 
 CD = FancyArrow(
