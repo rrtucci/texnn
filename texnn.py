@@ -297,12 +297,15 @@ class FancyArrow:
                 if self.displacement < 0 else "+" + str(self.displacement)
             str0 += "@<" + disp_str + "ex>"
         str0 += "[" + direction + "]"
+        color_str = ""
+        if self.color:
+            color_str = r"\color{" + self.color + "} "
         if self.superscript:
-            str0 += "^{" + self.superscript + "}"
+            str0 += "^{" + color_str + self.superscript + "}"
         if self.subscript:
-            str0 += "_{" + self.subscript + "}"
+            str0 += "_{" + color_str +  self.subscript + "}"
         if self.inscript:
-            str0 += "|-{" + self.inscript + "}"
+            str0 += "|-{" + color_str + self.inscript + "}"
         return str0
 
 
