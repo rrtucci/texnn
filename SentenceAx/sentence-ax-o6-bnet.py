@@ -2,9 +2,10 @@ from texnn import *
 
 mosaic = [
     "____",
-    "S__L",
+    "____",
+    "S_ML",
     "_Ea_",
-    "_G__",
+    "_Gd_",
     "_n__",
     "_A__",
     "VKQ_",
@@ -77,10 +78,10 @@ noden= Node(
 nodeS= Node(
     name="S",
     tile_ch='S',
-    parent_names=["E" ],
+    parent_names=["E", "G" ],
     slice_str="[86], [768]",
     fun_name=None,
-    fun_args_str=r'"E"',
+    fun_args_str=r'"E" + "G"',
     params_str=None,
     color="pink",
     cc_name="lll_word_hidstate"
@@ -88,7 +89,7 @@ nodeS= Node(
 nodeL= Node(
     name="L",
     tile_ch='L',
-    parent_names=["S"],
+    parent_names=["M"],
     slice_str="[86], [6]",
     fun_name=None,
     fun_args_str=r'"M"W_{il}^{[300],[6]}',
@@ -123,30 +124,42 @@ nodea= Node(
 nodeG= Node(
     name="G",
     tile_ch='G',
-    parent_names=["n"],
+    parent_names=["d"],
     slice_str="[86], [768]",
     fun_name="gather",
     fun_args_str=None,
-    params_str=None,
+    params_str="dim=-2",
     color="pink",
     cc_name="lll_word_hidstate"
 )
 
 
-# nodeM= Node(
-#     name="M",
-#     tile_ch='M',
-#     parent_names=["S"],
-#     slice_str="[86], [300]",
-#     fun_name=None,
-#     fun_args_str=r'"G"W_{il}^{[768], [300]}',
-#     params_str=None,
-#     color="SkyBlue",
-#     cc_name="lll_merge_hidstate"
-# )
+nodeM= Node(
+    name="M",
+    tile_ch='M',
+    parent_names=["S", "G"],
+    slice_str="[86], [300]",
+    fun_name=None,
+    fun_args_str=r'"G"W_{il}^{[768], [300]}',
+    params_str=None,
+    color="SpringGreen",
+    cc_name="lll_word_hidstate"
+)
 
-nodes = [nodeG, nodeL, noden, nodeS, nodeA,
-    nodeV, nodeK, nodeQ, nodeB, nodeE, nodea]
+noded = Node(
+    name="d",
+    tile_ch='d',
+    parent_names=["n"],
+    slice_str="[121], [768]",
+    fun_name="dropout",
+    fun_args_str=None,
+    params_str=None,
+    color="pink",
+    cc_name="lll_hidstate"
+)
+
+nodes = [nodeG, nodeL, noden, nodeS, nodeA, noded,
+    nodeV, nodeK, nodeQ, nodeB, nodeE, nodea, nodeM]
 
 BV= FancyArrow(parent_name="B",
                child_name="V",
@@ -168,54 +181,54 @@ An= FancyArrow(parent_name="A",
 
 ES= FancyArrow(parent_name="E",
                child_name="S",
-               superscript="1"
+               inscript="1"
 )
 
-SL= FancyArrow(parent_name="S",
+SM= FancyArrow(parent_name="S",
+               child_name="M",
+               inscript="depth\\neq 0",
+               color="red"
+)
+
+ML= FancyArrow(parent_name="M",
                child_name="L",
                subscript="W_{il}"
 )
 
-# ML= FancyArrow(parent_name="M",
-#                child_name="L",
-#                subscript="W_{il}"
-# )
-
-fancy_arrows = [BV, BQ, BK, An, SL, ES]
-
-S_ = EndingArrow(
-    parent_name="S",
-    num_u=3,
-    num_r=0
+GS= FancyArrow(parent_name="G",
+               child_name="S",
+               inscript="1"
 )
-S_l = EndingArrow(
-    parent_name="S",
-    num_u=3,
+GM= FancyArrow(parent_name="G",
+               child_name="M",
+               inscript="depth=0",
+               color="green",
+               curvature=1
+)
+
+fancy_arrows = [BV, BQ, BK, An, SM, ML, ES,
+                GS, GM]
+
+d_ = EndingArrow(
+    parent_name="d",
+    num_u=4,
     num_r=-1
 )
-S_r = EndingArrow(
-    parent_name="S",
-    num_u=3,
-    num_r=1
-)
-S_rr = EndingArrow(
-    parent_name="S",
-    num_u=3,
-    num_r=2
-)
-ending_arrows = [S_, S_l, S_r, S_rr]
+
+
+ending_arrows = [d_]
 
 plateEx = Plate(
-    first_and_last_row=(3,8),
-    first_and_last_col=(1,3),
-    margin= 2
+    first_and_last_row=(2,8),
+    first_and_last_col=(0,2),
+    margin= 4.8
 )
 
 plateAtt = Plate(
-    first_and_last_row=(6,8),
-    first_and_last_col=(1,3),
+    first_and_last_row=(5,8),
+    first_and_last_col=(0,2),
     style_name="dashed",
-    margin= 1.3
+    margin= 3.8
 )
 
 plates= [plateEx, plateAtt]
@@ -240,6 +253,6 @@ dag.write_tex_file(
                 "$d=768$ is the hidden dimension per head, and "
                 "$n_\\rvh=12$ is the number of heads. "
                 ,
-    row_separation= 1.5,
+    row_separation= 2.5,
     column_separation=3.5
 )

@@ -8,11 +8,11 @@ $$\xymatrix@R=2.5pc@C=3.5pc{
 \\
 &&&
 \\
-*+[F*:pink]{\underline{S}^{[86], [768]}}\ar[uu]\ar[uur]\ar[uurr]\ar@[red][rr]|-{\color{red} depth\neq 0}&&*+[F*:SpringGreen]{\underline{M}^{[86], [300]}}\ar[r]_{W_{il}}&*+[F*:SkyBlue]{\underline{L}^{[86], [6]}}
+*+[F*:pink]{\underline{S}^{[86], [768]}}\ar@[red][rr]|-{\color{red} depth\neq 0}&&*+[F*:SpringGreen]{\underline{M}^{[86], [300]}}\ar[r]_{W_{il}}&*+[F*:SkyBlue]{\underline{L}^{[86], [6]}}
 \\
-&*+[F*:pink]{\underline{E}^{[86], [768]}}\ar@[red][ul]|-{\color{red} depth\neq 0}&*+[F*:yellow]{\underline{a}^{[86]}}\ar[l]&
+&*+[F*:pink]{\underline{E}^{[86], [768]}}\ar[ul]|-{1}&*+[F*:yellow]{\underline{a}^{[86]}}\ar[l]&
 \\
-&*+[F*:pink]{\underline{G}^{[86], [768]}}\ar[ur]\ar[uur]\ar[uul]&*+[F*:pink]{\underline{d}^{[121], [768]}}\ar[l]&
+&*+[F*:pink]{\underline{G}^{[86], [768]}}\ar[ur]\ar@[green]@/_1pc/[uur]|-{\color{green} depth=0}\ar[uul]|-{1}&*+[F*:pink]{\underline{d}^{[121], [768]}}\ar[uuuul]\ar[l]&
 \\
 &*+[F*:Orchid]{\underline{n}^{[121], [768]}}\ar[ur]&&
 \\
@@ -29,7 +29,7 @@ $$\xymatrix@R=2.5pc@C=3.5pc{
 \restore
 }$$
 \caption{SentenceAx Bayesian network. 2 copies of dashed box are connected in series. 5 copies of plain box are connected in series. We display the tensor shape superscripts in the Linear Algebra R2L order. (PyTorch uses a L2R order instead). All tensor shape superscripts have been simplified by omitting a $[s_{ba}]$, where $s_{ba}=24$ is the batch size. $D= d n_\rvh$ where $d=768$ is the hidden dimension per head, and $n_\rvh=12$ is the number of heads. }
-\label{fig-texnn-for-sentence-ax-bnet}
+\label{fig-texnn-for-sentence-ax-o6-bnet}
 \end{figure}
 
 \begin{tabular}{ll}
@@ -39,7 +39,7 @@ $\underline{d}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
 $\underline{E}^{[86], [768]}$ :&{\tt lll\_pred\_code}\\
 $\underline{G}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}\\
 $\underline{L}^{[86], [6]}$ :&{\tt lll\_word\_score}\\
-$\underline{M}^{[86], [300]}$ :&{\tt lll\_merge\_hidstate}\\
+$\underline{M}^{[86], [300]}$ :&{\tt lll\_word\_hidstate}\\
 $\underline{n}^{[121], [768]}$ :&{\tt lll\_hidstate}\\
 $\underline{S}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}
 \end{tabular}
@@ -50,13 +50,13 @@ $\underline{S}^{[86], [768]}$ :&{\tt lll\_word\_hidstate}
 
 \begin{equation}\color{blue}
 A^{[121], [D]} = \text{Attention}(Q^{[121], [D]},K^{[121], [D]},V^{[121], [D]})
-\label{eq-A-fun-sentence-ax-bnet}
+\label{eq-A-fun-sentence-ax-o6-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
 a^{[86]} &= \text{argmax}(G^{[86], [768]};dim=-1)
-\label{eq-a-fun-sentence-ax-bnet}
+\label{eq-a-fun-sentence-ax-o6-bnet}
 \\ &:{\tt ll\_greedy\_ilabel}
 \end{aligned}
 \end{equation}
@@ -64,7 +64,7 @@ a^{[86]} &= \text{argmax}(G^{[86], [768]};dim=-1)
 \begin{equation}\color{blue}
 \begin{aligned}
 B^{[121], [768]} &= \text{BERT}()
-\label{eq-B-fun-sentence-ax-bnet}
+\label{eq-B-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_hidstate}
 \end{aligned}
 \end{equation}
@@ -72,7 +72,7 @@ B^{[121], [768]} &= \text{BERT}()
 \begin{equation}\color{blue}
 \begin{aligned}
 d^{[121], [768]} &= \text{dropout}(n^{[121], [768]})
-\label{eq-d-fun-sentence-ax-bnet}
+\label{eq-d-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_hidstate}
 \end{aligned}
 \end{equation}
@@ -80,7 +80,7 @@ d^{[121], [768]} &= \text{dropout}(n^{[121], [768]})
 \begin{equation}\color{blue}
 \begin{aligned}
 E^{[86], [768]} &= \text{embedding}(a^{[86]})
-\label{eq-E-fun-sentence-ax-bnet}
+\label{eq-E-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_pred\_code}
 \end{aligned}
 \end{equation}
@@ -88,20 +88,20 @@ E^{[86], [768]} &= \text{embedding}(a^{[86]})
 \begin{equation}\color{blue}
 \begin{aligned}
 G^{[86], [768]} &= \text{gather}(d^{[121], [768]};dim=-2)
-\label{eq-G-fun-sentence-ax-bnet}
+\label{eq-G-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_word\_hidstate}
 \end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
 K^{[121], [D]} = B^{[121], [768]}W_\rvk^{[768], [D]}
-\label{eq-K-fun-sentence-ax-bnet}
+\label{eq-K-fun-sentence-ax-o6-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
 L^{[86], [6]} &= M^{[86], [300]}W_{il}^{[300],[6]}
-\label{eq-L-fun-sentence-ax-bnet}
+\label{eq-L-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_word\_score}
 \end{aligned}
 \end{equation}
@@ -109,35 +109,35 @@ L^{[86], [6]} &= M^{[86], [300]}W_{il}^{[300],[6]}
 \begin{equation}\color{blue}
 \begin{aligned}
 M^{[86], [300]} &= G^{[86], [768]}W_{il}^{[768], [300]}
-\label{eq-M-fun-sentence-ax-bnet}
-\\ &:{\tt lll\_merge\_hidstate}
+\label{eq-M-fun-sentence-ax-o6-bnet}
+\\ &:{\tt lll\_word\_hidstate}
 \end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
 n^{[121], [768]} &= A^{[121], [D]}W_\rva^{[D], [768]}
-\label{eq-n-fun-sentence-ax-bnet}
+\label{eq-n-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_hidstate}
 \end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
 Q^{[121], [D]} = B^{[121], [768]}W_\rvq^{[768], [D]}
-\label{eq-Q-fun-sentence-ax-bnet}
+\label{eq-Q-fun-sentence-ax-o6-bnet}
 \end{equation}
 
 \begin{equation}\color{blue}
 \begin{aligned}
-S^{[86], [768]} &= (E^{[86], [768]} + S^{[86], [768]})\indi(depth\neq 0)
-\label{eq-S-fun-sentence-ax-bnet}
+S^{[86], [768]} &= E^{[86], [768]} + G^{[86], [768]}
+\label{eq-S-fun-sentence-ax-o6-bnet}
 \\ &:{\tt lll\_word\_hidstate}
 \end{aligned}
 \end{equation}
 
 \begin{equation}\color{blue}
 V^{[121], [D]} = B^{[121], [768]}W_\rvv^{[768], [D]}
-\label{eq-V-fun-sentence-ax-bnet}
+\label{eq-V-fun-sentence-ax-o6-bnet}
 \end{equation}
 
 \end{subequations}
