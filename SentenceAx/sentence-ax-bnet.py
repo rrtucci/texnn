@@ -6,8 +6,8 @@ mosaic = [
     "_ML",
     "SEa",
     "dG_",
-    "_I_",
-    "_BX"
+    "_IX",
+    "_B_"
 ]
 
 nodeB= Node(
@@ -28,7 +28,7 @@ noden= Node(
     parent_names=["B"],
     slice_str="[121], [768]",
     fun_name=None,
-    fun_args_str=r'\left["B"\indi(depth=0) "M"\indi(depth> 0)\right]',
+    fun_args_str=r'\left["B"\indi(depth=0)+ "M"\indi(depth> 0)\right]',
     params_str=None,
     color="Orchid",
     cc_name="lll_hidstate"
