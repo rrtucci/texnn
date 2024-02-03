@@ -18,13 +18,16 @@ wrapper for the LaTeX package xy-pic.
 
 Gallery:
 
-* [Silly Bnet](https://github.com/rrtucci/texnn/blob/master/silly_bnet/silly-bnet.pdf)
-
 * [Asia](https://github.com/rrtucci/texnn/blob/master/asia/asia.pdf)
 
 * [Expert Archer](https://github.com/rrtucci/texnn/blob/master/expert_archer/expert-archer.pdf)
 
 * [Rock Layers](https://github.com/rrtucci/texnn/blob/master/rock_layers/rock_layers.pdf)
+
+* [SentenceAx](https://github.com/rrtucci/texnn/blob/master/SentenceAx/sentence-ax-bnet.pdf)
+
+* [Silly Bnet](https://github.com/rrtucci/texnn/blob/master/silly_bnet/silly-bnet.pdf)
+
 
 * Vanilla Transformer
   * [Scaled dot product attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/scaled-dot-prod-att.pdf)
