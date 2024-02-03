@@ -1,16 +1,13 @@
 from texnn import *
 
 mosaic = [
-    "____",
-    "____",
-    "S_ML",
-    "_Ea_",
-    "_Gd_",
-    "_n__",
-    "_A__",
-    "VKQ_",
-    "____",
-    "_B__",
+    "___",
+    "___",
+    "_ML",
+    "SEa",
+    "dG_",
+    "_I_",
+    "_BX"
 ]
 
 nodeB= Node(
@@ -24,53 +21,14 @@ nodeB= Node(
     color="Orchid",
     cc_name="lll_hidstate"
 )
-nodeQ= Node(
-    name="Q",
-    tile_ch='Q',
-    parent_names=["B"],
-    slice_str="[121], [D]",
-    fun_name=None,
-    fun_args_str=r'"B"W_\rvq^{[768], [D]}',
-    params_str=None,
-    color="Dandelion"
-)
-nodeK= Node(
-    name="K",
-    tile_ch='K',
-    parent_names=["B"],
-    slice_str="[121], [D]",
-    fun_name=None,
-    fun_args_str=r'"B"W_\rvk^{[768], [D]}',
-    params_str=None,
-    color="Dandelion"
-)
-nodeV= Node(
-    name="V",
-    tile_ch='V',
-    parent_names=["B"],
-    slice_str="[121], [D]",
-    fun_name=None,
-    fun_args_str=r'"B"W_\rvv^{[768], [D]}',
-    params_str=None,
-    color="Dandelion"
-)
-nodeA= Node(
-    name="A",
-    tile_ch='A',
-    parent_names=["Q", "K", "V"],
-    slice_str="[121], [D]",
-    fun_name="Attention",
-    fun_args_str=None,
-    params_str=None,
-    color="Dandelion"
-)
+
 noden= Node(
-    name="n",
-    tile_ch='n',
-    parent_names=["A"],
+    name="I",
+    tile_ch='I',
+    parent_names=["B"],
     slice_str="[121], [768]",
     fun_name=None,
-    fun_args_str=r'"A"W_\rva^{[D], [768]}',
+    fun_args_str=r'\left["B"\indi(depth=0) "M"\indi(depth> 0)\right]',
     params_str=None,
     color="Orchid",
     cc_name="lll_hidstate"
@@ -78,10 +36,10 @@ noden= Node(
 nodeS= Node(
     name="S",
     tile_ch='S',
-    parent_names=["E", "G" ],
+    parent_names=["E", "G"],
     slice_str="[86], [768]",
     fun_name=None,
-    fun_args_str=r'("E" + "S")\indi(depth\neq 0)',
+    fun_args_str=r'"E" + "G"',
     params_str=None,
     color="pink",
     cc_name="lll_word_hidstate"
@@ -93,6 +51,17 @@ nodeL= Node(
     slice_str="[86], [6]",
     fun_name=None,
     fun_args_str=r'"M"W_{il}^{[300],[6]}',
+    params_str=None,
+    color="SkyBlue",
+    cc_name="lll_word_score"
+)
+nodeX= Node(
+    name="X",
+    tile_ch='X',
+    parent_names=[],
+    slice_str="[86], [6]",
+    fun_name=None,
+    fun_args_str=r'"L"\indi(depth> 0)',
     params_str=None,
     color="SkyBlue",
     cc_name="lll_word_score"
@@ -112,7 +81,7 @@ nodeE= Node(
 nodea= Node(
     name="a",
     tile_ch='a',
-    parent_names=["G"],
+    parent_names=["X"],
     slice_str="[86]",
     fun_name="argmax",
     fun_args_str=None,
@@ -133,103 +102,99 @@ nodeG= Node(
     cc_name="lll_word_hidstate"
 )
 
-
 nodeM= Node(
     name="M",
     tile_ch='M',
     parent_names=["S", "G"],
     slice_str="[86], [300]",
     fun_name=None,
-    fun_args_str=r'"G"W_{il}^{[768], [300]}',
+    fun_args_str=r'\left["G"\indi(depth=0) + "S"\indi(depth> 0) \right] '
+                 r'W_{me}^{[768], [300]}',
     params_str=None,
-    color="SpringGreen",
-    cc_name="lll_merge_hidstate"
+    color="Dandelion",
+    cc_name="lll_word_hidstate"
 )
 
 noded = Node(
     name="d",
     tile_ch='d',
-    parent_names=["n"],
+    parent_names=["I"],
     slice_str="[121], [768]",
     fun_name="dropout",
     fun_args_str=None,
     params_str=None,
-    color="pink",
+    color="Orchid",
     cc_name="lll_hidstate"
 )
 
-nodes = [nodeG, nodeL, noden, nodeS, nodeA, noded,
-    nodeV, nodeK, nodeQ, nodeB, nodeE, nodea, nodeM]
+nodes = [nodeG, nodeL, noden, nodeS, noded,
+    nodeB, nodeE, nodea, nodeM, nodeX]
 
-BV= FancyArrow(parent_name="B",
-               child_name="V",
-               inscript="W_\\rvv"
-)
-BQ= FancyArrow(parent_name="B",
-               child_name="Q",
-               inscript="W_\\rvq"
-)
-BK= FancyArrow(parent_name="B",
-               child_name="K",
-               inscript="W_\\rvk"
-)
-
-An= FancyArrow(parent_name="A",
-               child_name="n",
-               subscript="W_\\rva"
+GS= FancyArrow(parent_name="G",
+               child_name="S",
+               superscript="1"
 )
 
 ES= FancyArrow(parent_name="E",
                child_name="S",
-               inscript="depth\\neq 0",
-               color="red"
+               superscript="1"
 )
 
 SM= FancyArrow(parent_name="S",
                child_name="M",
-               inscript="depth\\neq 0",
-               color="red"
+               superscript="W_{me}",
+)
+
+GM= FancyArrow(parent_name="G",
+               child_name="M",
+               inscript="W_{me}",
+               color="red",
+               curvature= 5
 )
 
 ML= FancyArrow(parent_name="M",
                child_name="L",
-               subscript="W_{il}"
+               superscript="W_{il}"
 )
 
-fancy_arrows = [BV, BQ, BK, An, SM, ML, ES]
 
-S_ = EndingArrow(
-    parent_name="S",
+fancy_arrows = [SM, ML, ES, GS, GM]
+
+M_ = EndingArrow(
+    parent_name="M",
     num_u=2,
     num_r=0
 )
 
-S_r = EndingArrow(
-    parent_name="S",
+L_ = EndingArrow(
+    parent_name="L",
     num_u=2,
-    num_r=1
+    num_r=0
 )
-S_rr = EndingArrow(
-    parent_name="S",
-    num_u=2,
-    num_r=2
+
+
+ending_arrows = [M_, L_]
+
+plateOnce = Plate(
+    first_and_last_row=(3,3),
+    first_and_last_col=(0,2),
+    style_name= "dotted"
 )
-ending_arrows = [S_, S_r, S_rr]
 
 plateEx = Plate(
-    first_and_last_row=(2,8),
+    first_and_last_row=(2,5),
     first_and_last_col=(0,2),
     margin= 4.8
 )
 
 plateAtt = Plate(
-    first_and_last_row=(5,8),
-    first_and_last_col=(0,2),
+    first_and_last_row=(5,5),
+    first_and_last_col=(1,1),
     style_name="dashed",
     margin= 3.8
 )
 
-plates= [plateEx, plateAtt]
+plates= [plateEx, plateAtt, plateOnce]
 
 print("\nmosaic:", mosaic)
 name = "sentence-ax-bnet"
@@ -239,17 +204,18 @@ dag = DAG(name, mosaic, nodes,
           plates=plates)
 dag.write_tex_file(
     header=BAY_HEADER,
-    fig_caption="SentenceAx Bayesian network. "
-                "2 copies of dashed box are connected in "
-                "series. 5 copies of plain box are connected in series. "
+    fig_caption="Sax bnet. 2 copies of dashed box are connected in "
+                "series. 5 copies (5 depths) of plain box are connected in "
+                "series. "
+                " However, in the first of those 5 plain box copies, "
+                "the dotted box "
+                " is omitted and node $\\ul{G}$ feeds directly into node "
+                " $\\ul{M}$ (indicated by red arrow). "
                 "We display the tensor "
-                "shape superscripts in the Linear Algebra R2L order. "
-                "(PyTorch uses a L2R order instead). All "
+                "shape superscripts in the PyTorch L2R order. All "
                 "tensor shape superscripts have been simplified by "
-                "omitting a $[s_{ba}]$, where $s_{ba}=24$ is the batch size. " 
-                "$D= d n_\\rvh$ where "
-                "$d=768$ is the hidden dimension per head, and "
-                "$n_\\rvh=12$ is the number of heads. "
+                "omitting a $[s_{ba}]$ from their left side, where $s_{"
+                "ba}=24$ is the batch size. "
                 ,
     row_separation= 2.5,
     column_separation=3.5
