@@ -225,27 +225,34 @@ nodes = [
 
 xv0 = FancyArrow(parent_name="e_0^t",
                  child_name="v_0^t",
-                 superscript=r"W_{\rvv}^t")
+                 script_tuple=("super", r"W_{\rvv}^t")
+                 )
 xv1 = FancyArrow(parent_name="e_1^t",
                  child_name="v_1^t",
-                 superscript=r"W_{\rvv}^t")
+                 script_tuple=("super", r"W_{\rvv}^t")
+                 )
 xv2 = FancyArrow(parent_name="e_2^t",
                  child_name="v_2^t",
-                 superscript=r"W_{\rvv}^t")
+                 script_tuple=("super", r"W_{\rvv}^t")
+                 )
 xk0 = FancyArrow(parent_name="e_0^t",
                  child_name="k_0^t",
-                 subscript=r"W_{\rvk}^t")
+                 script_tuple=("sub", r"W_{\rvk}^t")
+                 )
 xk1 = FancyArrow(parent_name="e_1^t",
                  child_name="k_1^t",
-                 subscript=r"W_{\rvk}^t")
+                 script_tuple=("sub", r"W_{\rvk}^t")
+                 )
 xk2 = FancyArrow(parent_name="e_2^t",
                  child_name="k_2^t",
-                 subscript=r"W_{\rvk}^t")
+                 script_tuple=("sub", r"W_{\rvk}^t")
+                 )
 
 xq0 = FancyArrow(parent_name="e_0^t",
                  child_name="q_0^t",
                  color="red",
-                 superscript=r"W_{\rvq}^t")
+                 script_tuple=("super", r"W_{\rvq}^t")
+                 )
 qc0 = FancyArrow(parent_name="q_0^t",
                  child_name="a_0^t",
                  color="red")
@@ -253,29 +260,34 @@ qc0 = FancyArrow(parent_name="q_0^t",
 xq1 = FancyArrow(parent_name="e_1^t",
                  child_name="q_1^t",
                  color="red",
-                 superscript=r"W_{\rvq}^t")
+                 script_tuple=("super", r"W_{\rvq}^t")
+                 )
 qc1 = FancyArrow(parent_name="q_1^t",
                  child_name="a_1^t",
                  color="red")
 xq2 = FancyArrow(parent_name="e_2^t",
                  child_name="q_2^t",
                  color="red",
-                 superscript=r"W_{\rvq}^t")
+                 script_tuple=("super", r"W_{\rvq}^t")
+                 )
 qc2 = FancyArrow(parent_name="q_2^t",
                  child_name="a_2^t",
                  color="red")
 
 ce0 = FancyArrow(parent_name="a_0^t",
                  child_name="e_0^{t+1}",
-                 superscript="1")
+                 script_tuple=("super", "1")
+                 )
 
 ce1 = FancyArrow(parent_name="a_1^t",
                  child_name="e_1^{t+1}",
-                 superscript="1")
+                 script_tuple=("super", "1")
+                 )
 
 ce2 = FancyArrow(parent_name="a_2^t",
                  child_name="e_2^{t+1}",
-                 superscript="1")
+                 script_tuple=("super", "1")
+                 )
 
 
 fancy_arrows = [xq0, qc0, xq1, qc1, xq2, qc2,

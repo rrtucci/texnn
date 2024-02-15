@@ -124,42 +124,50 @@ nodes = [
 ek= FancyArrow(
     parent_name="e",
     child_name="K",
-    superscript="W_\\rvk")
+    script_tuple=("super", "W_\\rvk")
+)
 
 eq= FancyArrow(
     parent_name="e",
     child_name="Q",
-    superscript="W_\\rvq")
+    script_tuple=("super", "W_\\rvq")
+)
 
 ev= FancyArrow(
     parent_name="e",
     child_name="V",
-    subscript="W_\\rvv")
+    script_tuple=("sub", "W_\\rvv")
+)
 
 an= FancyArrow(
     parent_name="A",
     child_name="N",
-    subscript="W_\\rva")
+    script_tuple=("sub", "W_\\rva")
+)
 
 eN= FancyArrow(
     parent_name="e",
     child_name="N",
-    superscript="1")
+    script_tuple=("super", "1")
+)
 
 Nn= FancyArrow(
     parent_name="N",
     child_name="n",
-    superscript="1")
+    script_tuple=("super", "1")
+)
 
 Fn= FancyArrow(
     parent_name="F",
     child_name="n",
-    subscript="1")
+    script_tuple=("sub", "1")
+)
 
 xe= FancyArrow(
     parent_name="x",
     child_name="e",
-    superscript=r"\cale")
+    script_tuple=("super", r"\cale")
+)
 
 
 fancy_arrows = [ek, eq, ev, an, eN, Nn, Fn, xe]

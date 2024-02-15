@@ -25,7 +25,7 @@ r"""\documentclass[12pt]{article}
 """
 
 #replace yellow by other color or remove "*:yellow"
-NODE_STYLE_NAME_TO_XY_STR={
+NODE_STYLE_NAME_TO_XY_STR = {
     "plain": "",
     "box": "*+[F*:yellow]",
     "double-box": "*+[F=*:yellow]",
@@ -37,7 +37,7 @@ NODE_STYLE_NAME_TO_XY_STR={
     "dashed-oval": "*++[o][F--*:yellow]"
 }
 
-ARROW_STYLE_TO_XY_STR={
+ARROW_STYLE_TO_XY_STR = {
     "dashed": "@{-->}",
     "dotted": "@{.>}",
     "photon": "@{~>}",
@@ -46,7 +46,7 @@ ARROW_STYLE_TO_XY_STR={
     "dotted_double": "@{:>}"
 }
 
-PLATE_STYLE_TO_XY_STR={
+PLATE_STYLE_TO_XY_STR = {
     "plain": "-",
     "dashed": "--",
     "dotted": ".",
@@ -55,5 +55,12 @@ PLATE_STYLE_TO_XY_STR={
     "rounded": "-:<3pt>"
 }
 
+ARROW_SCRIPT_TYPE_TO_XY_STR = {
+    "super": "^",
+    "sub": "_",
+    "in": "|-"
+}
 
-
+# u, d must be first if 2 letters
+SIMPLE_DIRECTIONS = ["u", "d", "r", "l",
+                     "ur", "ul", "dr", "dl"]

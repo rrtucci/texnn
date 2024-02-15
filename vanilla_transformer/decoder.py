@@ -207,72 +207,86 @@ nodes = [
 ek= FancyArrow(
     parent_name="e",
     child_name="K",
-    subscript="W_\\rvk")
+    script_tuple=("sub", "W_\\rvk")
+)
 
 eq= FancyArrow(
     parent_name="e",
     child_name="Q",
-    superscript="W_\\rvq")
+    script_tuple=("super", "W_\\rvq")
+)
 
 ev= FancyArrow(
     parent_name="e",
     child_name="V",
-    subscript="W_\\rvv")
+    script_tuple=("sub", "W_\\rvv")
+)
 
 aa= FancyArrow(
     parent_name="A",
     child_name="J",
-    superscript="W_\\rva")
+    script_tuple=("super", "W_\\rva")
+)
 
 nk= FancyArrow(
     parent_name="n",
     child_name="k",
-    subscript="U_\\rvk")
+    script_tuple=("sub", "U_\\rvk")
+)
 
 nq= FancyArrow(
     parent_name="J",
     child_name="q",
-    superscript="U_\\rvq")
+    script_tuple=("super", "U_\\rvq")
+)
 
 nv= FancyArrow(
     parent_name="n",
     child_name="v",
-    superscript="U_\\rvv")
+    script_tuple=("super", "U_\\rvv")
+)
 
 aj= FancyArrow(
     parent_name="a",
     child_name="j",
-    superscript="U_\\rva")
+    script_tuple=("super", "U_\\rva")
+)
 
 eJ= FancyArrow(
     parent_name="e",
     child_name="J",
-    subscript="1")
+    script_tuple=("sub", "1")
+)
 
 Jj= FancyArrow(
     parent_name="J",
     child_name="j",
-    subscript="1")
+    script_tuple=("sub", "1")
+)
 
 jY= FancyArrow(
     parent_name="j",
     child_name="Y",
-    subscript="1")
+    script_tuple=("sub", "1")
+)
 
 FY= FancyArrow(
     parent_name="F",
     child_name="Y",
-    subscript="1")
+    script_tuple=("sub", "1")
+)
 
 xe= FancyArrow(
     parent_name="x",
     child_name="e",
-    subscript=r"\cale")
+    script_tuple=("sub", r"\cale")
+)
 
 YI= FancyArrow(
     parent_name="Y",
     child_name="I",
-    subscript="W_{fin}")
+    script_tuple=("sub", "W_{fin}")
+)
 
 
 fancy_arrows = [ek, eq, ev, aa,

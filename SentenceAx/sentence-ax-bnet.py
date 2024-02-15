@@ -132,29 +132,29 @@ nodes = [nodeG, nodeL, noden, nodeS, noded,
 
 GS= FancyArrow(parent_name="G",
                child_name="S",
-               superscript="1"
+               script_tuple=("super", "1")
 )
 
 ES= FancyArrow(parent_name="E",
                child_name="S",
-               superscript="1"
+               script_tuple=("super", "1")
 )
 
 SM= FancyArrow(parent_name="S",
                child_name="M",
-               superscript="W_{me}",
+               script_tuple=("super", "W_{me}")
 )
 
 GM= FancyArrow(parent_name="G",
                child_name="M",
-               inscript="W_{me}",
+               script_tuple=("in", "W_{me}"),
                color="red",
                curvature= 5
 )
 
 ML= FancyArrow(parent_name="M",
                child_name="L",
-               superscript="W_{il}"
+               script_tuple=("super", "W_{il}")
 )
 
 

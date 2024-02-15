@@ -176,7 +176,7 @@ class FancyArrow:
 
     Attributes
     ----------
-    child_name: str
+    child_name: str | None
         name of arrow's child
     color: str | None
         arrow color
@@ -187,40 +187,36 @@ class FancyArrow:
         direction)
     parent_name: str
         name of arrow's parent
+    script_tuple: (str, str)
+        The first component is in ["super", "sub", "in"]. The second
+        component is the string that you want to be a superscript, subscript
+        or inscript, respectively. A superscript appears above the arrow,
+        a subscript appears below the arrow, and an inscript appears pierced
+        by the arrow.
     style_name: str | None
         arrow style
-    subscript: str | None
-        arrow subscript, appears midway between endings
-    superscript: str | None
-        arrow superscript, appears midway between endings
-    inscript: str | None
-        symbol on top of arrow
 
     """
 
     def __init__(self,
                  parent_name,
-                 child_name,
+                 child_name=None,
                  color=None,
                  style_name=None,
                  curvature=None,
                  displacement=None,
-                 superscript=None,
-                 subscript=None,
-                 inscript=None):
+                 script_tuple=None):
         """
 
         Parameters
         ----------
         parent_name: str
-        child_name: str
+        child_name: str | None
         color: str | None
         style_name: str | None
         curvature: int | None
         displacement: int | None
-        superscript: str | None
-        subscript: str | None
-        inscript: str | None
+        script_tuple: (str, str)| None
 
         """
         self.parent_name = parent_name
@@ -229,18 +225,10 @@ class FancyArrow:
         self.style_name = style_name
         self.curvature = curvature
         self.displacement = displacement
-        self.subscript = subscript
-        self.superscript = superscript
-        self.inscript = inscript
-        num_annotations = 0
-        if superscript:
-            num_annotations += 1
-        if subscript:
-            num_annotations += 1
-        if inscript:
-            num_annotations += 1
-        assert num_annotations <=1, \
-            "number of fancy arrow annotations is >1"
+        self.script_tuple = script_tuple
+        if script_tuple:
+            assert script_tuple[0] in ["super", "sub", "in"], \
+                f"script type {script_tuple[0]} is invalid"
 
     def recognize_endings(self, parent_name, child_name):
         """
@@ -272,9 +260,10 @@ class FancyArrow:
 
         Parameters
         ----------
-        direction: str
+        direction: str | tuple(str)
             a string defining the direction of the arrow. for example,
-            "ruu", "rr", "lld", etc.
+            "ruu", "rr", "lld", etc. A string tuple (s, e) indicates a
+            RoundTripArrow with starting_dir = s and ending_dir = e
 
         Returns
         -------
@@ -296,20 +285,23 @@ class FancyArrow:
             disp_str = str(self.displacement) \
                 if self.displacement < 0 else "+" + str(self.displacement)
             str0 += "@<" + disp_str + "ex>"
-        str0 += "[" + direction + "]"
+        if type(direction) == str:
+            str0 += "[" + direction + "]"
+        elif type(direction) == tuple:
+            str0 += f"@({direction[0]}, {direction[1]})[]"
+        else:
+            assert False
+
         color_str = ""
         if self.color:
             color_str = r"\color{" + self.color + "} "
-        if self.superscript:
-            str0 += "^{" + color_str + self.superscript + "}"
-        if self.subscript:
-            str0 += "_{" + color_str +  self.subscript + "}"
-        if self.inscript:
-            str0 += "|-{" + color_str + self.inscript + "}"
+        if self.script_tuple:
+            str0 += ARROW_SCRIPT_TYPE_TO_XY_STR[self.script_tuple[0]] + \
+                    "{" + color_str + self.script_tuple[1] + "}"
         return str0
 
 
-class EndingArrow:
+class EndingArrow(FancyArrow):
     """
     This class is for drawing arrows that point from a named node to an 
     empty tile in the mosaic.
@@ -322,24 +314,59 @@ class EndingArrow:
     num_u: int
         how many u's (d's) in the arrow if the number is positive (resp.,
         negative)
-    parent_name: str
     """
 
     def __init__(self,
                  parent_name,
                  num_u,
-                 num_r):
+                 num_r,
+                 **kwargs):
+        """
+
+        Parameters
+        ----------
+        num_u: int
+        num_r: int
+        """
+        child_name = None
+        super().__init__(parent_name, child_name, **kwargs)
+        self.num_u = num_u
+        self.num_r = num_r
+
+
+class RoundTripArrow(FancyArrow):
+    """
+    This class is for drawing arrows that point from a named node to itself.
+
+    Attributes
+    ----------
+    ending_dir: str
+        ending direction
+    starting_dir: str
+        starting direction
+    """
+
+    def __init__(self,
+                 parent_name,
+                 starting_dir,
+                 ending_dir,
+                 **kwargs):
         """
 
         Parameters
         ----------
         parent_name: str
-        num_u: int
-        num_r: int
+        starting_dir: str
+        ending_dir: str
         """
-        self.parent_name = parent_name
-        self.num_u = num_u
-        self.num_r = num_r
+        child_name = None
+        super().__init__(parent_name, child_name, **kwargs)
+        self.starting_dir = starting_dir
+        self.ending_dir = ending_dir
+        assert starting_dir in SIMPLE_DIRECTIONS, \
+            "starting direction {starting_dir} is invalid"
+        assert ending_dir in SIMPLE_DIRECTIONS, \
+            "ending direction {starting_dir} is invalid"
 
 
 class Plate:
@@ -481,6 +508,7 @@ class DAG:
         nodes have empty list.
     plates: list[Plate] | None
         A list of Plates
+    round_trip_arrows: list[RoundTripArrow] | None
 
     """
     empty_tile = "_"
@@ -491,6 +519,7 @@ class DAG:
                  nodes,
                  fancy_arrows=None,
                  ending_arrows=None,
+                 round_trip_arrows=None,
                  plates=None):
         """
         
@@ -501,11 +530,13 @@ class DAG:
         nodes: list[Node]
         fancy_arrows: list[FancyArrow] | None
         ending_arrows: list[EndingArrow] | None
+        round_trip_arrows: list[RoundTripArrow] | None
         plates: list[Plate] | None
         """
         self.nodes = nodes
         self.fancy_arrows = fancy_arrows
         self.ending_arrows = ending_arrows
+        self.round_trip_arrows = round_trip_arrows
         self.plates = plates
 
         tiles = [node.tile_ch for node in nodes]
@@ -741,7 +772,14 @@ class DAG:
                             if e_arrow.num_r < 0:
                                 r_str = "l" * -e_arrow.num_r
                             direction = u_str + r_str
-                            str0 += r"\ar[" + direction + "]"
+                            str0 += e_arrow.get_xy_str(direction)
+                if self.round_trip_arrows:
+                    for rt_arrow in self.round_trip_arrows:
+                        if parent.name == rt_arrow.parent_name:
+                            dir_tuple = (rt_arrow.starting_dir,
+                                         rt_arrow.ending_dir)
+                            str0 += rt_arrow.get_xy_str(dir_tuple)
+
                 for child in self.parent_to_children[parent]:
                     is_fancy_arrow = False
                     which_arrow = None

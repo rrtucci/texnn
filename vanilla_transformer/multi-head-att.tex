@@ -49,6 +49,11 @@ A_1^{[d],[\ell]} = \text{Attention}(V_1^{[d],[\ell]},K_1^{[d],[\ell]},Q_1^{[d],[
 \end{equation}
 
 \begin{equation}\color{blue}
+e^{[d], [\ell]} = \;\;\text{prior}
+\label{eq-e-fun-multi-head-att}
+\end{equation}
+
+\begin{equation}\color{blue}
 K^{[D], [\ell]} = W_\rvk^{[D],[d]}e^{[d], [\ell]}
 \label{eq-K-fun-multi-head-att}
 \end{equation}
@@ -96,11 +101,6 @@ V_0^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project 
 \begin{equation}\color{blue}
 V_1^{[d],[\ell]} = \text{linear}(V^{[D], [\ell]})\;\;\text{(split, then project a component)}
 \label{eq-8-fun-multi-head-att}
-\end{equation}
-
-\begin{equation}\color{blue}
-e^{[d], [\ell]} = \;\;\text{prior}
-\label{eq-e-fun-multi-head-att}
 \end{equation}
 
 \end{subequations}

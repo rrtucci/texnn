@@ -34,27 +34,27 @@ AB = FancyArrow(
     color="red",
     style_name="dashed",
     curvature=1,
-    superscript="F"
+    script_tuple=("super", "F")
 )
 
 BD = FancyArrow(
     parent_name="B",
     child_name="D",
-    inscript=r"(x,y)"
+    script_tuple=("in", r"(x,y)")
 )
 
 CD = FancyArrow(
     parent_name="C",
     child_name="D",
-    subscript=r"\mu",
-    style_name="photon",
+    script_tuple=("sub", r"\mu"),
+    style_name="photon"
 )
 
 AC = FancyArrow(
     parent_name="A",
     child_name="C",
     style_name="double",
-    subscript="500"
+    script_tuple=("sub", "500")
 )
 
 fancy_arrows = [AB, BD, CD, AC]
@@ -67,11 +67,22 @@ A_ = EndingArrow(
 
 ending_arrows = [A_]
 
+RT = RoundTripArrow(
+    parent_name="D",
+    starting_dir="ur",
+    ending_dir="dr",
+    color="red",
+    script_tuple= ("super", "RT")
+)
+
+round_trip_arrows = [RT]
+
 print("\nmosaic:", mosaic)
 name = "expert-archer"
 dag = DAG(name, mosaic, nodes,
           fancy_arrows=fancy_arrows,
-          ending_arrows=ending_arrows)
+          ending_arrows=ending_arrows,
+          round_trip_arrows=round_trip_arrows)
 dag.write_tex_file(
     underline=True,
     fig_caption="Expert Archer.",

@@ -83,23 +83,27 @@ nodes = [nodeA,
 
 xk = FancyArrow(parent_name="(e^t)",
                 child_name="(k^t)",
-                superscript=r"W_\rvk^{[d], [d]}")
+                script_tuple=("super", r"W_\rvk^{[d], [d]}")
+                )
 xv = FancyArrow(parent_name="(e^t)",
                 child_name="(v^t)",
-                subscript=r"W_\rvv^{[d], [d]}")
+                script_tuple=("sub", r"W_\rvv^{[d], [d]}")
+                )
 
 
 xq = FancyArrow(parent_name="(e^t)",
                   child_name="(q^t)",
                   color="red",
-                superscript=r"W_\rvq^{[d], [d]}")
+                script_tuple=("super", r"W_\rvq^{[d], [d]}")
+                )
 qx = FancyArrow(parent_name="(q^t)",
                   child_name="(a^t)",
                   color="red")
 
 ce = FancyArrow(parent_name="(a^t)",
                   child_name="(e^{t+1})",
-                  superscript="1")
+                  script_tuple=("super", "1")
+                )
 
 fancy_arrows = [xq, qx, xv, xk, ce]
 

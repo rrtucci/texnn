@@ -12,8 +12,10 @@ dir_whitelist = [
     "./",
     "silly_bnet",
     "asia",
+    "Bayesuvius_bnets",
     "expert_archer",
     "rock_layers",
+    "SentenceAx",
     "vanilla_transformer"
 ]
 file_blacklist = [
