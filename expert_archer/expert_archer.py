@@ -67,15 +67,15 @@ A_ = EndingArrow(
 
 ending_arrows = [A_]
 
-RT = RoundTripArrow(
+DD = RoundTripArrow(
     parent_name="D",
-    starting_dir="ur",
+    starting_dir="dl",
     ending_dir="dr",
     color="red",
-    script_tuple= ("super", "RT")
+    script_tuple= ("sub", "xx")
 )
 
-round_trip_arrows = [RT]
+round_trip_arrows = [DD]
 
 print("\nmosaic:", mosaic)
 name = "expert-archer"
