@@ -381,10 +381,10 @@ class ConfounderArrow(FancyArrow):
     This class is for drawing dashed arrows that have arrowheads at both
     ends. These arrows are often used by Pearl et al to represent confounding.
 
-    The reason for making this a subclass of FancyArrow, instead of using
-    FancyArrow with a new style_name for them, is that these arrows are not
-    in the parent_to_children or child_to_parent dictionaries. They are
-    ancillary to the DAG.
+    The reason for making this a subclass of FancyArrow, instead of using a
+    FancyArrow to represent them, is that these arrows are not in the
+    parent_to_children or child_to_parent dictionaries. They are not part of
+    the DAG. Think of them as DAG decorations.
 
     Attributes
     ----------
@@ -412,10 +412,10 @@ class FeedbackArrow(FancyArrow):
     """
     This class is for drawing feedback arrows.
 
-    The reason for making this a subclass of FancyArrow, instead of using
-    FancyArrow top represent them, is that these arrows are not in the
-    parent_to_children or child_to_parent dictionaries. They are ancillary
-    to the DAG.
+    The reason for making this a subclass of FancyArrow, instead of using a
+    FancyArrow to represent them, is that these arrows are not in the
+    parent_to_children or child_to_parent dictionaries. They are not part of
+    the DAG. Think of them as DAG decorations.
 
     We will assume parent_name ! = child_name for this class. For arrows
     pointing from a node to itself, see RoundTripArrow.
