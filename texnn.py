@@ -381,10 +381,10 @@ class ConfounderArrow(FancyArrow):
     This class is for drawing dashed arrows that have arrowheads at both
     ends. These arrows are often used by Pearl et al to represent confounding.
 
-    The reason for making this a subclass of FancyArrow, instead of using a
-    FancyArrow to represent them, is that these arrows are not in the
-    parent_to_children or child_to_parent dictionaries. They are not part of
-    the DAG. Think of them as DAG decorations.
+    The reason for making these arrows a subclass of FancyArrow, instead of
+    using a FancyArrow to represent them, is that these arrows are not in
+    the parent_to_children or child_to_parent dictionaries. They are not
+    part of the DAG. Think of them as DAG decorations.
 
     Attributes
     ----------
@@ -412,10 +412,10 @@ class FeedbackArrow(FancyArrow):
     """
     This class is for drawing feedback arrows.
 
-    The reason for making this a subclass of FancyArrow, instead of using a
-    FancyArrow to represent them, is that these arrows are not in the
-    parent_to_children or child_to_parent dictionaries. They are not part of
-    the DAG. Think of them as DAG decorations.
+    The reason for making these arrows a subclass of FancyArrow, instead of
+    using a FancyArrow to represent them, is that these arrows are not in
+    the parent_to_children or child_to_parent dictionaries. They are not
+    part of the DAG. Think of them as DAG decorations.
 
     We will assume parent_name ! = child_name for this class. For arrows
     pointing from a node to itself, see RoundTripArrow.
@@ -896,18 +896,14 @@ class DAG:
                 def get_extra_str(arrow1):
                     extra_str = ""
                     if parent.name == arrow1.parent_name:
-                        for child0, child_tile_loc0 in \
-                                self.node_to_tile_loc.items():
-                            if child0.name == arrow1.child_name:
-                                parent_tile_loc = \
-                                    self.node_to_tile_loc[parent]
-                                delta_row = child_tile_loc0[0] - \
-                                            parent_tile_loc[0]
-                                delta_col = child_tile_loc0[1] - \
-                                            parent_tile_loc[1]
-                                direction9 = DAG.get_direction(delta_row,
-                                                               delta_col)
-                                extra_str += arrow1.get_xy_str(direction9)
+                        child1 = self.name_to_node[arrow1.child_name]
+                        child_tile_loc1 = self.node_to_tile_loc[child1]
+                        parent_tile_loc = self.node_to_tile_loc[parent]
+                        delta_row = child_tile_loc1[0] - parent_tile_loc[0]
+                        delta_col = child_tile_loc1[1] - parent_tile_loc[1]
+                        direction1 = DAG.get_direction(delta_row,
+                                                       delta_col)
+                        extra_str += arrow1.get_xy_str(direction1)
                     return extra_str
 
                 if self.confounder_arrows:
