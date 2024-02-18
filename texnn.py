@@ -304,8 +304,10 @@ class FancyArrow:
 
 class EndingArrow(FancyArrow):
     """
-    This class is for drawing arrows that point from a named node to an 
-    empty tile in the mosaic.
+    This class is for drawing arrows that point from a named node to an
+    empty tile in the mosaic. These arrows can be added to a leaf node of a
+    bnet, or they can be pointing to the next iteration of a bnet cell in a
+    dynamic bnet.
     
     Attributes
     ----------
@@ -339,6 +341,8 @@ class EndingArrow(FancyArrow):
 class RoundTripArrow(FancyArrow):
     """
     This class is for drawing arrows that point from a named node to itself.
+    These arrows are used to represent self-feedback with a folded dynamic
+    Bayesian network.
 
     Attributes
     ----------
@@ -409,9 +413,9 @@ class FeedbackArrow(FancyArrow):
     This class is for drawing feedback arrows.
 
     The reason for making this a subclass of FancyArrow, instead of using
-    FancyArrow with a new style_name for them, is that these arrows are not
-    in the parent_to_children or child_to_parent dictionaries. They are
-    ancillary to the DAG.
+    FancyArrow top represent them, is that these arrows are not in the
+    parent_to_children or child_to_parent dictionaries. They are ancillary
+    to the DAG.
 
     We will assume parent_name ! = child_name for this class. For arrows
     pointing from a node to itself, see RoundTripArrow.
@@ -435,6 +439,7 @@ class FeedbackArrow(FancyArrow):
         super().__init__(parent_name,
                          child_name,
                          **kwargs)
+        assert parent_name != child_name
 
 
 class Plate:
@@ -901,7 +906,7 @@ class DAG:
                                 delta_col = child_tile_loc0[1] - \
                                             parent_tile_loc[1]
                                 direction9 = DAG.get_direction(delta_row,
-                                                              delta_col)
+                                                               delta_col)
                                 extra_str += arrow1.get_xy_str(direction9)
                     return extra_str
 
