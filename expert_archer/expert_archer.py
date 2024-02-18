@@ -57,6 +57,7 @@ AC = FancyArrow(
     script_tuple=("sub", "500")
 )
 
+
 fancy_arrows = [AB, BD, CD, AC]
 
 A_ = EndingArrow(
@@ -77,12 +78,22 @@ DD = RoundTripArrow(
 
 round_trip_arrows = [DD]
 
+A_C = ConfounderArrow(
+    parent_name="A",
+    child_name="C",
+    color="blue",
+    curvature= 3
+)
+
+confounder_arrows = [A_C]
+
 print("\nmosaic:", mosaic)
 name = "expert-archer"
 dag = DAG(name, mosaic, nodes,
           fancy_arrows=fancy_arrows,
           ending_arrows=ending_arrows,
-          round_trip_arrows=round_trip_arrows)
+          round_trip_arrows=round_trip_arrows,
+          confounder_arrows=confounder_arrows)
 dag.write_tex_file(
     underline=True,
     fig_caption="Expert Archer.",

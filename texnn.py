@@ -207,6 +207,7 @@ class FancyArrow:
                  displacement=None,
                  script_tuple=None):
         """
+        Constructor
 
         Parameters
         ----------
@@ -322,6 +323,7 @@ class EndingArrow(FancyArrow):
                  num_r,
                  **kwargs):
         """
+        Constructor
 
         Parameters
         ----------
@@ -352,6 +354,7 @@ class RoundTripArrow(FancyArrow):
                  ending_dir,
                  **kwargs):
         """
+        Constructor
 
         Parameters
         ----------
@@ -367,6 +370,37 @@ class RoundTripArrow(FancyArrow):
             "starting direction {starting_dir} is invalid"
         assert ending_dir in SIMPLE_DIRECTIONS, \
             "ending direction {starting_dir} is invalid"
+
+
+class ConfounderArrow(FancyArrow):
+    """
+    This class is for drawing dashed arrows that have arrowheads at both
+    ends. These arrows are often used by Pearl et al to represent
+    confounding. The reason for making this a subclass of FancyArrow,
+    instead of using FancyArrow with a new style_name for them, is that
+    these arrows are not in the parent_to_children or child_to_parent
+    dictionaries.
+
+    Attributes
+    ----------
+    """
+
+    def __init__(self,
+                 parent_name,
+                 child_name,
+                 **kwargs):
+        """
+        Constructor
+
+        Parameters
+        ----------
+        parent_name: str
+        child_name: str
+        """
+        super().__init__(parent_name,
+                         child_name,
+                         style_name="two_way_dashed",
+                         **kwargs)
 
 
 class Plate:
@@ -520,9 +554,11 @@ class DAG:
                  fancy_arrows=None,
                  ending_arrows=None,
                  round_trip_arrows=None,
+                 confounder_arrows=None,
                  plates=None):
         """
-        
+        Constructor
+
         Parameters
         ----------
         name: str
@@ -531,12 +567,14 @@ class DAG:
         fancy_arrows: list[FancyArrow] | None
         ending_arrows: list[EndingArrow] | None
         round_trip_arrows: list[RoundTripArrow] | None
+        confounder_arrows: list[ConfounderArrow] | None
         plates: list[Plate] | None
         """
         self.nodes = nodes
         self.fancy_arrows = fancy_arrows
         self.ending_arrows = ending_arrows
         self.round_trip_arrows = round_trip_arrows
+        self.confounder_arrows = confounder_arrows
         self.plates = plates
 
         tiles = [node.tile_ch for node in nodes]
@@ -618,7 +656,7 @@ class DAG:
     def get_node_to_tile_loc(self):
         """
         This method returns a node_to_tile_loc dictionary
-        
+
         Returns
         -------
         dict[Node, tuple[int]]
@@ -636,11 +674,42 @@ class DAG:
                     node_to_tile_loc[node] = (row, col)
         return node_to_tile_loc
 
+    @staticmethod
+    def get_direction(delta_row, delta_col):
+        """
+        This method returns a string composed of ["u", "d", "r",
+        "l"] characters indicating the direction between 2 tiles with row
+        difference `delta_row` and column difference `delta_col`.
+
+        direction = (delta_row, delta_col) = child_loc - parent_loc
+
+        Parameters
+        ----------
+        delta_row: int
+        delta_col: int
+
+        Returns
+        -------
+        str
+
+        """
+
+        direction = ""
+        if delta_row > 0:
+            direction += "d" * delta_row
+        elif delta_row < 0:
+            direction += "u" * (-delta_row)
+        if delta_col > 0:
+            direction += "r" * delta_col
+        elif delta_col < 0:
+            direction += "l" * (-delta_col)
+        return direction
+
     def set_parentage(self):
         """
-        This method fills the dictionaries `self.child_to_parents` and 
+        This method fills the dictionaries `self.child_to_parents` and
         `self.parent_to_children`.
-        
+
         Returns
         -------
         None
@@ -670,7 +739,7 @@ class DAG:
         superscript shows the slice str for that node. For example, if "A_0"
         is a node with slice str "[5],[3]", it will replace every occurrence
         of '"A_0"' by "A_0^{[5],[3]}".
-        
+
         Parameters
         ----------
         str0: str
@@ -698,9 +767,9 @@ class DAG:
                        row_separation=None,
                        column_separation=None):
         """
-        This method returns a LaTex string for drawing a bnet that 
+        This method returns a LaTex string for drawing a bnet that
         represents a neural net.
-        
+
         Parameters
         ----------
         fig_header: str | None
@@ -779,6 +848,21 @@ class DAG:
                             dir_tuple = (rt_arrow.starting_dir,
                                          rt_arrow.ending_dir)
                             str0 += rt_arrow.get_xy_str(dir_tuple)
+                if self.confounder_arrows:
+                    for con_arrow in self.confounder_arrows:
+                        if parent.name == con_arrow.parent_name:
+                            for child0, child_tile_loc0 in \
+                                    self.node_to_tile_loc.items():
+                                if child0.name == con_arrow.child_name:
+                                    parent_tile_loc = \
+                                        self.node_to_tile_loc[parent]
+                                    delta_row = child_tile_loc0[0] - \
+                                                parent_tile_loc[0]
+                                    delta_col = child_tile_loc0[1] - \
+                                                parent_tile_loc[1]
+                                    direction = DAG.get_direction(delta_row,
+                                                                  delta_col)
+                                    str0 += con_arrow.get_xy_str(direction)
 
                 for child in self.parent_to_children[parent]:
                     is_fancy_arrow = False
@@ -791,17 +875,8 @@ class DAG:
                                 which_arrow = fancy_arrow
                                 break
                     child_row, child_col = self.node_to_tile_loc[child]
-                    delta0 = child_row - row
-                    delta1 = child_col - col
-                    direction = ""
-                    if delta0 > 0:
-                        direction += "d" * delta0
-                    elif delta0 < 0:
-                        direction += "u" * (-delta0)
-                    if delta1 > 0:
-                        direction += "r" * delta1
-                    elif delta1 < 0:
-                        direction += "l" * (-delta1)
+                    direction = DAG.get_direction(child_row - row,
+                                                  child_col - col)
                     if not is_fancy_arrow:
                         str0 += r"\ar[" + direction + "]"
                     else:
@@ -852,10 +927,10 @@ class DAG:
 
         """
 
-        def get_parent_str(node):
+        def get_parent_str(node1):
             parent_str = ""
             num_parents = 0
-            for parent in self.child_to_parents[node]:
+            for parent in self.child_to_parents[node1]:
                 num_parents += 1
                 parent_nameL = parent.name
                 if add_superscripts:
