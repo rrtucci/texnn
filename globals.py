@@ -47,10 +47,6 @@ ARROW_STYLE_TO_XY_STR = {
     "two_way_dashed": "@{<-->}"
 }
 
-TWO_WAY_ARROW_STYLE_TO_XY_STR = \
-    {type: xy_str.replace("@{", "@{<") for type, xy_str in
-        ARROW_STYLE_TO_XY_STR.items()}
-
 
 PLATE_STYLE_TO_XY_STR = {
     "plain": "-",
