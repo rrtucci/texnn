@@ -375,11 +375,12 @@ class RoundTripArrow(FancyArrow):
 class ConfounderArrow(FancyArrow):
     """
     This class is for drawing dashed arrows that have arrowheads at both
-    ends. These arrows are often used by Pearl et al to represent
-    confounding. The reason for making this a subclass of FancyArrow,
-    instead of using FancyArrow with a new style_name for them, is that
-    these arrows are not in the parent_to_children or child_to_parent
-    dictionaries.
+    ends. These arrows are often used by Pearl et al to represent confounding.
+
+    The reason for making this a subclass of FancyArrow, instead of using
+    FancyArrow with a new style_name for them, is that these arrows are not
+    in the parent_to_children or child_to_parent dictionaries. They are
+    ancillary to the DAG.
 
     Attributes
     ----------
@@ -400,6 +401,39 @@ class ConfounderArrow(FancyArrow):
         super().__init__(parent_name,
                          child_name,
                          style_name="two_way_dashed",
+                         **kwargs)
+
+
+class FeedbackArrow(FancyArrow):
+    """
+    This class is for drawing feedback arrows.
+
+    The reason for making this a subclass of FancyArrow, instead of using
+    FancyArrow with a new style_name for them, is that these arrows are not
+    in the parent_to_children or child_to_parent dictionaries. They are
+    ancillary to the DAG.
+
+    We will assume parent_name ! = child_name for this class. For arrows
+    pointing from a node to itself, see RoundTripArrow.
+
+    Attributes
+    ----------
+    """
+
+    def __init__(self,
+                 parent_name,
+                 child_name,
+                 **kwargs):
+        """
+        Constructor
+
+        Parameters
+        ----------
+        parent_name: str
+        child_name: str
+        """
+        super().__init__(parent_name,
+                         child_name,
                          **kwargs)
 
 
@@ -525,6 +559,8 @@ class DAG:
         A list of EndingArrows
     fancy_arrows: list[FancyArrow] | None
         A list of FancyArrows
+    feedback_arrows: list[FeedbackArrows] | None
+        A list of FeedbackArrows
     mosaic: list[str]
         a list of strings of equal length which when stacked horizontally
         represent the bnet that we wish to draw, as a tile mosaic.
@@ -555,6 +591,7 @@ class DAG:
                  ending_arrows=None,
                  round_trip_arrows=None,
                  confounder_arrows=None,
+                 feedback_arrows=None,
                  plates=None):
         """
         Constructor
@@ -568,6 +605,7 @@ class DAG:
         ending_arrows: list[EndingArrow] | None
         round_trip_arrows: list[RoundTripArrow] | None
         confounder_arrows: list[ConfounderArrow] | None
+        feedback_arrows: list[FeedbackArrow] | None
         plates: list[Plate] | None
         """
         self.nodes = nodes
@@ -575,6 +613,7 @@ class DAG:
         self.ending_arrows = ending_arrows
         self.round_trip_arrows = round_trip_arrows
         self.confounder_arrows = confounder_arrows
+        self.feedback_arrows = feedback_arrows
         self.plates = plates
 
         tiles = [node.tile_ch for node in nodes]
@@ -848,21 +887,30 @@ class DAG:
                             dir_tuple = (rt_arrow.starting_dir,
                                          rt_arrow.ending_dir)
                             str0 += rt_arrow.get_xy_str(dir_tuple)
+
+                def get_extra_str(arrow1):
+                    extra_str = ""
+                    if parent.name == arrow1.parent_name:
+                        for child0, child_tile_loc0 in \
+                                self.node_to_tile_loc.items():
+                            if child0.name == arrow1.child_name:
+                                parent_tile_loc = \
+                                    self.node_to_tile_loc[parent]
+                                delta_row = child_tile_loc0[0] - \
+                                            parent_tile_loc[0]
+                                delta_col = child_tile_loc0[1] - \
+                                            parent_tile_loc[1]
+                                direction9 = DAG.get_direction(delta_row,
+                                                              delta_col)
+                                extra_str += arrow1.get_xy_str(direction9)
+                    return extra_str
+
                 if self.confounder_arrows:
                     for con_arrow in self.confounder_arrows:
-                        if parent.name == con_arrow.parent_name:
-                            for child0, child_tile_loc0 in \
-                                    self.node_to_tile_loc.items():
-                                if child0.name == con_arrow.child_name:
-                                    parent_tile_loc = \
-                                        self.node_to_tile_loc[parent]
-                                    delta_row = child_tile_loc0[0] - \
-                                                parent_tile_loc[0]
-                                    delta_col = child_tile_loc0[1] - \
-                                                parent_tile_loc[1]
-                                    direction = DAG.get_direction(delta_row,
-                                                                  delta_col)
-                                    str0 += con_arrow.get_xy_str(direction)
+                        str0 += get_extra_str(con_arrow)
+                if self.feedback_arrows:
+                    for fb_arrow in self.feedback_arrows:
+                        str0 += get_extra_str(fb_arrow)
 
                 for child in self.parent_to_children[parent]:
                     is_fancy_arrow = False
