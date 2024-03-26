@@ -28,6 +28,7 @@ Gallery:
 
 * [Silly Bnet](https://github.com/rrtucci/texnn/blob/master/silly_bnet/silly-bnet.pdf)
 
+* [Thermodynamics](https://github.com/rrtucci/texnn/blob/master/thermo/thermo.pdf)
 
 * Vanilla Transformer
   * [Scaled dot product attention](https://github.com/rrtucci/texnn/blob/master/vanilla_transformer/scaled-dot-prod-att.pdf)

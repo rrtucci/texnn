@@ -341,7 +341,7 @@ class EndingArrow(FancyArrow):
 class RoundTripArrow(FancyArrow):
     """
     This class is for drawing arrows that point from a named node to itself.
-    These arrows are used to represent self-feedback with a folded dynamic
+    These arrows are used to represent self-feedback in a folded dynamic
     Bayesian network.
 
     Attributes
@@ -384,7 +384,7 @@ class ConfounderArrow(FancyArrow):
     The reason for making these arrows a subclass of FancyArrow, instead of
     using a FancyArrow to represent them, is that these arrows are not in
     the parent_to_children or child_to_parent dictionaries. They are not
-    part of the DAG. Think of them as DAG decorations.
+    part of the DAG structure. Think of them as DAG decorations.
 
     Attributes
     ----------
@@ -415,7 +415,7 @@ class FeedbackArrow(FancyArrow):
     The reason for making these arrows a subclass of FancyArrow, instead of
     using a FancyArrow to represent them, is that these arrows are not in
     the parent_to_children or child_to_parent dictionaries. They are not
-    part of the DAG. Think of them as DAG decorations.
+    part of the DAG structure. Think of them as DAG decorations.
 
     We will assume parent_name ! = child_name for this class. For arrows
     pointing from a node to itself, see RoundTripArrow.
