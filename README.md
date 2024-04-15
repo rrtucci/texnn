@@ -22,6 +22,8 @@ Gallery:
 
 * [Expert Archer](https://github.com/rrtucci/texnn/blob/master/expert_archer/expert-archer.pdf)
 
+* [Gaussian Markov random field (by Kevin P. Murphy)](https://github.com/rrtucci/texnn/blob/master/Gaussian_Markov_random_field/gmrf.pdf)
+
 * [Rock Layers](https://github.com/rrtucci/texnn/blob/master/rock_layers/rock_layers.pdf)
 
 * [SentenceAx](https://github.com/rrtucci/texnn/blob/master/SentenceAx/sentence-ax-bnet.pdf)

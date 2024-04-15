@@ -1,0 +1,103 @@
+\documentclass[12pt]{article}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[color,matrix,frame,arrow,curve]{xy}
+\begin{document}
+
+
+\begin{figure}[h!]\centering
+$$\xymatrix{
+&&*++[o][F--]{\underline{\theta}}\ar@[black]@{-->}[ddll]\ar@[black]@{-->}@/_2pc/[dd]\ar@[black]@{-->}[ddrr]\ar@[black]@{-->}@/^4pc/[dddd]&&
+\\
+*++[o][F*:SkyBlue]{\underline{C_1}^{[m]}}\ar@[black][d]^{\color{black} \beta_1}&&*++[o][F*:SkyBlue]{\underline{C_2}^{[m]}}\ar@[black][d]^{\color{black} \beta_2}&&*++[o][F*:SkyBlue]{\underline{C_3}^{[m]}}\ar@[black][d]^{\color{black} \beta_3}
+\\
+*++[o][F]{\underline{X_1}^{[m]}}\ar@[black]@{-}[rr]^{\color{black} \tau}\ar[d]&&*++[o][F]{\underline{X_2}^{[m]}}\ar@[black]@{-}[rr]_{\color{black} \tau}\ar@[black]@{-}@/_2pc/[dd]_{\color{black} \tau}\ar[d]&&*++[o][F]{\underline{X_3}^{[m]}}\ar[d]
+\\
+*++[o][F*:SkyBlue]{\underline{Y_1}^{[m]}}&&*++[o][F*:SkyBlue]{\underline{Y_2}^{[m]}}&&*++[o][F*:SkyBlue]{\underline{Y_3}^{[m]}}
+\\
+&&*++[o][F]{\underline{X_4}^{[m]}}\ar[d]&*++[o][F*:SkyBlue]{\underline{C_4}^{[m]}}\ar@[black][l]^{\color{black} \beta_4}&
+\\
+&&*++[o][F*:SkyBlue]{\underline{Y_4}^{[m]}}&&
+\save
+\POS"2,1"."6,1"."2,5"."6,5"!C*+<2.0em>\frm{-,}
+\restore
+\\
+*+[F-,]{\;\;}&\text{$m$ layers}
+}$$
+\caption{}
+\label{fig-texnn-for-gmrf2}
+\end{figure}
+
+\begin{subequations}
+
+\begin{equation}\color{blue}
+\theta =
+\label{eq-T-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+C_1^{[m]} =
+\label{eq-A-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+C_2^{[m]} =
+\label{eq-B-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+C_3^{[m]} =
+\label{eq-C-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+C_4^{[m]} =
+\label{eq-K-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+X_1^{[m]} = C_1^{[m]},\theta
+\label{eq-D-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+X_2^{[m]} = C_2^{[m]},X_1^{[m]},\theta
+\label{eq-E-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+X_3^{[m]} = C_3^{[m]},X_2^{[m]},\theta
+\label{eq-F-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+X_4^{[m]} = C_4^{[m]},X_2^{[m]},\theta
+\label{eq-J-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+Y_1^{[m]} = X_1^{[m]}
+\label{eq-G-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+Y_2^{[m]} = X_2^{[m]}
+\label{eq-H-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+Y_3^{[m]} = X_3^{[m]}
+\label{eq-I-fun-gmrf2}
+\end{equation}
+
+\begin{equation}\color{blue}
+Y_4^{[m]} = X_4^{[m]}
+\label{eq-L-fun-gmrf2}
+\end{equation}
+
+\end{subequations}
+
+
+\end{document}
