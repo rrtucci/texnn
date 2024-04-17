@@ -4,7 +4,7 @@ mosaic = [
     "__T__",
     "A_B_C",
     "D_E_F",
-    "G_H_I",
+    "GH__I",
     "__JK_",
     "__L__"
 ]
@@ -73,7 +73,7 @@ nodeX3 = Node(
 nodeX4 = Node(
     name="X_4",
     tile_ch='J',
-    parent_names=["C_4", "X_2", "\\theta"],
+    parent_names=["C_4", "X_2", "X_3", "\\theta"],
     style_name="oval"
 )
 
@@ -127,7 +127,6 @@ X2X4 = FancyArrow(
     child_name="X_4",
     color="black",
     style_name="undirected",
-    curvature=2,
     script_tuple=("sub", r"\tau")
 )
 
@@ -136,7 +135,15 @@ X2X3 = FancyArrow(
     child_name="X_3",
     color="black",
     style_name="undirected",
-    script_tuple=("sub", r"\tau")
+    script_tuple=("super", r"\tau")
+)
+
+X3X4 = FancyArrow(
+    parent_name="X_3",
+    child_name="X_4",
+    color="black",
+    style_name="undirected",
+    script_tuple=("super", r"\tau")
 )
 
 C1X1 = FancyArrow(
@@ -194,7 +201,8 @@ TX4 = FancyArrow(
     curvature=-4
 )
 
-fancy_arrows = [X1X2, X2X3, X2X4, C1X1, C2X2, C3X3, C4X4,
+fancy_arrows = [X1X2, X2X3, X2X4, X3X4,
+                C1X1, C2X2, C3X3, C4X4,
                 TX1, TX2, TX3, TX4]
 
 plate = Plate(
@@ -207,7 +215,8 @@ plate = Plate(
 import pathlib
 
 # dir = str(pathlib.Path(__file__).parent.resolve())
-name = "gmrf2"
+# name = "gmrf2"
+name = "gmrf"
 # name = dir + "/" + name
 # print("writing to ", name)
 dag = DAG(name, mosaic, nodes, fancy_arrows=fancy_arrows, plates=[plate])
