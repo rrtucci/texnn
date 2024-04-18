@@ -455,6 +455,8 @@ class Plate:
     first_and_last_col: tuple(int)
         0-based (>=0) ints. For example, "(3,4)"
     legend: str
+        Iff (this str is empty or there is only one layer in this plate),
+        no legend is written under figure for this plate
     margin: float
     num_layers_str: str
     only_one_layer: bool
@@ -942,7 +944,7 @@ class DAG:
                 str0 += plate.get_xy_str() + "\n"
             str0 += r"\restore" + "\n"
             for plate in self.plates:
-                if not plate.only_one_layer:
+                if plate.legend or not plate.only_one_layer:
                     str0 += r"\\" + "\n"
                     xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
                     str0 += "*+[F" + xy_str0 + "]{\;\;}&"
