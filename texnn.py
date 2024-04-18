@@ -454,6 +454,7 @@ class Plate:
         0-based (>=0) ints. For example, "(3,4)"
     first_and_last_col: tuple(int)
         0-based (>=0) ints. For example, "(3,4)"
+    legend: str
     margin: float
     num_layers_str: str
     only_one_layer: bool
@@ -467,7 +468,8 @@ class Plate:
                  first_and_last_col,
                  num_layers_str="1",
                  margin=1.0,
-                 style_name="shaded"):
+                 style_name="shaded",
+                 legend=""):
         """
         Constructor
 
@@ -478,6 +480,7 @@ class Plate:
         num_layers_str: str
         margin: float
         style_name: str
+        legend: str
         """
         self.first_and_last_row = first_and_last_row
         self.first_and_last_col = first_and_last_col
@@ -489,6 +492,7 @@ class Plate:
             self.only_one_layer = True
         else:
             self.only_one_layer = False
+        self.legend = legend
 
     def get_xy_str(self):
         """
@@ -942,7 +946,12 @@ class DAG:
                     str0 += r"\\" + "\n"
                     xy_str0 = PLATE_STYLE_TO_XY_STR[plate.style_name]
                     str0 += "*+[F" + xy_str0 + "]{\;\;}&"
-                    str0 += r"\text{$" + plate.num_layers_str + "$ layers}\n"
+                    if not plate.legend:
+                        str0 += r"\text{$" + plate.num_layers_str \
+                                + "$ layers}\n"
+                    else:
+                        str0 += r"\text{" + plate.legend + "}\n"
+
         str0 += "}$$\n"
         str0 += fig_footer
         str0 += r"\caption{" + fig_caption + "}\n"
