@@ -455,8 +455,8 @@ class Plate:
     first_and_last_col: tuple(int)
         0-based (>=0) ints. For example, "(3,4)"
     legend: str
-        Iff (this str is non-empty or there is more than one layer in this
-        plate), a legend is written under figure for this plate
+        If (this str is non-empty or there is more than one layer in this
+        plate), then a legend is written under figure for this plate
     margin: float
     num_layers_str: str
     only_one_layer: bool
