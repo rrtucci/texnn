@@ -418,7 +418,7 @@ class RoundTripArrow(FancyArrow):
         returns an xy string which incorporates all the RoundTripArrow
         attributes. For example,
 
-        r"\loopup{3}{@[green]_{\color{color} r}"
+        r"\loopup{3}{@{-->}@[green]_{\color{green} r}"
 
         Parameters
         ----------
@@ -442,6 +442,8 @@ class RoundTripArrow(FancyArrow):
         else:
             assert False
         str0 += str(self.size) + "}{"
+        if self.style_name:
+            str0 += ARROW_STYLE_TO_XY_STR[self.style_name]
         if self.color:
             str0 += "@[" + self.color + "]"
             color_str = r"\color{" + self.color + "} "

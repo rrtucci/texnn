@@ -72,6 +72,7 @@ DD = RoundTripArrow(
     side="down",
     size=4,
     color="green",
+    style_name="dashed",
     script_tuple=("sub", "xx")
 )
 
