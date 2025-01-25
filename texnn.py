@@ -184,7 +184,7 @@ class FancyArrow:
         arrow curvature, ...-3,-2,-1,0, 1,2,3,...
     displacement: int | None
         how much the arrow is displaced sideways (perpendicularly to its
-        direction)
+        side)
     parent_name: str
         name of arrow's parent
     script_tuple: (str, str)
@@ -262,15 +262,18 @@ class FancyArrow:
         Parameters
         ----------
         direction: str | tuple(str)
-            a string defining the direction of the arrow. for example,
-            "ruu", "rr", "lld", etc. A string tuple (s, e) indicates a
-            RoundTripArrow with starting_dir = s and ending_dir = e
+            a string defining the side of the arrow. for example,
+            "ruu", "rr", "lld", etc.
+            # A string tuple (s, e) indicates a
+            # RoundTripArrow with starting_dir = s and ending_dir = e.
+            If direction == 'round', this indicates a RoundTripArrow
 
         Returns
         -------
         str
 
         """
+        assert direction != "round"
 
         str0 = r"\ar"
         if self.color:
@@ -290,8 +293,6 @@ class FancyArrow:
             str0 += "[" + direction + "]"
         elif type(direction) == tuple:
             str0 += f"@({direction[0]}, {direction[1]})[]"
-        else:
-            assert False
 
         color_str = ""
         if self.color:
@@ -338,6 +339,44 @@ class EndingArrow(FancyArrow):
         self.num_r = num_r
 
 
+# Old RoundTripArrow class with loops of fixed size 3
+# class RoundTripArrow(FancyArrow):
+#     """
+#     This class is for drawing arrows that point from a named node to itself.
+#     These arrows are used to represent self-feedback in a folded dynamic
+#     Bayesian network.
+#
+#     Attributes
+#     ----------
+#     ending_dir: str
+#         ending side
+#     starting_dir: str
+#         starting side
+#     """
+#
+#     def __init__(self,
+#                  parent_name,
+#                  starting_dir,
+#                  ending_dir,
+#                  **kwargs):
+#         """
+#         Constructor
+
+# Parameters
+# ----------
+# parent_name: str
+# starting_dir: str
+# ending_dir: str
+# """
+# child_name = None
+# super().__init__(parent_name, child_name, **kwargs)
+# self.starting_dir = starting_dir
+# self.ending_dir = ending_dir
+# assert starting_dir in SIMPLE_DIRECTIONS, \
+#     "starting side {starting_dir} is invalid"
+# assert ending_dir in SIMPLE_DIRECTIONS, \
+#     "ending side {starting_dir} is invalid"
+
 class RoundTripArrow(FancyArrow):
     """
     This class is for drawing arrows that point from a named node to itself.
@@ -346,16 +385,16 @@ class RoundTripArrow(FancyArrow):
 
     Attributes
     ----------
-    ending_dir: str
-        ending direction
-    starting_dir: str
-        starting direction
+    side: str
+        either up, right, down, left
+    size: int
+        smallest advisable size is 3
     """
 
     def __init__(self,
                  parent_name,
-                 starting_dir,
-                 ending_dir,
+                 side,
+                 size,
                  **kwargs):
         """
         Constructor
@@ -363,17 +402,54 @@ class RoundTripArrow(FancyArrow):
         Parameters
         ----------
         parent_name: str
-        starting_dir: str
-        ending_dir: str
+        side: str
+        size: int
         """
         child_name = None
         super().__init__(parent_name, child_name, **kwargs)
-        self.starting_dir = starting_dir
-        self.ending_dir = ending_dir
-        assert starting_dir in SIMPLE_DIRECTIONS, \
-            "starting direction {starting_dir} is invalid"
-        assert ending_dir in SIMPLE_DIRECTIONS, \
-            "ending direction {starting_dir} is invalid"
+        self.side = side
+        self.size = size
+        assert side in ("up", "right", "down", "left"), \
+            "side {side} is invalid"
+
+    def get_xy_str(self, direction):
+        """
+        This method overrides a method in its parent class FancyArrow. It
+        returns an xy string which incorporates all the RoundTripArrow
+        attributes. For example,
+
+        r"\loopup{3}{@[green]_{\color{color} r}"
+
+        Parameters
+        ----------
+        direction: str
+            should be "round"
+
+        Returns
+        -------
+        str
+
+        """
+        assert direction == "round"
+        if self.side == "up":
+            str0 = r"\loopup{"
+        elif self.side == "right":
+            str0 = r"\loopright{"
+        elif self.side == "down":
+            str0 = r"\loopdown{"
+        elif self.side == "left":
+            str0 = r"\loopleft{"
+        else:
+            assert False
+        str0 += str(self.size) + "}{"
+        if self.color:
+            str0 += "@[" + self.color + "]"
+            color_str = r"\color{" + self.color + "} "
+        if self.script_tuple:
+            str0 += ARROW_SCRIPT_TYPE_TO_XY_STR[self.script_tuple[0]] + \
+                    "{" + color_str + self.script_tuple[1] + "}"
+        str0 += "}"
+        return str0
 
 
 class ConfounderArrow(FancyArrow):
@@ -728,10 +804,10 @@ class DAG:
     def get_direction(delta_row, delta_col):
         """
         This method returns a string composed of ["u", "d", "r",
-        "l"] characters indicating the direction between 2 tiles with row
+        "l"] characters indicating the side between 2 tiles with row
         difference `delta_row` and column difference `delta_col`.
 
-        direction = (delta_row, delta_col) = child_loc - parent_loc
+        side = (delta_row, delta_col) = child_loc - parent_loc
 
         Parameters
         ----------
@@ -895,9 +971,12 @@ class DAG:
                 if self.round_trip_arrows:
                     for rt_arrow in self.round_trip_arrows:
                         if parent.name == rt_arrow.parent_name:
-                            dir_tuple = (rt_arrow.starting_dir,
-                                         rt_arrow.ending_dir)
-                            str0 += rt_arrow.get_xy_str(dir_tuple)
+                            # dir_tuple = (rt_arrow.starting_dir,
+                            #              rt_arrow.ending_dir)
+                            # str0 += rt_arrow.get_xy_str(dir_tuple)
+                            # example of string generated
+                            # \loopup{3}{@[green]_r}
+                            str0 += rt_arrow.get_xy_str("round")
 
                 def get_extra_str(arrow1):
                     extra_str = ""

@@ -69,8 +69,8 @@ ending_arrows = [A_]
 
 DD = RoundTripArrow(
     parent_name="D",
-    starting_dir="dl",
-    ending_dir="dr",
+    side="down",
+    size=4,
     color="green",
     script_tuple=("sub", "xx")
 )
