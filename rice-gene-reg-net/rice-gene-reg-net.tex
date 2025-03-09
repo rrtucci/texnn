@@ -1,0 +1,94 @@
+\documentclass[12pt]{article}
+\input{bayesuvius.sty}
+\begin{document}
+
+\begin{figure}[h!]\centering
+$$\xymatrix{
+*+[F*:Dandelion]{\underline{PAT1}}\ar[dr]&&*+[F*:Dandelion]{\underline{P1F3}}\ar[d]\ar[dl]\ar[drr]\ar[dr]&&*+[F*:Dandelion]{\underline{APRR}}\ar[d]&&
+\\
+&*+[F*:Orchid]{\underline{CHS}}&*+[F*:Orchid]{\underline{CAB1}}&*+[F*:Orchid]{\underline{RBCB1A}}&*+[F*:Dandelion]{\underline{LHY}}\ar[dr]\ar[d]\ar@/_1pc/[rr]&&*+[F*:Orchid]{\underline{GI}}\ar@/_1pc/[ll]
+\\
+*+[F*:Orchid]{\underline{HOG1}}\ar[ur]&&*+[F*:Orchid]{\underline{STO}}\ar[ul]\ar[dr]&&*+[F*:Orchid]{\underline{GBSS1}}&*+[F*:Orchid]{\underline{CAT3}}\ar[dll]&*+[F*:Orchid]{\underline{DND1}}\ar[dlll]
+\\
+&&&*+[F*:Orchid]{\underline{RCD1}}&&&
+}$$
+\caption{Hybrid rice gene reg net}
+\label{fig-texnn-for-rice-gene-reg-net}
+\end{figure}
+
+\begin{subequations}
+
+\begin{equation}\color{blue}
+APRR = 
+\label{eq-A-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+CAB1 = P1F3
+\label{eq-b-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+CAT3 = LHY
+\label{eq-d-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+CHS = PAT1,P1F3,HOG1,STO
+\label{eq-C-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+DND1 = 
+\label{eq-D-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+GBSS1 = LHY
+\label{eq-c-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+GI = LHY
+\label{eq-G-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+HOG1 = 
+\label{eq-H-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+LHY = P1F3,APRR,GI
+\label{eq-L-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+P1F3 = 
+\label{eq-a-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+PAT1 = 
+\label{eq-P-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+RBCB1A = P1F3
+\label{eq-R-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+RCD1 = STO,CAT3,DND1
+\label{eq-e-fun-rice-gene-reg-net}
+\end{equation}
+
+\begin{equation}\color{blue}
+STO = 
+\label{eq-S-fun-rice-gene-reg-net}
+\end{equation}
+
+\end{subequations}
+
+
+\end{document}  
